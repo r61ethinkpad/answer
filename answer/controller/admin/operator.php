@@ -16,7 +16,7 @@ class operator extends tbController
 	//首页
 	public function index(){
 		$operator = spClass("operatorModel");
-		$this->operator_type = $operator->getOperType(1, '_ARRAY');
+                $this->operator_types = $operator->getOperType('_ARRAY');
 		$this->operator_status = $operator->getOperStatus('_ARRAY');
 		
 		$_SESSION['operator_tid'] = $this->spArgs("tid");
@@ -49,6 +49,7 @@ class operator extends tbController
 			
 			'name'		=> $operator_name=="管理员名称"?"":trim($operator_name),
 			'status'	=>	$this->spArgs("status"),
+                        'type'	=>	$this->spArgs("type"),
 		);
 		//dump(json_encode($args));
 		
@@ -102,7 +103,7 @@ class operator extends tbController
 	public function operNew()
 	{   
 		$operator = spClass("operatorModel"); 
-		
+		$this->operator_types = $operator->getOperType('_ARRAY');
 		$this->current_opertype = $_SESSION['operator']['type'];
 		$this->tid = ($this->spArgs("tid")=='')?$_SESSION['operator_tid']:$this->spArgs("tid");
 		$this->sid = ($this->spArgs("sid")=='')?$_SESSION['operator_sid']:$this->spArgs("sid");
@@ -122,9 +123,8 @@ class operator extends tbController
 			'password'	=> encryptPasswd(trim($this->spArgs("password"))),
 			'name'	 => trim($this->spArgs("name")),
 			'phone'	 => trim($this->spArgs("phone")),
-			'qq_no'	 => trim($this->spArgs("qq_no")),
 			'email'	 => trim($this->spArgs("email")),
-			'type'	 => '01',
+			'type'	 => trim($this->spArgs("type")),
 			
 			
 			
@@ -179,7 +179,7 @@ class operator extends tbController
 		$this->tid = $_SESSION['operator_tid'];
 		$this->sid = $_SESSION['operator_sid'];
 		$this->saveUrl = $_SESSION['saveUrl'];
-		
+		$this->operator_types = $operator->getOperType('_ARRAY');
 		$acl = spClass('aclModel');
 		$this->authconfig = array(
 			'update'=>	$acl->checkCA('operator', 'operUpdate'),
@@ -200,7 +200,7 @@ class operator extends tbController
 		
 			'name'	 => trim($this->spArgs("name")),
 			'phone'	 => trim($this->spArgs("phone")),
-			'qq_no'	 => trim($this->spArgs("qq_no")),
+			'type'	 => trim($this->spArgs("type")),
 			'email'	 => trim($this->spArgs("email")),
 			
 		);
