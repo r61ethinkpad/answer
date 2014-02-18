@@ -1,0 +1,107 @@
+<style>
+.dbTable tbody tr td a {
+    margin-right: 5px;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+<!--<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>-->
+		<table class="dbTable">
+                <thead>
+                    <tr>
+                    	<th><a id='check_all'>全选</a></th>
+                    	<th>姓名</th>
+						<th>手机</th>
+                                                <th>职位</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <{foreach from=$user_list item=one key=k}>
+                	<tr>
+                		<td><input type="checkbox" name='userbox[]' value='<{$one.user_id}>|<{$one.user_name}>'/></td>
+                		<td><{$one.user_name}></td>
+                		<!-- <td title="<{$one.area_name}>"><{$one.area_name|truncate:20:"...":true}></td> -->
+                		<td><{$one.user_isdn}></td>
+                                <td><{$one.user_position_text}></td>
+                		
+                	</tr>
+                <{foreachelse}>
+					<tr><td colspan="8">无查询记录！</td></tr>
+                <{/foreach}>
+                    
+                </tbody>
+                <tfoot>
+                	<{if true and $authconfig.arradd==true}>
+                	<tr><td colspan="8">
+                        
+                        <a href='javascript:void(0);' onclick="membAdd()">新增监控的用户</a>
+			
+                    </td></tr>
+					<{/if}>
+                </tfoot>
+
+                
+            </table>
+           <{include file="../inc/page.html"}>
+           
+           
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#check_all").toggle(function () {
+		 $("input[name=userbox[]]").attr("checked",true);
+		 $(this).html('全消');
+	}, function () {
+		 $("input[name=userbox[]]").attr("checked",false);
+		$(this).html('全选');
+	});
+});
+
+
+	
+	
+	//批量删除
+	function membAdd(){
+		var fields=document.getElementsByName("userbox[]");
+		var ides = "";
+		var cnt = 0;
+		for(var i=0;i<fields.length;i++){
+			 if(fields[i].checked){
+			 	
+                            ides+=fields[i].value+",";
+                            cnt +=1;
+			 }
+		}
+		if(ides){
+	        ides=ides.substring(0,ides.length-1);
+	    }else{
+	        alert("请至少勾选一项！");return false;
+	    }
+		//alert(ides);
+		if(!confirm("确定要将所选的"+cnt+"个用户添加到当前操作员的监控范围内吗？"))
+			return false;
+		else
+		{
+			jQuery.ajax({
+				url: '<{spUrl c=monitor a=create}>',
+				type: 'POST',
+                                data:{ides:ides},
+				error: function()
+				{
+					alert("请求失败");
+				},
+				success: function(data)
+				{
+					alert(data);
+					listQuery('_query_form', '<{spUrl c=monitor a=queryUserList operator_id=$current_optid operator_class=$current_optclass page=$lpage}>', 'datagrid'); 
+				}
+			});
+		}
+	}
+	
+	
+</script>
+
+           
+           
+           
+           

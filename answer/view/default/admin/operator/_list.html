@@ -1,0 +1,105 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>
+<table class="dbTable">
+
+    <thead>
+        <tr>
+            <th>操作员帐号</th><th>名称</th><th>联系电话</th><th>类型</th><th>状态</th><th>操作</th></tr>
+    </thead>
+    <tbody>
+        <{foreach from=$operator_list item=one}>
+        <tr>
+
+
+            <td><{$one.operator_id}></td>
+            <td width="15%"><{$one.name}></td>
+            <td><{$one.phone}></td>
+            <td><{$one.type_desc}></td>
+
+            <td><{$one.status_desc}></td>
+            <td>
+                <{if $one.type <> '00'}>
+                    <{if $authconfig.update == true}>
+                    <a href='<{spUrl c=operator a=operEdit operator_id=$one.operator_id tid=$tid sid=$sid}>' >编辑</a>
+                    <{/if}>
+                    <{if $authconfig.passwd == true}>
+                    <a href='#' onclick="itemWindow('重置操作员密码', '<{spUrl c=operator a=operPasswd operator_id=$one.operator_id}>', '500', '200');">重置密码</a>
+                    <{/if}>
+
+                    <{if $authconfig.freeze == true}>
+                        <{if $one.status =='00'}>
+                        <a href='#' onclick="alertSubmit('确定冻结操作员 <{$one.operator_id}> 吗？', '<{spUrl c=operator a=freeze id=$one.operator_id}><{$saveUrl}>', 'datagrid');">冻结</a>
+                        <{else}>
+                        <a href='#' onclick="alertSubmit('确定解冻操作员 <{$one.operator_id}> 吗？', '<{spUrl c=operator a=unfreeze id=$one.operator_id}><{$saveUrl}>', 'datagrid');">解冻</a>
+                        <{/if}>
+                    <{/if}>
+
+                    <{if $authconfig.del == true}>
+                    <a href='#' onclick="alertSubmit('确定删除操作员 <{$one.operator_id}> 吗？', '<{spUrl c=operator a=operDel id=$one.operator_id page=$_pg_.page}><{$saveUrl}>', 'datagrid');">删除</a>
+                    <{/if}>
+                
+                <{/if}>
+            </td>
+
+
+        </tr>
+        <{foreachelse}>
+        <tr><td colspan="6">无查询记录！</td></tr>
+        <{/foreach}>
+    </tbody>
+    <tfoot>
+        <tr><td colspan="6">
+
+                <{if $authconfig.new == true}>
+                <a id="url1" href="<{spUrl c=operator a=operNew tid=$tid sid=$sid}>">添加操作员</a>
+                <{/if}>
+            </td></tr>
+    </tfoot>
+
+</table>
+<{include file="../inc/page.html"}>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#checkAll").click(function(){
+            $('input:checkbox').attr("checked", true);
+            $('#checkAll').hide();
+            $('#checkNone').show();
+        })
+        $("#checkNone").click(function(){
+            $('input:checkbox').attr("checked", false);
+            $('#checkAll').show();
+            $('#checkNone').hide();
+        })
+        $("#delsButton").click(function(){
+            if(check() == true){
+                if(confirm('确定删除选中的操作员吗？')){
+                    //formSubmit('_checkall_form', '<{spUrl c=operator a=delAll}>', 'datagrid');
+                    var options = {
+                        //dataType:'json',
+                        success:function(data){
+                            $('#datagrid').html(data);
+                        },
+                        error:function(){
+                            alert('请求失败');
+                        }
+                    }
+                    $('#_checkall_form').ajaxSubmit(options);
+                    return false;
+                }
+            }else{
+                alert("请至少勾选一项");
+            }
+        })
+        if('<{$optResult}>' != ''){
+            alert('<{$optResult}>');
+        }
+    })
+    function check(){
+        var aa = document.getElementsByName("selectdel[]");
+        for (var i=0; i<aa.length; i++)
+        {
+            if (aa[i].checked) return true;
+        }
+        return false;
+    }
+</script>

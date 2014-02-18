@@ -1,0 +1,69 @@
+<{include file="../inc/index/_header.html"}>
+
+<body>
+<!-- header start -->
+<div id="header">
+    <div id="header-top">
+        <div class="floatL">
+            <img src="view/<{$tplName}>/images/foot.png" style="width:50px;height:50px;float:left;"/>
+            <div style="float:left">
+                <div style="font-size: 28px;font-weight: bolder;margin-top: 2px;font-family: cambria;margin-left: 2px;">跬步</div>
+                <div style="margin-top: 5px;vertical-align: bottom;font-size: 14px;font-family: cambria;color:#a9a9a9;margin-left: 2px;">企业信息化服务平台</div>
+            </div>
+        </div>
+    
+		<div class="menu">
+        	<p>
+                <!--<a href="#" class="msg">消息 <em>2</em></a> ｜
+				<a href="#">建议</a> |-->
+                <a href="#">帮助中心</a> 
+            </p>
+        </div>
+
+    </div>
+    
+    <div id="nav" class="nav">
+        <div class="nav-cnt">
+            <ul>
+			<{foreach item=item name=nav from=$tNavigation}>
+			<li <{if $item.tid eq $smarty.get.tid}> class="master current" <{else}> class="master" <{/if}>>
+				<a class="name" href="<{spUrl c=$item.controller a=$item.action tid=$item.tid sid=$item.sid}>"><strong><{$item.name}></strong></a>
+
+				<{if ($item.tid eq $smarty.get.tid && 0<$item.hassub)}>
+					<{if (1 eq $item.mainflag)}>
+						<p class="subnav">
+							<span><{T('txt_common_operation')}></span>
+							<{foreach item=subitem name=subnav from=$item.subitem}>				
+									<a href="<{spUrl c=$subitem.controller a=$subitem.action tid=$item.tid}>"><{$subitem.name}></a> |
+							<{/foreach}>
+						</p>
+					<{else}>
+						<ul class="subnav" style="width:930px">
+						<{foreach item=subitem name=subnav from=$item.subitem}>				
+							<li <{if $subitem.sid eq $smarty.get.sid}>class="current"<{/if}>>
+								<a href="<{spUrl c=$subitem.controller a=$subitem.action tid=$item.tid sid=$subitem.sid}>"><span><{$subitem.name}></span></a>
+							</li>
+						<{/foreach}>
+						</ul>
+					<{/if}>
+					
+				<{elseif ($item.tid eq $smarty.get.tid && 0 eq $item.hassub)}>
+					<script type="text/javascript">
+						$(document).ready(function(){
+							$('#nav').addClass('nav-nosub');
+						});
+					</script> 	
+				<{/if}>
+			<{/foreach}>
+			</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- header end -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+})
+</script>
+			

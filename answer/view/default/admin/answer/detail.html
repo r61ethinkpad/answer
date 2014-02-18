@@ -1,0 +1,80 @@
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+<style>
+	.formList tr td a { color:#666;}
+	.formList tr td a:hover {text-decoration:underline; color:#F60;}
+</style>
+<div id="content">
+	<div class="tab">
+    	<{include file="answer/_topTitle.html"}>
+	
+        <div class="tab-main">
+        	<table class="formList">
+                    <tr class="line">
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">所属分类：</td>
+                        <td class="value">
+                            <input type="hidden" name="exam[question_id]" value="<{$args.question_id}>"/>
+                            <{$args.exam_type_text}>
+                        </td>
+
+                    </tr>
+
+                    <tr class="line">
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">所属关卡：</td>
+                        <td class="value">
+                            <{$args.exam_point_text}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">题目内容：</td>
+                        <td class="value">
+                             <{$args.question_content}>
+                        </td>
+                    </tr>
+                    <tr class="line">
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">正确答案：</td>
+                        <td class="value">
+                            <{$args.correct_answer}>
+                        </td>
+                    </tr>
+                    <tr class="line">
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">备选答案A：</td>
+                        <td class="value">
+                            <{$args.alternative_a}>
+                        </td>
+                    </tr>
+                    
+                    <tr class="line">
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">备选答案B：</td>
+                        <td class="value">
+                            <{$args.alternative_b}>
+                        </td>
+                    </tr>
+                    
+                    <tr class="line">
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">备选答案C：</td>
+                        <td class="value">
+                           <{$args.alternative_c}>
+                        </td>
+                    </tr>
+                    
+                    <tr class="line">
+                        <td class="name" style="vertical-align:top;font-weight: bolder;">备选答案D：</td>
+                        <td class="value">
+                           <{$args.alternative_d}>
+                        </td>
+                    </tr>                   
+                    
+                </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery("#showBigPic").click(function(){
+        //alert("click");
+        itemWindow('查看病害的图片', '<{spUrl c=pest a=showBigPic file_name=$args.pic_path}>', '950', '500');
+    });
+});
+</script>

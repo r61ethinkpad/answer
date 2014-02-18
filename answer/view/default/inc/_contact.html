@@ -1,0 +1,64 @@
+<{include file="../inc/_header.html"}>
+
+<{include file="../inc/_login_header.html"}>
+
+<body>
+
+<div id="content">
+
+<div class="help_left">
+
+	<h3></h3>
+
+    <ul class="sdmenu">
+        <li><a  class="current"  href="#001">联系我们</a></li>
+    </ul>
+
+</div>
+
+<style>
+.help_right h2 { font-size:14px;}
+</style>
+
+<div class="help_right">
+
+     <h2 id="001"><img src="view/<{$tplName}>/images/txt.png" style="vertical-align:middle;" /> 联系我们</h2>
+
+    <p>公司名称：创博亚太科技（山东）有限公司</p>
+
+    <p>联系地址：山东省济南市高新区颖秀路2600号</p>
+
+    <p>联系电话：0531-xxxxxxxx。</p>
+
+
+</div>
+
+</div>
+
+</body>
+
+
+<{include file="../inc/footer.html"}>
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	$('.sdmenu').find('a').click(function(){
+
+		$('.sdmenu').find('a').removeClass('current');
+
+		$(this).addClass('current');
+
+		var a = $(this).attr('href');
+
+		$('h2').css('color','#666');
+
+		$(a).css('color','#F60');
+	})
+
+}); 			
+
+</script>

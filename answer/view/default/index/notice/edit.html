@@ -1,0 +1,159 @@
+<style>
+	.formList tr td a {text-decoration:none; color:#666;}
+	.formList tr td a:hover {text-decoration:underline; color:#F60;}
+</style>
+
+<div id="content">
+	<div class="tab">
+    	<ul class="tab-label">
+        	<li class="current"><a href="<{spUrl c=notice a=edit tid=$tid sid=$sid id=$notice.notice_id}>">编辑公告</a></li>	
+        </ul>
+				<div id="showAdviceButton"></div>
+        <div class="tab-main">
+        <{if $opt_msg == ''}>
+        <p class="dBox" style="display:none;"><{$opt_msg}></p>
+        <{else}>
+        <p class="dBox"><{$opt_msg}></p>
+        <{/if}>
+        <form id="_create_form" action="<{spUrl c=notice a=edit tid=$tid sid=$sid}>" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<{$id}>" />
+        	<table class="formList">
+                <tr>
+                	<td class="name"><font color="red">*</font>公告主题：</td>
+                    <td class="value">
+						<input type="text" class="input_text address" name="notice[notice_title]" value="<{$notice.notice_title}>" maxlength="33" style="width:450px;"/>
+	                    <span class="colOrange"><{$error_array.notice_title}></span>
+					</td>
+                <tr>
+                <tr id="words"><td>&nbsp;</td><td><span id="words_left">&nbsp;</span></td></tr>
+                <tr>
+                	<td class="name"><font color="red">*</font>公告内容：</td>
+                    <td class="value">
+						<textarea id="Notice_notice_content" name="notice[notice_content]"  maxlength="300" style="width:500px;height:150px;"><{$notice.notice_content}></textarea>
+	                    <span class="colOrange"><{$error_array.notice_content}></span>
+					</td>
+				<tr><td>&nbsp;</td><td>（如果公告内容多于300个字符，请用附件的方式发布，附件大小请勿超过5M。）</td></tr>
+
+                <{if $notice.link_file != ''}>
+                <tr>
+                	<td class="name">已上传附件：</td>
+                	<td class="value">
+                		<a href="<{spUrl c=notice a=down id=$notice.notice_id file=$notice.link_file}>"><{$notice.link_file}></a>
+                		<{if $broken_file_msg != ''}>
+                			<span class="colOrange">(<{$broken_file_msg}>)</span>
+                		<{/if}>
+                	</td>
+                </tr>
+                <{/if}>
+                <tr class="line">
+                	<td class="name">附件：</td>
+                    <td class="value" colspan="4">
+                    	<input type="file" name="link_file" value="<{$args.link_file}>"/>
+                		<span style="margin-left:50px;">(上传新附件会将原附件删除，如不修改，无需上传)</span>
+	                    <span class="colOrange"><{$error_array.link_file}></span>
+                    </td>
+                </tr>
+                
+                <tr class="btnBox">
+                    <td colspan="4">
+                        <span class="sBtn">
+                            <a class="left">确定</a><a class="right"></a>
+                        </span>
+                        <span class="sBtn-cancel">
+                            <a class="left" href="<{spUrl c=notice a=index tid=$tid sid=$sid}>">返回</a><a class="right"></a>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		
+		jQuery.ajax({
+			type: 'get',
+			url: "<{spUrl c=advice a=showButton module=$adviceModule position='公告通知->编辑公告'|escape:'url'}>",
+			success: function(data,html){jQuery("#showAdviceButton").html(data); },
+			error: function(){}
+		})
+		
+		//屏蔽回车事件
+		$('input,select').live("keypress", function(e) {
+		    if (e.keyCode == 13) {
+	            return false;
+		    }
+		}); 
+		
+		jQuery("#check-all").click(function(){
+			if ($(this).attr('checked')==true) {
+				jQuery('[name="area[]"]:checkbox').attr('checked', true);
+				jQuery("#checkall").html('&nbsp;全消&nbsp;');
+			}
+			else if ($(this).attr('checked')==false) {
+				jQuery('[name="area[]"]:checkbox').attr('checked', false);;
+				jQuery("#checkall").html('&nbsp;全选&nbsp;');
+			}
+		});
+		
+		//jQuery validate
+		v_addMethod();
+		jQuery(".sBtn").click(function(){
+			jQuery("#_create_form").validate({
+				rules: 
+				{
+					'notice[notice_title]' : {required: true, maxlength:33, v_preg:'^[\u4e00-\u9fa5a-zA-Z0-9_,;:.?!，；：。？！……]+$'},
+					'notice[notice_content]' : {required: true, maxlength:300},
+				},
+				messages:
+				{
+					'notice[notice_title]' : {v_preg: '请输入数字、英文字母、汉字、标点符号、下划线'}
+				}
+			});
+			if(jQuery("#_create_form").valid()){
+				jQuery("#_create_form").submit();
+			}
+		})
+	});
+	
+	window.onload=function(){
+		jQuery("#words").hide();
+	    var js=document.getElementById("Notice_notice_content");//获取文本域
+	    var info=document.getElementById('words_left');//获取要插入提示信息的元素
+	    //var submit=document.getElementById('btnSubmit');//获取提交按钮
+	    var max=js.getAttribute('maxlength');//获取限制输入的最大长度
+	    var tips=document.createElement('span');//新建一个提示span
+	    var val,cur,count,warn;
+	    //submit.disabled=true;//默认不可提交
+	    tips.innerHTML='（您还可以输入&nbsp;<em style="color:red;">'+max+'</em>&nbsp;&nbsp;个字符，<font size="2pt">不区分中英文字符。</font>）'; 
+	    if(max){
+	        js.onkeyup=js.onchange=function(){
+	        	jQuery("#words").show();
+	            //submit.disabled=false;
+	            if(info.lastChild.nodeName!='SPAN') info.appendChild(tips);//避免每次弹起都会插入一条提示信息
+	            count=info.getElementsByTagName('em')[0];//根据输入数字变换区
+	            warn=info.getElementsByTagName('font')[0];//副标题
+	            val=this.value;
+	            cur=val.length;
+//	            for(var i=0;i<val.length; i++){//此循环是用来判断中英文字符的,但并不建议那样做
+//	                if(val.charCodeAt(i)>255) cur+=1;
+//	            }
+	            if(cur==0){ //当默认值长度为0时,可输入数为默认maxlength值,此时不可提交
+	                count.innerHTML = max;
+	                //submit.disabled=true;
+	                warn.innerHTML='不区分中英文字符。';
+	            }else if (cur < max) {//当默认值小于限制数时,可输入数为max-cur
+	                count.innerHTML = max - cur;
+	                warn.innerHTML='不区分中英文字符。';
+	            }else{
+	                count.innerHTML = 0;//当默认值大于等于限制数时,插入一条提示信息并截取限制数内的值
+	                warn.innerHTML='不可再输入！';
+	                this.value=val.substring(0,max);//此处前面的this.value不能用变量val,它们不再是同一个值
+	            }
+	        }
+	    }
+	}
+</script>

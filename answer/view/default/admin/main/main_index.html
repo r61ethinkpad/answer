@@ -1,0 +1,67 @@
+
+<!-- content start -->
+<div id="content" class="clearfix">
+    <!-- content > left start -->
+    <div id="left">
+        <div class="lc">
+            <div class="lc-title"><{T('txt_operator_info')}></div>
+            <ul class="lc-main">
+				<li>登录账号&nbsp;:&nbsp;<{$user_id}></li>
+                <li>用户姓名&nbsp;:&nbsp;<span class="username_tag"><{$user_name}></span></li>
+                <li><{T('txt_role_name')}>&nbsp;:&nbsp;<{$role_name}></li>
+				<li>用户等级&nbsp;:&nbsp;<{$class_name}></li>
+                <li><{T('txt_login_time')}>&nbsp;:&nbsp;<{$login_time}></li>
+				<br>
+				<p>
+                <a href="#"  onclick="itemWindow('修改个人信息', '<{spUrl c=main a=info}>', '500', '450');"><{T('lab_operator_info')}></a> |
+                <a href='#' onclick="itemWindow('修改密码', '<{spUrl c=main a=passwd}>', '500', '250');">修改密码</a> |
+				<a href="#" onclick="if(confirm('确定退出登录吗？')){ location.href = '<{spUrl c=main a=logout}>';}">退出</a>
+                </p>
+            </ul>
+        </div>
+        <div class="lc-app">
+            <div class="lc-app-title">
+                <span class="floatL"><{T('txt_quick_operation')}></span>
+                <!--<a class="setting" href="#" title="自定义快速操作"></a>
+				-->
+			</div>
+            <ul class="lc-app-main">
+            	<{foreach item=item name=nav from=$quick_link}>
+            	<li><a href='<{$item.url}>'><img src="<{$item.image}>"/><span><{$item.name}></span></a></li>
+            	<{/foreach}>
+            </ul>
+        </div>
+	</div>
+    <!-- content > left end -->
+    
+    <!-- content > right start -->
+    <div id="right">
+		<div class="rc clearfix" id="showInfo" style="border:none;">
+			<{include file="main/_info.html"}>
+		</div>
+        
+        <div class="rc" id="showNotice">
+			<{include file="main/_notice.html"}>
+        </div>
+        
+    </div>
+    <!-- content > right end -->
+
+</div>
+<!-- content end -->
+<script type="text/javascript">
+$(document).ready(function(){
+	jQuery.ajax({
+		type: 'get',
+		url: "<{spUrl c=main a=showOrgInfo}>",
+		success: function(data,html){jQuery("#showInfo").html(data); $("#showInfo").show(); },
+		error: function(){}//alert('加载数据失败');}
+	})
+	jQuery.ajax({
+		type: 'get',
+		url: "<{spUrl c=main a=showNotice}>",
+		success: function(data,html){jQuery("#showNotice").html(data); $("#showNotice").show(); },
+		error: function(){}//alert('加载数据失败');}
+	})
+})
+</script>

@@ -1,0 +1,23 @@
+<div id="header">
+    <div id="header-top">
+        <div class="floatL">
+            <!--img src="view/<{$tplName}>/images/login/logo.gif"/-->
+            答题有奖系统
+        </div>
+    </div>
+
+    
+    <div id="nav" class="nav nav-nosub">
+        <div class="nav-cnt">
+            <ul>
+			
+			<{foreach item=item name=nav from=$loginMenu}>
+			<li <{if $item.tid eq $smarty.get.tid}> class="master current" <{else}> class="master" <{/if}>>
+				<a class="name" href="<{$item.url}>"><strong><{$item.name}></strong></a>
+			<{/foreach}>
+					
+            </ul>
+        </div>
+    </div>
+
+</div>

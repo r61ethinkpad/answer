@@ -1,0 +1,33 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>
+
+<table class="dbTable">
+	<thead>
+        <tr><th>操作员帐号</th><th>名称</th><th>模块</th><th>操作</th><th>结果</th><th>IP地址</th><th>操作时间</th></tr>
+    </thead>
+    <tbody>
+		<{foreach from=$optlog_list item=one}>
+        <tr>
+			<td><{$one.operator_id}></td>
+			<td width="10%"><{$one.operator_name}></td>
+			<td><{$one.module_desc}></td>
+			<td><{$one.opt_field}></td>
+			
+                        <td><{$one.result_desc}><span title="<{$one.opt_desc}>"><a href="javascript:void(0);">[详细]</a></span></td>
+			<td><{$one.opt_host_ip}></td>
+			<td width="15%"><{$one.opt_time}></td>
+			<!--<td><a href='#' onclick="itemWindow('操作日志详细信息', '<{spUrl c=optLog a=logInfo log_id=$one.log_id}>', '500', '200');">重置密码</a>
+			-->
+		</tr>
+		<{foreachelse}>
+		<tr><td colspan="7">无查询记录！</td></tr>
+		<{/foreach}>
+	</tbody>
+	 <tfoot>
+        <tr><td colspan="7">
+		</td></tr>
+    </tfoot>
+	
+</table>
+</form>
+<{include file="../inc/page.html"}>
+

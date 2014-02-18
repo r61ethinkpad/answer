@@ -1,0 +1,52 @@
+<div class="page">
+	<{if ($_pg_.total_count <> 0)}>
+		<div class="floatL">共<{$_pg_.total_page}>页（<{$_pg_.total_count}>条）记录</div>
+		<div class="pageNumber">
+			<span class="floatL">
+			
+				<{if $_pg_.current_page == 1}>
+					<a class="pageAir">首页</a>
+				<{else}>
+					<a onclick="listQuery('<{$query_form_id}>', '<{$query_url}>&page=1', 'datagrid');">首页</a>
+				<{/if}>
+				
+				<{if $_pg_.current_page > 3}>
+					...
+				<{/if}>
+				
+				
+				<{if $_pg_.current_page-1 > 1}>
+					<a onclick="listQuery('<{$query_form_id}>', '<{$query_url}>&page=<{$_pg_.current_page-1}>', 'datagrid');"><{$_pg_.current_page-1}></a>
+				<{/if}>
+				
+				<{if $_pg_.current_page > 1 and $_pg_.current_page < $_pg_.total_page }>
+					<a class="pageAir"><{$_pg_.current_page}></a>
+				<{/if}>
+				
+				<{if $_pg_.current_page+1 < $_pg_.total_page}>
+					<a  onclick="listQuery('<{$query_form_id}>', '<{$query_url}>&page=<{$_pg_.current_page+1}>', 'datagrid');"><{$_pg_.current_page+1}></a>
+				<{/if}>
+				
+			
+				
+				<{if $_pg_.current_page < $_pg_.total_page-2}>
+					...
+				<{/if}>
+				
+				<{if $_pg_.total_page > 1}>
+					<{if $_pg_.current_page == $_pg_.total_page}>
+						<a class="pageAir">末页</a>
+					<{else}>
+						<a onclick="listQuery('<{$query_form_id}>', '<{$query_url}>&page=<{$_pg_.total_page}>', 'datagrid');">末页</a>
+					<{/if}>
+				<{/if}>
+			</span>
+			<select onchange="listQuery('<{$query_form_id}>', '<{$query_url}>&page='+this.options[this.options.selectedIndex].value, 'datagrid');">
+				<option>跳转至</option>
+				<{section name=pages loop=$_pg_.total_page}>
+				<option><{$smarty.section.pages.index+1}></option>
+				<{/section}>
+			</select>
+		</div>	
+	<{/if}>
+</div>

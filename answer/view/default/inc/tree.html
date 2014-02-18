@@ -1,0 +1,209 @@
+<!-- 
+//-----cardup平台tree.html的使用----2012-6-6----yangtl-----------------
+该版本树的功能：
+1）初始加载整棵树，默认展开一级节点；
+2）由带有树的页面t.html跳转到另一页面other.html，再返回带有树的页面t.html时，可以记住跳转之前的树的打开状态和选中状态
+
+1.一般使用，即不需实现上述第二功能, 参见index/user.php->index(),控制器中传参：
+
+    $this->root_name = $_SESSION['org_name'];     //必填，根节点的名称                      
+    $this->root_id = $org_id;                     //必填，根节点id
+	$struct_rs = spClass('structModel')->structRs();
+	$whole_tree = spClass('structModel')->getTreeArr($struct_rs); 
+	$this->whole_tree = json_encode(array_values($whole_tree));//必填，组织结构信息
+    $this->tiHtmlOption = "onclick='thisNode(this)'";   //可选，点击某一节点时的js事件
+	$_SESSION['blockNode'] = '';   //防止其他页面树的干扰
+
+2.开启第二功能时：参见index/user.php->index1()
+一般使用的基础上，
+去掉代码：
+	$_SESSION['blockNode'] = '';   
+添加代码：
+	$this->back_tiHtmlOption = "onclick='backThisNode(this)'";     //必填，返回t.html页面时，当前节点点击事件
+
+	//返回时，查看当前树加载状态
+	if($this->spArgs('back_fid')){
+		$this->back_fid = $this->spArgs('back_fid');    //必填，跳转之前被选中的节点
+		$this->blockNode = $_SESSION['blockNode'];      //必填，跳转之前打开的节点
+		
+	}else{   
+		$_SESSION['blockNode'] = '';    //防止其他页面tree状态的干扰
+	}
+ -->
+
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQtree/treeCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQtree/treeJS.js"></script>
+
+<ul id='AsynchTree' class='treeFile lightTreeview' >
+	<li class='branch-last' id='<{$root_id}>'>
+		<span class='flex-ico flex-close' onclick='flex(this);'></span>
+		<a class='treeview-folder treeview-folder-close' href='javascript:void(0)' style="background:none; padding:0;">
+			<span onclick='setColor(this)' class="colBold" id='root_span' auth='1'>
+				<label style="font-size:14px; line-height:16px;" sort='root' <{$tiHtmlOption}> ><{$root_name}></label>
+				<label style="font-size:14px; line-height:16px;" class='displayN' sort='root' <{$back_tiHtmlOption}> ><{$root_name}></label>
+			</span>
+		</a>
+	</li> 
+	
+<script type="text/javascript"> 
+
+//缩放
+function flex(obj) {
+    toggleUl(obj);
+    loadchild(obj);
+}
+//加载子节点
+var loadchild = function(obj) {
+    var ico = $(obj);
+    var father = ico.parent(); 
+    var list = $('>ul,>ol', father);   
+    if (list.eq(0).html()) {   //有子节点 
+		$.ajax({
+			
+			url:"<{spUrl c=struct a=toggleNode }>"+"&father_id="+father.attr('id')+"&hide="+ico.hasClass('flex-close'),
+			
+			success:function(data){
+				//alert(data);
+			}
+		})
+    }   
+    
+}
+
+//缩放连接线 
+var toggleUl = function(obj) {
+    var ico = $(obj);
+    var father = ico.parent();
+    var list = $('>ul,>ol', father);
+    var ln = ico.filter('.flex-none').parent();  
+    var ic = ico.not('.flex-none');   
+    var fl = $('>.treeview-folder', father);
+    ln.toggleClass('node-last-close');    
+    ic.toggleClass('flex-close');   //+/-号
+    fl.toggleClass('treeview-folder-close');
+    list.toggle(200);
+}
+
+//节点点击加亮显示
+function setColor(obj){
+ 	var auth = $(obj).attr('auth');
+ 	if (auth==0){     //没有权限
+ 		return false;
+ 	}
+ 	var tree=$("#AsynchTree");
+    tree.find("span").removeClass("colOrange");
+    $(obj).addClass("colOrange");
+}
+
+
+//构造整棵树
+var wholeTree = function(stree){ 
+	var len = stree.length;
+        //alert(len);
+	var bnode = "<{$blockNode}>";   
+	if(len==0){
+		var root = $('#<{$root_id}>');
+		root.append("<ul style='display:none;'><li id='load'>没有子节点</li></ul>");
+		return;
+	}
+	for(var i=0;i<len;i++){
+		var one = stree[i];
+		if(bnode.indexOf(one.father_id)!=-1)
+			var ifshow = "block";
+		else
+			var ifshow = "none";
+		buildChildren(one.father_id,one.children,ifshow);
+	}
+}
+
+//创建子节点元素
+var buildChildren=function(father_id,children,ifshow){  
+    var father = $('#'+father_id);  
+	var ico = father.children('span').eq(0);
+	if(ifshow=='block'){
+		ico.removeClass('flex-close');
+		ico.next('a').removeClass('treeview-folder-close');
+	}
+	var eul = "<ul style='display:"+ifshow+";'></ul>";
+	father.append(eul);
+    var list = $('>ul,>ol', father);
+    var ht="";
+    var len=children.length;
+    for(var i=0;i<len;i++)
+    {
+        var child=children[i];
+        var liC="";
+        var aC="";
+        var sp="";
+        var aS="";
+        var cli="";
+        var sort = " sort='0' ";
+        var spl = ""
+        if(len-1==i){     //最后一个子节点
+            liC="branch-last";
+        }
+        if(child.node_sort==2){  //叶子节点
+            aC = "treeview-file";
+            sort = " sort='2' ";
+        }else{
+            sp="<span class='flex-ico flex-close' onclick=flex(this); ></span>";
+            aS="";
+			aC = "treeview-folder treeview-folder-close";
+        }
+       	
+		if(!child.auth){  //没有管理权限且父节点（不包括根节点）也没有管理权限
+        	spl=" class='disAuth' auth='0' ";
+       	}else{
+    	   	spl=" class='colBold' auth='1' ";
+       	}
+		
+        ht+="<li class='"+liC+"' id='"+child.node_id+"'>";
+        ht+=sp;
+        ht+="<a class='"+aC+"' href='javascript:void(0)' ><span "+spl+" onclick=\"setColor(this);\" ><label "+aS+sort+" <{$tiHtmlOption}> >";
+        ht+=child.node_name;
+        ht+="</label><label class='displayN' "+aS+sort+" <{$back_tiHtmlOption}> >"+child.node_name+"</label></span></a></li>";
+    }
+    list.eq(0).html(ht);  
+	
+}
+
+$(document).ready(function(){
+//检验是否部门经理
+
+var oper_class = '<{$oper_class}>';
+ if(oper_class==4){
+	 $('#root_span').addClass('disAuth');
+	 //$('#root_span').attr('auth','0');
+	 
+}
+ else{
+	 $('#root_span').addClass('colOrange');
+	 //$('#root_span').attr('auth','1');
+ }
+
+
+//读取whole_tree
+var wtree = <{$whole_tree}>;   
+if(wtree)
+	wholeTree(wtree);    
+var back_fid = '<{$back_fid}>';    
+if(back_fid){
+	$('#'+back_fid).find('label').eq(1).click();   //backthisNode方法
+}else{
+	$('#AsynchTree').find('span').eq(0).click();    //默认展开一级节点
+}
+
+});
+
+
+
+ 
+ 
+ 
+ 
+ 
+</script>
+</ul>
+
+
+                

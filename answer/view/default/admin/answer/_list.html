@@ -1,0 +1,74 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>	
+<table class="dbTable">
+    <thead>
+        <tr>
+            <th style="width:10%">所属分类</th>
+            <th style="width:10%">所属关卡</th>
+            <th style="width:20%">题目内容</th>
+            <th style="width:10%">正确答案</th>
+            <th style="width:10%">备选答案A</th>
+            <th style="width:10%">备选答案B</th>
+            <th style="width:10%">备选答案C</th>
+            <th style="width:10%">备选答案D</th>
+            <th>操作</th></tr>
+    </thead>
+    <tbody>
+        <{foreach from=$exam_list item=exam}>
+        <tr>
+            <td><{$exam.exam_type_text}></td>
+            <td><{$exam.exam_point_text}></td>
+            <td>
+
+                <a href="<{spUrl c=answer a=detail id=$exam.question_id  tid=$tid sid=$sid}>"> 
+                    <{$exam.question_content_text}>
+                </a>
+            </td>
+            <td><{$exam.correct_answer}></td>
+            <td><{$exam.alternative_a_text}></td>
+            <td><{$exam.alternative_b_text}></td>
+            <td><{$exam.alternative_c_text}></td>
+            <td><{$exam.alternative_d_text}></td>
+            <td>
+                <a href="<{spUrl c=answer a=edit id=$exam.question_id tid=$tid sid=$sid}>">编辑</a>
+                <a href="javascript:void(0);" onclick="del('<{$exam.question_id}>');">删除</a>
+
+            </td>
+        </tr>
+        <{foreachelse}>
+        <tr><td colspan="9"><span id="no_record">无查询记录！</span></td></tr>
+        <{/foreach}>
+    </tbody>
+    <tfoot>
+        <tr><td colspan="9">
+
+                <a href="<{spUrl c=answer a=create tid=$tid sid=$sid}>">新增题目</a>
+            </td></tr>
+    </tfoot>
+</table>
+<{include file="../inc/page.html"}>
+
+<script type="text/javascript">
+	
+    function del(id)
+    {
+        
+        if(!confirm("您正在删除此题目，继续吗？"))
+            return false;
+        else
+            jQuery.ajax({
+                type: 'get',
+                url: '<{spUrl c=answer a=del}>' + '&id=' + id,
+                success: function (data,html){
+                    alert(data);
+                    jQuery.ajax({
+                        type: 'get',
+                        url: encodeURI('<{spUrl c=answer a=queryList}>' + '<{$saveUrl}>'),
+                        success: function (data, html){jQuery('#datagrid').html(data);},
+                        error: function (){}
+                    });
+                },
+            error: function (){alert('请求失败');}
+        });
+    }
+	
+</script>

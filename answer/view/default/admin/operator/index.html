@@ -1,0 +1,56 @@
+
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+
+<div id="content">
+    <div class="tab-main">
+        <div class="tool-box">
+			<form id='_query_form'>
+				<input type="hidden" name="orgid" value="<{$orgid}>">
+				<input type="text" name="operator_id" value="管理员帐号" maxlength="20" class="input_text grayTips mr5" />
+				<input type="text" name="operator_name" value="管理员名称" maxlength="20" class="input_text grayTips mr5" />
+				
+				
+				<select name="status" id="operstatus">
+				<option value="" selected="selected" />--管理员状态--</option>
+				<{foreach from=$operator_status item=desc key=status}>
+					<option value="<{$status}>"/><{$desc}></option>
+				<{/foreach}>
+				</select>
+				
+				<a class="search_btn" onclick="listQuery('_query_form', '<{spUrl c=operator a=queryList}>', 'datagrid');"></a>
+			</form>
+			
+			<{if $authconfig.new == true}>	
+				<div style="position:absolute; right:15px; top:2px; z-index:999; width:100px; text-align:right;">
+					<a id="url1" href="<{spUrl c=operator a=operNew tid=$tid sid=$sid}>">添加操作员</a>
+				</div>
+			<{/if}>
+			
+		</div>
+		
+
+		<div id="datagrid" >
+			<{include file="operator/_list.html"}>
+		</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	//搜索区域回车事件
+		$('input,select').live("keypress", function(e) {
+		    if (e.keyCode == 13) {
+	            listQuery('_query_form', '<{spUrl c=operator a=queryList}>', 'datagrid');
+	            return false;
+		    }
+		}); 
+	jQuery.ajax({
+		type: 'get',
+		url: "<{spUrl c=operator a=queryList}>",
+		success: function(data,html){jQuery("#datagrid").html(data); },
+		error: function(){}//alert('加载数据失败');}
+	})
+	
+})
+</script>

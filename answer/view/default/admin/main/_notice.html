@@ -1,0 +1,18 @@
+
+    <div class="rc-title">
+        <span class="floatL">最新公告</span>
+        <a class="more" href="<{spUrl c=notice a=index tid=5 sid=1}>" >更多公告</a>
+    </div>
+	<table class="dbList">
+		<tbody>
+			<{foreach item=item from=$msg_notice}>
+			 <tr>
+			 <td><{$item.title}></td>
+			 <td><{$item.record_time}></td>
+			 <td style="text-align:right"><a href="<{spUrl c=notice a=detail id=$item.announce_id tid=5 sid=1}>">立即查看</a></td>
+			 </tr>
+			<{foreachelse}>
+			 <tr><td colspan="8">无最新公告通知！</td></tr>
+			<{/foreach}>
+		</tbody>
+	</table>

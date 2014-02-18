@@ -1,0 +1,98 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>
+
+<form id="_checkall_form" method="post" action="<{spUrl c=monitor a=delAll  page=$_pg_.page}><{$saveUrl}>">
+    <table class="dbTable">
+
+        <thead>
+            <tr>
+                <{if $authconfig.delall == true}>
+			<th><span id="checkAll" style="cursor:pointer; font-size:13px;">全选</span>
+				<span id="checkNone" style="cursor:pointer;display: none;">全消</span>
+			</th>
+			<{/if}>
+                <th>用户姓名</th><th>手机号</th><th>职位</th><th>操作</th></tr>
+        </thead>
+        <tbody>
+            <{foreach from=$user_list item=one}>
+            <tr>
+
+
+                    <{if $authconfig.delall == true}>
+				<td>
+                                    <input name="selectdel[]" type="checkbox" value="<{$one.user_id}>"/>
+				
+				</td>
+			<{/if}>
+                <td width="15%"><{$one.user_name}></td>
+                <td width="25%"><{$one.user_isdn}></td>
+                <td width="25%"><{$one.position_text}></td>
+                <td>
+
+                    <{if $authconfig.del == true}>
+                    <a href='#' onclick="alertSubmit('确定删除监控用户 <{$one.user_name}> 吗？', '<{spUrl c=monitor a=delete id=$one.user_id  page=$_pg_.page}><{$saveUrl}>', 'datagrid');">删除</a></td>
+                <{/if}>
+
+            </tr>
+            <{foreachelse}>
+            <tr><td colspan="5">无查询记录！</td></tr>
+            <{/foreach}>
+        </tbody>
+<tfoot>
+        <tr><td colspan="5">
+			<{if $authconfig.delall == true}>
+				<a href="#" id="delsButton">删除选中</a>
+			<{/if}>
+			<{if $authconfig.new == true}>
+				<a id="url1" href="<{spUrl c=monitor a=add tid=$tid sid=$sid}>">新增监控用户</a>
+			<{/if}>
+		</td></tr>
+    </tfoot>
+    </table>
+</form>
+<{include file="../inc/page.html"}>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#checkAll").click(function(){
+		$('input:checkbox').attr("checked", true);
+		$('#checkAll').hide();
+		$('#checkNone').show();
+	})
+	$("#checkNone").click(function(){
+		$('input:checkbox').attr("checked", false);
+		$('#checkAll').show();
+		$('#checkNone').hide();
+	})
+	$("#delsButton").click(function(){
+		if(check() == true){
+			if(confirm('确定删除选中的监控用户吗？')){
+				//formSubmit('_checkall_form', '<{spUrl c=operator a=delAll}>', 'datagrid');
+				var options = {
+					//dataType:'json',
+					success:function(data){
+						$('#datagrid').html(data);
+					},
+					error:function(){
+						alert('请求失败');
+					}
+				}
+				$('#_checkall_form').ajaxSubmit(options);
+				return false;
+			}
+		}else{
+			alert("请至少勾选一项");
+		}
+	})
+	if('<{$optResult}>' != ''){
+		alert('<{$optResult}>');
+	}
+})
+function check(){
+	var aa = document.getElementsByName("selectdel[]");
+	for (var i=0; i<aa.length; i++)
+	{
+		if (aa[i].checked) return true;
+	}
+	return false;
+}
+</script>

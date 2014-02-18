@@ -1,0 +1,188 @@
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQtree/treeCSS.css" />
+<style>
+    .treeFile li label { margin-left:2px; vertical-align:middle; line-height:18px;}
+    .treeFile li ul li input { margin:0; text-align:left; width:16px;}
+</style>
+<ul id='AsynchTree' class='treeFile lightTreeview'>
+    <li class='branch-last' id='<{$root_id}>' sort='root'>
+        <span class='flex-ico flex-close' id='root_span' onclick=flex(this,'<{spUrl c=struct a=getNode}>','<{spUrl c=struct a=getNode org_id=$root_id node_id=$root_id}>');></span>
+        <a class='treeview-folder treeview-folder-close' href='javascript:void(0)' style="background:none; padding:0;">
+            <label style="font-size:14px; line-height:16px;" class="colOrange colBold" sort='root' <{$tiHtmlOption}> ><{$root_name}></label>
+        </a>
+    </li> 
+
+    <script type="text/javascript"> 
+        //缩放
+        function flex(obj,baseurl,url) {
+            toggleUl(obj);
+            loadchild(obj,baseurl,url);
+        }
+
+        var loadchild = function(obj,baseurl,url) {
+            var ico = $(obj);
+    
+            var father = ico.parent();
+            var list = $('>ul,>ol', father);
+            if (list.eq(0).html()) {
+                return;
+            }
+            father.append("<ul><li id='load'>加载中..</li></ul>");
+            $.ajax({
+                url:url,
+                dataType:"json",
+                success:function(data) {
+           
+                    if(data.success)
+                    {
+                        buildChildren(obj,data.children, baseurl);
+                    }else{
+                        $('#load').html("没有子节点");
+                    }
+                }
+            });
+    
+            // setChecked();   //checkbox勾选、取消事件
+	
+        }
+ 
+        var buildChildren=function(obj,children, baseurl){
+            var ico = $(obj);
+            var father = ico.parent();
+            var list = $('>ul,>ol', father);
+            var ht="";
+            var len=children.length;
+            for(var i=0;i<len;i++)
+            {
+                var child=children[i];
+                var liC="";
+                var aC="";
+                var sp="";
+                var aS="";
+                var cli="";
+                var spl = "";
+                var ckd = "";
+                var sort = " sort='0' ";
+                var aa = "";
+		
+                    <{foreach from=$nodevalue item=node}>
+                    //alert(i+'--'+child.node_id+'--'+'<{$node}>');
+                if(child.node_id == '<{$node}>'){
+                    aa = "checked=\"checked\"";
+                }
+                    <{/foreach}>
+		
+                    if(len-1==i){     //最后一个子节点
+                    liC="branch-last";
+                }
+                if(child.node_sort==2){
+                    aC = "treeview-file-ck";
+                    sort = " sort='2' ";
+                }else{
+                    sp="<span class='flex-ico flex-close' onclick=flex(this,'";
+                    sp+=baseurl+"','";
+                    sp+=baseurl+'&org_id='+child.org_id+'&node_id='+child.node_id;
+                    sp+="'); ></span>";
+                    aS="";
+                    aC = "treeview-folder treeview-folder-close";
+                }
+        
+                if(!child.auth){  //没有管理权限且父节点（不包括根节点）也没有管理权限
+                    spl=" class='disAuth' auth='0' ";
+                    ckd = " disabled = 'true'";
+                }else{
+                    spl=" class='colBold' auth='1' ";
+                }
+        
+                //该节点被选中时，默认子节点被选中
+                var ck = "";
+                var i_ck = father.find("input[type='checkbox']").eq(0).attr('checked');  
+                if(i_ck==true)
+                    ck = " checked=checked "
+        
+                ht+="<li class='"+liC+"' id='"+child.node_id+"'>";
+                ht+=sp;
+                
+                ht+="<input type=\"checkbox\" name=\"nodes[]\" value=\""+child.node_id+"\""+aa+ck+" onclick='setChecked(this);' "+ckd+">";
+                
+                ht+="<a class='"+aC+"' href='javascript:void(0)' ><span "+spl+" onclick=\"setColor(this);\" ><label "+aS+sort+">";
+                ht+=child.node_name;
+                ht+="</label></span></a></li>";
+		
+            }
+            list.eq(0).html(ht);
+		
+        }
+ 
+        var toggleUl = function(obj) {
+            var ico = $(obj);
+            var father = ico.parent();
+            var list = $('>ul,>ol', father);
+            var ln = ico.filter('.flex-none').parent();
+            var ic = ico.not('.flex-none');
+            var fl = $('>.treeview-folder', father);
+            ln.toggleClass('node-last-close');
+            ic.toggleClass('flex-close');
+            fl.toggleClass('treeview-folder-close');
+            list.toggle(200);
+        }
+
+        // 为树添加颜色
+        function setColor(obj){
+            var tree=$("#AsynchTree");
+            tree.find("span").removeClass("colOrange colBold");
+            $(obj).addClass("colOrange colBold");
+        }
+
+        var setChecked = function(obj){   
+	
+            var b = $(obj).parent('li');  
+		
+            //---------------2012-4-5-----------------------------
+		
+            if ($(obj).attr("checked") == true){  //其兄弟都被选中时，上级节点被选中
+                b.find('input[type="checkbox"]').attr('checked',true);
+                var wflag = $(obj).parent('li').parent('ul').parent('li').attr("sort")!="root";   //当遍历到根节点时，结束循环
+                var cbox = $(obj);  
+			
+                while(wflag==true){  
+                    var brothers = cbox.parent('li').parent('ul').children('li');   
+                    var cnt_checked = 0;
+                    brothers.each(function(){
+                        var cc = $(this).find("input[type='checkbox']").eq(0);
+                        if(cc.attr('checked')==true)
+                            cnt_checked++;
+                    });
+				
+                    if(cnt_checked==brothers.length){
+                        cbox.parent('li').parent('ul').parent('li').find("input[type='checkbox']").eq(0).attr('checked',true);
+                    }
+				
+                    wflag=cnt_checked==brothers.length?cbox.parent('li').parent('ul').parent('li').attr("sort")!="root":false;
+                    cbox = cbox.parent('li').parent('ul').parent('li').find("input[type='checkbox']").eq(0);
+				
+                }
+		
+			
+            }
+            else if ($(obj).attr("checked") == false){   //取消了该节点的勾选状态时，其上级节点的勾选状态应被取消
+                b.find('input[type="checkbox"]').attr('checked',false);
+                b.parents("li").each(function(){
+                    if($(this).attr('sort')!='root')   //不是根节点
+                        $(this).find('input[type="checkbox"]').eq(0).attr('checked',false)
+                });
+            }
+		
+        }
+
+
+        $('#root_span').click();   //默认展开一级节点
+
+    </script>
+</ul>
+
+
+<!--<div>
+<span id="tree_note" class="colOrange">
+        提示：<{T('title_department')}>多选是就高选择，即只要选择一个<{T('title_department')}>，其下所有组织都可被管理，请慎重选择。
+</span>
+</div>-->

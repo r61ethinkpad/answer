@@ -1,0 +1,11 @@
+
+<{include file="../inc/tree_check.html"}>
+
+<script type="text/javascript"> 
+function thisNode(obj){
+		var node_id = $(obj).parents('li').attr('id');
+		refreshList(node_id);
+		setColor(obj);
+		setCurrentNode();
+	}
+</script>

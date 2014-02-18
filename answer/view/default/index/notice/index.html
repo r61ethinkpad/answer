@@ -1,0 +1,71 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/DatePicker/WdatePicker.js"></script><link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+
+<div id="content">
+	<div class="tab-main">
+		<form id='_query_form'>
+            <div class="tool-box">
+				<input type="text" value="输入公告主题" name="notice_title" class="grayTips input_text" maxlength="32"/>
+				 
+		            <input class="Wdate" type="text" id="date1" name='date1' onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+		            <span class="floatL" style="margin-left:5px; margin-right:-1px; margin-top:-2px;">到</span>
+		            <input class="Wdate" type="text" id="date1" name='date2' onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+				<a class="search_btn" onclick="noticeQuery('datagrid');"></a>
+				<{if $authconfig.create == true}>	
+					<div style="position:absolute; right:65px; top:2px; z-index:999; width:100px; text-align:right;">
+						<a id="url1" href="<{spUrl c=notice a=create tid=$tid sid=$sid}>">发布公告</a>
+					</div>
+				<{/if}>
+				<div id="showAdviceButton"></div>
+			</div>
+		</form>
+        </div>
+        <div id="datagrid">
+			<{include file="notice/_list.html"}>
+		</div>
+    </div>
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		
+		jQuery.ajax({
+			type: 'get',
+			url: "<{spUrl c=advice a=showButton module=$adviceModule position='公告通知->公告列表'|escape:'url'}>",
+			success: function(data,html){jQuery("#showAdviceButton").html(data); },
+			error: function(){}
+		})
+		
+		//加载列表
+		jQuery.ajax({
+			type: 'get',
+			url: "<{spUrl c=notice a=queryList}>",
+			data: jQuery('#_query_form').serialize(),
+			beforeSend: function(XMLHttpRequest){
+				$("#no_record").html("<img src='view/default/js/JQwindow/loading.gif' class='loading' />数据加载中...");
+			},
+			success: function(data,html){jQuery("#datagrid").html(data); $("#datagrid").show(); },
+			error: function(){alert('加载数据失败');}
+		});
+		
+		//搜索区域回车事件
+		$('input,select').live("keypress", function(e) {
+		    if (e.keyCode == 13) {
+	            noticeQuery();
+	            return false;
+		    }
+		}); 
+	});
+	
+	//查询
+	function noticeQuery(datagrid)
+	{
+        jQuery.ajax({
+            type: 'get',
+            url:'<{spUrl c=notice a=queryList}>',
+            data: $("#_query_form").serialize(),
+            success: function(data,html){jQuery("#datagrid").html(data);},
+            error: function(){alert('请求失败');}
+        })
+	}
+	
+</script>

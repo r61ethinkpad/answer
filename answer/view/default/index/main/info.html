@@ -1,0 +1,108 @@
+<div class="tab-main">
+	<p id="showUdError" class="dBox" style="display:none;"><{$error_array.ud_error}></p>
+	<form id="infoForm" method="post" action="<{<{spUrl c=main a=infoUpdate}>}>">
+       	<table class="formList">
+            <tr>
+                <td class="name" style="width:40%">操作员帐号：</td>
+                <td class="value"><{$args.operator_id}></td>
+                 <input type="hidden" name="operator_id" id="operator_id" value="<{$args.operator_id}>">
+			</tr>	
+			
+			<tr>
+                <td class="name">注册时间：</td>
+                <td class="value"><{$args.reg_time}></td>
+			</tr>
+			<tr>
+				<td class="name">最近登录IP：</td>
+                <td class="value"><{$args.last_login_ip}></td>
+			</tr>
+			<tr class="line">
+				<td class="name">最近登录时间：</td>
+                <td class="value"><{$args.last_login_time}></td>
+			</tr>
+			<tr>
+				<td class="name">操作员类型：</td>
+				<td class="value"><{$args.type_name}></td>
+			</tr>	
+			<tr>
+				<td class="name">操作员级别：</td>
+				<td class="value"><{$args.class_name}></td>
+			</tr>
+			<tr class="line">
+				<td class="name">管理范围：</td>
+                <td class="value"><{$args.scope}></td>
+			</tr>
+			<tr>
+                <td class="name"><span class='colRed'>*</span>操作员名称：</td>
+				<td class="value">
+					<input name="name" maxlength="20" type="text" class="input_text" value="<{$args.name}>"/>
+					<span id="error_name" class="colOrange"></span>
+				</td>
+			</tr>
+			<tr>
+                <td class="name"><span class='colRed'>*</span>手机号码：</td>
+                <td class="value">
+					<input name="phone" maxlength="11" type="text" class="input_text" value="<{$args.phone}>"/>
+					<span id="error_phone" class="colOrange"></span>
+				</td>
+			</tr>
+			<tr>
+                <td class="name">QQ号码：</td>
+                <td class="value">
+					<input name="qq_no" maxlength="20" type="text" class="input_text" value="<{$args.qq_no}>"/>
+					<span id="error_qq_no" class="colOrange"></span>
+				</td>
+			</tr>
+			<tr class="line">
+                <td class="name">邮箱：</td>
+                <td class="value">
+					<input name="email" maxlength="50"  type="text" class="input_text" value="<{$args.email}>"/>
+					<span id="error_email" class="colOrange"></span>
+				</td>
+			</tr>	
+			
+			<tr class="btnBox">
+                <td colspan="2">
+                    <span class="sBtn" id="submitButton">
+                        <a class="left" >确定</a><a class="right"></a>
+                    </span>
+                </td>
+            </tr>
+			
+        </table>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){	
+	v_addMethod();
+	$("#infoForm #submitButton").click(function(){
+		$('#showUdError').hide();
+		$('#infoForm').find('.tip').hide();
+		$("#infoForm").validate({
+			rules: {
+				name: { required:true, schar:true, minlength:2, maxlength:20},
+				phone: { required:true, number:true, minlength:11, maxlength:11},
+				qq_no: { number:true, minlength:4, maxlength:20},
+				email:'email',
+				another_name:{minlength:4, maxlength:20, v_preg:'^[a-zA-Z0-9_]+$',notEqualto:'#infoForm input[name=operator_id]'}
+			},
+			messages:{
+				another_name:{v_preg:'请输入字母、数字、下划线组合',notEqualto:'登录别名与操作员账号不能重复'}
+			}
+		});
+		if($("#infoForm").valid()){
+			//$('#infoForm').submit();
+			formSubmit('infoForm', '<{spUrl c=main a=infoUpdate}>', 'windown-content');
+		}
+	})
+	
+	if('<{$rs_flag}>' == 1){
+		$('#showUdError').show();
+		$(".username_tag").html("<{$username}>");
+	}else{
+		$('#showUdError').hide();
+	}
+});
+</script>

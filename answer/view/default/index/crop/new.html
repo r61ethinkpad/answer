@@ -1,0 +1,163 @@
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQtree/treeCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQtree/treeJS.js"></script>
+
+<div id="content">
+    <{if $opt_msg!=''}>
+    <p id="optMsg" class="dBox"><{$opt_msg}><a id='msg_close' style='margin-left:50px;' class='colOrange'>[关闭]</a></p>
+    <{/if}>
+
+    <div class="tab">
+        <ul class="tab-label">
+            <{if $authconfig.view == true}>
+            <li><a href="<{spUrl c=monitor a=index tid=$tid sid=$sid}>">监控用户列表</a></li>
+              <{/if}>  
+        	<li  class="current"><a href="<{spUrl c=monitor a=add tid=$tid sid=$sid}>">新增监控用户</a></li>
+                
+        </ul>
+        <div>
+                <div style="position:absolute; right:10px; top:11px; z-index:999; width:auto; text-align:right; line-height:14px;">
+    <a href="<{spUrl c=operator a=index sid=$sid tid=$tid}>">[返回]</a>
+</div>
+            </div>
+        <div class="more" style='left:400px;'>
+        	<span class='colBlue'>TIPS:当前用户为：[<{$current_optname}>]</span>
+        
+        </div>
+
+        <div class="tab-main arrange">
+            <div id="left" style='width:22%;'>
+                <div class="lc" style='margin-top:0px;'>
+                    <div class="lc-title">组织结构</div>
+                    <div class="lc-tree-main" style="background-color:#fff;">
+                        <div id="stree">
+                            <{include file="../inc/tree.html"}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="right" style='width:77%;' >
+                <div class="title" style='margin-top:0px;'>
+                    <span class="floatL" id='title_query'></span>
+                    <span class="more" id='tool_query'>
+                        <form id='_query_form'>
+                            <input type='hidden' id='node_hidden' value='' name='q[node_hidden]'/>
+                            
+                            <select name="q[user_position]" id="q_user_position" style="height: 24px;">
+                                <option value="" selected="selected" />--用户职位--</option>
+                                <{foreach from=$user_position item=name key=id}>
+                                <option value="<{$id}>"/><{$name}></option>
+                                <{/foreach}>
+                            </select>
+                            <input type="text" name='q[user_name]' value="用户姓名" class="grayTips" maxlength='20'/>
+
+                            <input type="text" name='q[user_isdn]' value="手机号码" class="grayTips" maxlength='11'/>
+
+                            <input type="hidden" name="q_form_id" value="_query_form" />
+
+                            <a class="search_btn"  id='_search_btn'
+                               onclick="listQuery('_query_form', '<{spUrl c=monitor a=queryUserList operator_id=$current_optid operator_class=$current_optclass page=$lpage}>', 'datagrid');"></a>
+
+                           
+                        </form>
+                    </span>
+                </div>
+                <span id='loading_msg'></span>
+                <div id="datagrid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"> 
+    $(document).ready(function(){	       
+	listQuery('_query_form', '<{spUrl c=monitor a=queryUserList operator_id=$current_optid operator_class=$current_optclass}>', 'datagrid');
+    });
+    //关闭提示消息
+    $('#msg_close').click(function(){
+        $('#optMsg').hide();
+    });
+	
+    //回车快捷键
+    $(':input').bind('keypress',function(e){
+        if(e.keyCode==13){
+            $('#_search_btn').click();
+            return false;
+        }
+    });
+	
+	
+    //点击节点
+    function thisNode(obj){ 
+		
+        var auth = $(obj).parent().attr('auth'); 
+        if (auth==0){     //没有权限
+            alert('您没有管理此部门的权限');
+ 			
+        }else if (auth==1){  
+            var node_id = $(obj).parents('li').attr('id');  
+            var node_name = $(obj).html();
+            var flag = node_id=='<{$root_id}>';   //判断是否是根节点
+            setCurrentNode(node_id,node_name,flag);
+        }
+    }
+	
+    function setCurrentNode(id,name,flag){
+		
+        if(!flag){  //点击某个部门  
+            $("#node_hidden").attr("value",id);
+        
+        }else{   //点击根节点  
+            $('#title_query').html('');
+            $('#tool_query').show();
+            $('#_search_btn').click();
+            $("#node_hidden").attr("value","");
+        }
+    }	
+	
+    //返回时，保持树接口的伸缩和列表数据
+    function backThisNode(obj){ 
+        var auth = $(obj).parent().attr('auth'); 
+        if (auth==0){     //没有权限
+            alert('您没有管理此部门的权限');
+ 			
+        }else if (auth==1){  
+            var node_id = $(obj).parents('li').attr('id');  
+            var node_name = $(obj).html();
+            var flag = node_id=='<{$root_id}>';   //判断是否是根节点
+            backCurrentNode(node_id,node_name,flag);
+        }
+    }
+	
+    function backCurrentNode(id,name,flag){
+        if(!flag){  //点击某个部门   
+            var url = "<{spUrl c=orgUser a=orguserList}>"+'&dept_id='+id+'&dept_name='+name+'&page='+'<{$lpage}>';
+            url = encodeURI(url);
+            jQuery.ajax({
+                url: url,
+                type: 'GET',
+                error: function(){
+                    alert("请求失败");
+                },
+                success: function(data){
+                    $('#tool_query').hide();
+                    $('#title_query').html("当前部门："+name);
+                    $('#datagrid').html(data);
+                },
+                beforeSend: function(XMLHttpRequest){
+                    $('#loading_msg').html("<img src='view/default/js/JQwindow/loading.gif' class='loading' />");
+                },
+                complete: function(XMLHttpRequest, textStatus){$('#loading_msg').html('');}
+            });
+        }else{   //点击根节点  
+            $('#title_query').html('');
+            $('#tool_query').show();
+            $('#h_search_btn').click();
+        }
+    }
+</script>
+
+
+
+
+
+

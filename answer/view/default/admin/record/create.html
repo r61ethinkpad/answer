@@ -1,0 +1,244 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+<div id="content">
+    <div class="tab">
+        <ul class="tab-label">
+           <li><a href="<{spUrl c=history a=index tid=$tid sid=$sid}>"><{T('crop')}>病史列表</a></li>
+
+            <li   class="current"><a href="<{spUrl c=history a=create tid=$tid sid=$sid}>">新增<{T('crop')}>病史</a></li>
+
+        </ul>
+
+        <div class="tab-main">
+            <{if $opt_msg == ''}>
+            <p class="dBox"  style="display:none;"><{$opt_msg}></p>
+            <{else}>
+            <p class="dBox"><{$opt_msg}></p>
+            <{/if}>
+            <form id="_create_form" action="<{spUrl c=history a=create tid=$tid sid=$sid}>" method="post">
+                <table class="formList">
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>受灾年份：</td>
+                        <td class="value">
+                            <input type="text" class=" Wdate input_text" name="history[year]" value="" maxlength="4" style="width:150px;" onFocus="WdatePicker({dateFmt:'yyyy'})" />
+                            <span class="colOrange"><{$error_array.year}></span>
+                        </td>
+                    </tr>
+      
+
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>发病时期：</td>
+                        <td class="value">
+
+                            <select name="history[period_id]" class="input_text" id="growth_period">
+                                <option value="">--<{T('any_period')}>--</option>
+                                <{foreach from=$growth_period item=value key=name}>
+                                <option value="<{$name}>"><{$value}></option>
+
+                                <{/foreach}>
+                            </select>
+                            <span class="colOrange"><{$error_array.period_id}></span>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>发病部位：</td>
+                        <td class="value">
+                            <select name="history[part_id]" class="input_text" id="crop_part">
+
+                                <option value="">--<{T('any_part')}>--</option>
+
+                            </select>
+                            <span class="colOrange"><{$error_array.part_id}></span>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>病害名称：</td>
+                        <td class="value">
+                            <select name="history[pest_id]" class="input_text" id="pest_id">
+
+                                <option value="">--<{T('any')}>--</option>
+
+                            </select>
+                            <input type="text" name="history[pest_name]" id="pest_name" value=""/>
+                            <span class="colOrange"><{$error_array.pest_id}></span>
+                        </td>
+                    </tr>   
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>所属省份：</td>
+                        <td class="value">
+                            <select name="history[province_code]" class="input_text" id="province_code">
+
+                                <option value="">--<{T('any')}>--</option>
+                                <{foreach from=$province_list item=value key=name}>
+                                <option value="<{$name}>"><{$value}></option>
+                                <{/foreach}>
+                            </select>
+                            <span class="colOrange"><{$error_array.province_code}></span>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;">所属地市：</td>
+                        <td class="value">
+                            <select name="history[area_code]" class="input_text" id="area_code">
+
+                                <option value="">--<{T('any')}>--</option>
+                                
+                            </select>
+                            <span class="colOrange"><{$error_array.area_code}></span>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>受灾程度：</td>
+                        <td class="value">
+                            <select name="history[level_code]" class="input_text" id="level_code">
+
+                                <option value="">--<{T('any')}>--</option>
+                                <{foreach from=$level_list item=value key=name}>
+                                <option value="<{$name}>"><{$value}></option>
+                                <{/foreach}>
+                            </select>
+                            <span class="colOrange"><{$error_array.level_code}></span>
+                        </td>
+                    <tr>
+                    
+                    <tr id="words"><td>&nbsp;</td><td><span id="words_left">&nbsp;</span></td></tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>病害简述：</td>
+                        <td class="value">
+                            <textarea id="history_remark" name="history[remark]"  maxlength="300" style="width:500px;height:150px;"><{$args.remark}></textarea>
+                            <span class="colOrange"><{$error_array.remark}></span>
+                        </td>
+                    <tr><td>&nbsp;</td><td>（简述内容不多于300个字符）</td></tr>
+
+
+                    <tr class="btnBox">
+                        <td colspan="2">
+                            <span class="sBtn">
+                                <a class="left">确定</a><a class="right"></a>
+                            </span>
+                            <span class="sBtn-cancel">
+                                <a class="left" href="<{spUrl c=history a=index tid=$tid sid=$sid}>">返回</a><a class="right"></a>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+	
+        jQuery("#growth_period").change(function(){
+            var v = jQuery(this).val();
+            //alert(v);
+            jQuery.post('<{spUrl c=pest a=getCropParts }>&id='+v,function(data){
+                jQuery("#crop_part").html(data).show();
+            });
+        });
+        
+        jQuery("#crop_part").change(function(){
+            var v = jQuery(this).val();
+            var p_v = jQuery("#growth_period").val();
+            //alert(v);
+            jQuery.post('<{spUrl c=history a=getPestDetail }>&pid='+p_v+'&cid='+v,function(data){
+                jQuery("#pest_id").html(data).show();
+            });
+        });
+        
+        jQuery("#pest_id").change(function(){
+            
+            var txt = $(this).find("option:selected").text();
+            jQuery("#pest_name").val(txt);
+        });
+        
+        jQuery("#province_code").change(function(){
+            
+            var v = jQuery(this).val();
+            jQuery.post('<{spUrl c=history a=getAreaCode}>&id='+v,function(data){
+                jQuery("#area_code").html(data);
+            });
+            
+        });
+		
+		
+        //屏蔽回车事件
+        $('input,select').live("keypress", function(e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        }); 
+		
+        
+		
+		
+        //jQuery validate
+        v_addMethod();
+        jQuery(".sBtn").click(function(){
+            jQuery("#_create_form").validate({
+                rules: 
+                    {
+                    'history[pest_name]' : {required: true, maxlength:33, v_preg:'^[\u4e00-\u9fa5a-zA-Z0-9_,;:.?!，；：。？！……]+$'},
+                    'history[remark]' : {required: true, maxlength:300},
+                    'history[pest_id]':{required:true},
+                    'history[province_code]':{required:true},
+                    'history[year]':{required:true},
+                    'history[level_code]':{required:true},
+                    'history[period_id]':{required:true},
+                    'history[part_id]':{required:true}
+                    
+                },
+                messages:
+                    {
+                    'history[pest_name]' : {v_preg: '请输入数字、英文字母、汉字、标点符号、下划线'}
+                }
+            });
+            if(jQuery("#_create_form").valid()){
+                jQuery("#_create_form").submit();
+            }
+        })
+    });
+	
+    window.onload=function(){
+        jQuery("#words").hide();
+        var js=document.getElementById("history_remark");//获取文本域
+        var info=document.getElementById('words_left');//获取要插入提示信息的元素
+        //var submit=document.getElementById('btnSubmit');//获取提交按钮
+        var max=js.getAttribute('maxlength');//获取限制输入的最大长度
+        var tips=document.createElement('span');//新建一个提示span
+        var val,cur,count,warn;
+        //submit.disabled=true;//默认不可提交
+        tips.innerHTML='（您还可以输入&nbsp;<em style="color:red;">'+max+'</em>&nbsp;&nbsp;个字符，<font size="2pt">不区分中英文字符。</font>）'; 
+        if(max){
+            js.onkeyup=js.onchange=function(){
+                jQuery("#words").show();
+                //submit.disabled=false;
+                if(info.lastChild.nodeName!='SPAN') info.appendChild(tips);//避免每次弹起都会插入一条提示信息
+                count=info.getElementsByTagName('em')[0];//根据输入数字变换区
+                warn=info.getElementsByTagName('font')[0];//副标题
+                val=this.value;
+                cur=val.length;
+                //	            for(var i=0;i<val.length; i++){//此循环是用来判断中英文字符的,但并不建议那样做
+                //	                if(val.charCodeAt(i)>255) cur+=1;
+                //	            }
+                if(cur==0){ //当默认值长度为0时,可输入数为默认maxlength值,此时不可提交
+                    count.innerHTML = max;
+                    //submit.disabled=true;
+                    warn.innerHTML='不区分中英文字符。';
+                }else if (cur < max) {//当默认值小于限制数时,可输入数为max-cur
+                    count.innerHTML = max - cur;
+                    warn.innerHTML='不区分中英文字符。';
+                }else{
+                    count.innerHTML = 0;//当默认值大于等于限制数时,插入一条提示信息并截取限制数内的值
+                    warn.innerHTML='不可再输入！';
+                    this.value=val.substring(0,max);//此处前面的this.value不能用变量val,它们不再是同一个值
+                }
+            }
+        }
+    }
+</script>

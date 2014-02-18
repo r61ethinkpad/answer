@@ -1,0 +1,61 @@
+<div class="tab-main">
+	<form id="adviceForm" method="post" action="<{spUrl c=advice a=adviceSubmit}>">
+		<input name="position" type="hidden" value="<{$position}>">
+		<input name="module" type="hidden" value="<{$module}>">
+		<table class="formList">
+            <tr>
+                <td class="name">当前位置：</td>
+                <td class="value"><{$position}></td>
+			</tr>	
+			<tr>
+                <td class="name"></td>
+                <td class="value"></td>
+			</tr>
+			<tr>
+                <td class="name">意见/建议：</td>
+                <td class="value">
+					<textarea name="advice" maxlength="500" style="width:350px;height:90px;overflow-y:scroll;"><{$advice}></textarea>
+				</td>
+			</tr>
+			<tr>
+                <td class="name"></td>
+                <td class="value">如您在使用中对系统有宝贵意见或有好的建议，请反馈给我们！</td>
+			</tr>
+			<tr class="btnBox">
+                <td colspan="2">
+                    <span class="sBtn" id="submitButton">
+                        <a class="left" >发送</a><a class="right"></a>
+                    </span>
+                </td>
+            </tr>
+			
+        </table>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){	
+	$("#submitButton").click(function(){
+		$('#adviceForm').find('.tip').hide();
+		$("#adviceForm").validate({
+			rules: {
+				advice: { required:true, maxlength:500}
+			}
+		});
+		if($("#adviceForm").valid()){
+			formSubmit('adviceForm', '<{spUrl c=advice a=adviceSubmit}>', 'windown-content');
+		}
+	})
+	
+	if ('<{$success_flag}>' == '1'){
+		alert('您的意见已提交，感谢对系统的支持！');
+		closeWindown();
+		
+	}
+	
+	
+	
+	
+});
+</script>

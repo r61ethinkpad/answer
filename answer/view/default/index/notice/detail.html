@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+<style>
+	.formList tr td a { color:#666;}
+	.formList tr td a:hover {text-decoration:underline; color:#F60;}
+</style>
+<div id="content">
+	<div class="tab">
+    	<ul class="tab-label">
+        	<li class="current"><a href="<{spUrl c=notice a=detail tid=$tid sid=$sid id=$notice.announce_id}>">查看公告</a></li>	
+        </ul>
+				<div id="showAdviceButton"></div>
+        <div class="tab-main">
+        	<table class="formList">
+        		<tr>
+                	<td colspan="2" style="font-size:15pt;color:#0368A8; padding-bottom:20px;">
+                		主题：<{$notice.title}>
+                		<span style="float:right;"><a href="<{spUrl c=notice a=index tid=$tid sid=$sid}>">返回</a></span>
+                	</td>
+                	
+                </tr>
+        		<tr>
+                	<td><img src="view/<{$tplName}>/images/user.png" style="vertical-align:middle; margin-right:5px;" /><{$notice.operator_id}></td><td><img src="view/<{$tplName}>/images/time.png" style="vertical-align:middle; margin-right:5px;" /><{$notice.record_time}></td>
+                </tr>
+                
+                <tr class="line"><td colspan="2"></td></tr>
+                
+                <tr>
+                    <td colspan="2" style="font-size:15px;word-spacing:2px;letter-spacing:2px;line-height:200%;word-break:break-all;word-wrap:break-word;"><{$notice.content}></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+jQuery.ajax({
+	type: 'get',
+	url: "<{spUrl c=advice a=showButton module=$adviceModule position='公告通知->查看公告'|escape:'url'}>",
+	success: function(data,html){jQuery("#showAdviceButton").html(data); },
+	error: function(){}
+})
+</script>

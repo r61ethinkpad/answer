@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+body { background-color:#fff; font-size:14px; color:#666;}
+img { vertical-align:text-bottom; margin-right:5px;}
+#content { width:980px; margin:0 auto;}
+.help_left { float:left; width:200px; margin-top:10px;}
+.help_left h3 { display:block; padding:10px; color:#F60; background: url("toptitle.gif") no-repeat; cursor:pointer; border-bottom: 1px solid #ddd; font-size:14px; line-height:14px;}
+.sdmenu { width:199px; background:url("bottom.gif") no-repeat right bottom; text-align:center;}
+.sdmenu li a { height:34px; line-height:34px; background:#f7f7f7; width:199px; display:block; border-bottom:1px solid #eee; color:#333; text-decoration:none; cursor:pointer;}
+.sdmenu li a.current, .sdmenu li a:hover { background:#f60 url("linkarrow.gif") no-repeat right center; color:#fff; text-decoration:none;}
+.help_right { float:right; width:760px;}
+.help_right h2 { font-size:16px; font-weight:bold; border-bottom:1px #ccc solid; height:24px; overflow:hidden; clear:both; margin:30px 0 6px;}
+.help_right p { line-height:24px; text-align:justify; text-justify:inter-ideograph;}

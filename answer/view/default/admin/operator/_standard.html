@@ -1,0 +1,18 @@
+
+    <td class="name"><span class='colRed'>*</span>发卡规范选择：</td>
+    <td class="value" colspan="3">
+	<{foreach from=$standard_array item=name key=value}>
+		<p>
+			<input name="standard[]" id="standard_list" type="checkbox" style="width:auto" value='<{$value}>'
+			<{foreach from=$card_dataauth item=data}>
+				<{if $data == $value}>
+					checked="checked"
+				<{/if}>
+			<{foreachelse}>
+				checked="checked"
+			<{/foreach}>
+			><label for="card"><{$name}></label>
+		</p>
+	<{/foreach}>
+	
+	</td>

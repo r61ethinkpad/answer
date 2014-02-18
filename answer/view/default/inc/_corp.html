@@ -1,0 +1,47 @@
+<div class="tab-main">
+	<form id="switchForm" name="switchForm" method="post" action="<{spUrl c=main a=switchSys}>">
+       	<table class="formList">
+			<tr>
+				<td class="name"  style="width:30%">当前<{T('title_org')}>：</td>
+                <td class="value"><{$dataname}></td>
+			</tr>
+            <tr>
+                <td class="name"  style="width:30%; vertical-align:top;">切换<{T('title_org')}>：</td>
+                <td class="value" style="padding:0;">
+					<{foreach from=$dataauth key=data_id item=data_name}>
+						<{if $current_dataid <> $data_id}>
+                        <p>
+							<input style="width:14px; margin:0;" name="corpid" type="radio" id="corpid" value="<{$data_id}>"  />
+							<label style="margin-left:0;" for="corpid"><{$data_name}></label>
+                        </p>   
+						<{/if}>
+					<{/foreach}>
+				</td>
+			</tr>
+			<tr class="btnBox">
+                <td colspan="2">
+                    <span class="sBtn" id="submitButton">
+                        <a class="left" href="#">确定</a><a class="right"></a>
+                    </span>
+                </td>
+            </tr>
+			
+        </table>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){	
+	$("#submitButton").click(function(){
+		$('#switchForm').find('.tip').hide();
+		$("#switchForm").validate({
+			rules: {
+				corpid: { required:true},
+			}
+		});
+		if($("#switchForm").valid()){
+			$('#switchForm').submit();
+		}
+	})
+});
+</script>

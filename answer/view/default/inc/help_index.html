@@ -1,0 +1,78 @@
+<{include file="../inc/_header.html"}>
+
+<{include file="../inc/_login_header.html"}>
+
+<body>
+
+<div id="content">
+
+<div class="help_left">
+
+	<h3></h3>
+
+    <ul class="sdmenu">
+
+        <li><a class="current" href="#001">产品简介</a></li>
+
+        <li><a href="#002">联系我们</a></li>
+
+
+        
+
+    </ul>
+
+</div>
+
+<style>
+.help_right h2 { font-size:14px;}
+</style>
+
+<div class="help_right">
+
+    <h2 style="margin-top:10px;" id="001"><img src="view/<{$tplName}>/images/txt.png" style="vertical-align:middle;" /> 产品简介</h2>
+
+    <p>跬步作为企业信息化服务平台的一部分，为企业提供了更多的便利。本平台包括网页版的服务平台和智能手机上的app。智能手机的客户端负责采集企业成员的数据。服务平台可以统计分析企业用户的数据，以便更好的管理企业用户。</p>
+
+    <h2 id="002"><img src="view/<{$tplName}>/images/txt.png" style="vertical-align:middle;" /> 联系我们</h2>
+
+    <p>公司名称：创博亚太科技（山东）有限公司</p>
+
+    <p>联系地址：山东省济南市高新区颖秀路2600号</p>
+
+    <p>联系电话：0531-xxxxxxxx。</p>
+
+
+</div>
+
+</div>
+
+</body>
+
+
+<{include file="../inc/footer.html"}>
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	$('.sdmenu').find('a').click(function(){
+
+		$('.sdmenu').find('a').removeClass('current');
+
+		$(this).addClass('current');
+
+		var a = $(this).attr('href');
+
+		$('h2').css('color','#666');
+
+		$(a).css('color','#F60');
+	})
+
+}); 			
+
+</script>
+
+
+

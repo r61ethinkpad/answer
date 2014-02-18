@@ -1,0 +1,14 @@
+<ul class="tab-label">
+<{if $current_tab == 'edit'}>
+    <li><a href="<{spUrl c=answer a=$current_action tid=$tid sid=$sid}>">题目列表</a></li>
+    <li class="current"><a href="<{spUrl c=answer a=edit id=$id tid=$tid sid=$sid}>">编辑题目</a></li>
+<{elseif $current_tab == 'detail'}>
+    <li><a href="<{spUrl c=answer a=$current_action tid=$tid sid=$sid}>">题目列表</a></li>
+    <li class="current"><a href="<{spUrl c=answer a=detail id=$id tid=$tid sid=$sid}>">查看详细</a></li>
+<{else}>
+    <li <{if $current_tab == 'list'}> class="current"<{/if}>><a href="<{spUrl c=answer a=$current_action tid=$tid sid=$sid}>">题目列表</a></li>
+
+    <li <{if $current_tab == 'new'}> class="current"<{/if}>><a href="<{spUrl c=answer a=create tid=$tid sid=$sid}>">新增题目</a></li>
+<{/if}>
+
+</ul>

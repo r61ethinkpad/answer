@@ -1,0 +1,152 @@
+
+<div id="content">
+	<div class="tab">
+    	<ul class="tab-label">
+        	<li><a href="<{spUrl c=operator a=operEdit operator_id=$operator_id tid=$tid sid=$sid}>">基本信息</a></li>
+			<li class="current"><a href="">权限信息</a></li>
+        </ul>
+        <div id="showAdviceButton"></div>
+		
+<div class="tab-main">
+	<p id="udError" class="dBox" style="display:none;"></p>
+	<form id="_auth_form" method="post" action="<{spUrl c=operator a=authUpdate}>">
+	<!--<input type="submit" value="提交">-->
+       	<table class="formList">
+			<tr>
+                <td class="name">操作员帐号：</td>
+                <td class="value"><{$operator_id}></td>
+				<input type="hidden" name="operator_id" id="operator_id" value="<{$operator_id}>">
+				<td class="name">操作员类型：</td>
+				<td class="value"><{$type_name}></td>
+			</tr>
+			<tr>
+				<td class="name">名称：</td>
+				<td class="value"><{$operator_name}></td>
+				<td class="name">操作员级别：</td>
+				<td class="value"><{$class_name}></td>
+			</tr>
+			
+			<{if $show_auth == 1}>
+			<tr>
+				<td class="name" colspan="2">拥有所登录系统的所有功能权限，无需设置。</td>
+			</tr>
+			<{else}>
+			<tr>
+				<td colspan="4"><h1 class="colOrange">功能权限设置</h1></td>
+			</tr>
+			<{foreach from=$perm_module item=desc key=module}>
+            <tr>
+                <td class="name" style="width:150px;"><{$desc}>：</td>
+                <td colspan="3">
+				
+				<table>
+					<tr><td>
+					
+					<span id="checkall_<{$module}>">
+						<input class="class_<{$module}>" type="checkbox" style="width:auto" onchange="checkall('<{$module}>');" onClick="this.blur();" ><label for="perm">全选</label>
+					</span>
+					<span id="checknone_<{$module}>" style="display: none;" >
+						<input class="class_<{$module}>" type="checkbox" style="width:auto" onchange="checknone('<{$module}>');" onClick="this.blur();" ><label for="perm">全消</label>
+					</span>
+					</td>
+					
+					<{foreach from=$permission item=perm_arr key=perm_module}>
+						<{if $perm_module == $module}>
+							<{foreach from=$perm_arr item=perm key=k}>
+								<{if $k!=0&&$k%9==0}>
+									<tr><td></td>
+								<{/if}>
+								
+								<td>
+								<input name="perm[]" id="perm" class="class_<{$module}>" type="checkbox" style="width:auto" value='<{$perm.permkey}>' 
+									<{if $perm.check==1}>checked="checked"<{/if}> ><label><{$perm.description}></label>
+								</td>
+								
+								<{if ($k+1)%9==0}>
+									</tr>
+								<{/if}>
+							<{/foreach}>
+						<{/if}>
+					<{/foreach}>
+					
+				</table>
+				
+				</td>
+			</tr>
+			<{/foreach}>
+			
+			
+			</tr>
+				<{if $shownotice == 1}>
+				<tr>
+					<td class="name"><span class="colRed">提示：</span></td>
+					<td class="colRed" colspan="3">
+                    <p>1、除部门/用户等功能外，其他功能都属于<{T('title_org')}>级功能，不应由<{T('title_department')}>级别操作员管理，请慎重选择功能权限。</p>
+
+                    </td>
+				</tr>
+				<{/if}>
+			<{/if}>
+			<tr class="line"><td colspan="4"></td>
+			<tr class="btnBox">
+                <td colspan="4">
+					<{if $authconfig.authupdate == true}>
+                    <span class="sBtn">
+                        <a class="left" >确定</a><a class="right"></a>
+                    </span>
+					<{/if}>
+					<span class="sBtn-cancel" id="returnButton">
+                        <a href="<{spUrl c=operator a=index tid=$tid sid=$sid}>" class="left" >返回</a><a class="right"></a>
+                    </span>
+                </td>
+            </tr>
+			
+        </table>
+	</form>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+function checkall(id){
+	$('.class_'+id).attr("checked", true);
+	$('#checkall_'+id).hide();
+	$('#checknone_'+id).show();
+}
+function checknone(id){
+	$('.class_'+id).attr("checked", false);
+	$('#checkall_'+id).show();
+	$('#checknone_'+id).hide();
+}
+
+$(document).ready(function(){
+
+	$(".sBtn").click(function(){
+			var options = {
+				dataType:'json',
+				success:function(data){
+					$('#udError').hide();
+					if (data.status == '0'){
+						//alert('编辑操作员成功');
+						$('#udError').html('编辑操作员功能权限成功').show();
+					}
+					else{
+						$('#udError').html('编辑操作员功能权限失败：'+ data.msg + '(' + data.status + ')').show();
+					}
+				},
+				error:function(){
+					$('#udError').html('请求失败').show();
+				}
+			}
+			$('#_auth_form').ajaxSubmit(options);
+			return false;
+	})
+	
+	jQuery.ajax({
+		type: 'get',
+		url: "<{spUrl c=advice a=showButton module=$adviceModule position='操作员管理->权限信息'|escape:'url'}>",
+		success: function(data,html){jQuery("#showAdviceButton").html(data); },
+		error: function(){}
+	})
+})
+</script>

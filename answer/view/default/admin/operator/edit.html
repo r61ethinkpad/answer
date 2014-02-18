@@ -1,0 +1,134 @@
+<div id="content">
+	<div class="tab">
+    	<ul class="tab-label">
+        	<li class="current"><a href="">基本信息</a></li>
+<!--			<li><a href="<{spUrl c=operator a=operAuth operator_id=$args.operator_id tid=$tid sid=$sid}>">权限信息</a></li>-->
+        </ul>
+		<div id="showAdviceButton"></div>
+		
+<style>#showtree .value a { text-decoration:none; color:#666; margin-left:0;}</style>		
+
+<div class="tab-main">
+	<p id="udError" class="dBox" style="display:none;"></p>
+	<form id="_operedit_form" method="post" action="<{spUrl c=operator a=operUpdate}>">
+	<!--<input type="submit" value="提交">-->
+	<table class="formList">
+            <tr>
+                <td class="name">操作员帐号：</td>
+                <td class="value"><{$args.operator_id}></td>
+				<input type="hidden" name="operator_id" id="operator_id" value="<{$args.operator_id}>">
+				 <td class="name">注册时间：</td>
+                <td class="value"><{$args.reg_time}></td>
+			</tr>
+			<tr  class='line'>
+                 
+				<td class="name">最近登录时间：</td>
+                <td class="value"><{$args.last_login_time}></td>
+			
+                <td class="name">最近登录IP：</td>
+                <td class="value"><{$args.last_login_ip}></td>
+                
+			</tr>
+			
+			<tr>
+                <td class="name"><span class='colRed'>*</span>名称：</td>
+				<td class="value">
+					<input name="name" maxlength="20" type="text" class="input_text" value="<{$args.name}>"/>
+					<span id="error_name" class="colOrange"></span>
+				</td>
+                <td class="name"><span class='colRed'>*</span>手机号码：</td>
+                <td class="value">
+					<input name="phone" maxlength="11" type="text" class="input_text" value="<{$args.phone}>"/>
+					<span id="error_phone" class="colOrange"></span>
+				</td>
+			</tr>
+			<tr>
+				 <td class="name">QQ号码：</td>
+                <td class="value">
+					<input name="qq_no" maxlength="15" type="text" class="input_text" value="<{$args.qq_no}>"/>
+					<span id="error_qq_no" class="colOrange"></span>
+				</td>
+                <td class="name">邮箱：</td>
+                <td class="value">
+					<input name="email" maxlength="50"  type="text" class="input_text" value="<{$args.email}>"/>
+					<span id="error_email" class="colOrange"></span>
+				</td>
+			</tr>	
+			
+			
+			<tr  class="line"><td colspan="4"></td></tr>
+			
+			<tr class="btnBox">
+                <td colspan="4">
+					<{if $authconfig.update == true and $args.operator_class <> '0'}>
+                    <span class="sBtn">
+                        <a class="left" >确定</a><a class="right"></a>
+                    </span>
+					<{/if}>
+					<span class="sBtn-cancel" id="returnButton">
+                        <a href="<{spUrl c=operator a=index tid=$tid sid=$sid operator_id=$args.operator_id}>" class="left" >返回</a><a class="right"></a>
+                    </span>
+                </td>
+            </tr>
+			
+        </table>
+	</form>
+
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){	
+	
+	v_addMethod();
+	
+	
+	$(".sBtn").click(function(){
+		$('#_operedit_form').find('.tip').hide();
+		$("#_operedit_form").validate({
+			rules: {
+				name: { required:true, schar:true, minlength:2, maxlength:20},
+				phone: { required:true, number:true, minlength:11, maxlength:11},
+				qq_no: { number:true, minlength:4, maxlength:15},
+				email:'email',
+				type:{ required:true}
+			}
+			
+		});
+		if($("#_operedit_form").valid()){
+			//$('#_operedit_form').submit();
+			var options = {
+				dataType:'json',
+				success:function(data){
+					$('#udError').hide();
+					$('.colOrange').hide();
+					if(data.status == '9999'){
+						var error = data.data;
+						for(var key in error){
+							$('#error_'+key).html(error[key]).show();
+						}
+					}
+					else if (data.status == '0'){
+						//alert('编辑操作员成功');
+						$('#udError').html('编辑操作员基本信息成功').show();
+						change();
+					
+					}
+					else{
+						$('#udError').html('编辑操作员失败：'+ data.msg + '(' + data.status + ')').show();
+					}
+				},
+				error:function(){
+					$('#udError').html('请求失败').show();
+				}
+			}
+			$('#_operedit_form').ajaxSubmit(options);
+			return false;
+		}
+	})
+	
+});
+</script>

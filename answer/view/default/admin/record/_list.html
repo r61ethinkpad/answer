@@ -1,0 +1,64 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>	
+<table class="dbTable">
+    <thead>
+        <tr>
+            <th style="width:20%">病害名称</th><th>受灾年份</th><th>所在地区</th><th>受灾程度</th><th>操作</th></tr>
+    </thead>
+    <tbody>
+        <{foreach from=$history_list item=one}>
+        <tr>
+
+            <td>
+
+                <a href="<{spUrl c=history a=detail id=$one.history_id  tid=$tid sid=$sid}>"> 
+                    <{$one.pest_name}>
+                </a>
+            </td>
+            <td><{$one.year}></td>
+            <td><{$one.area_text}></td>
+            <td><{$one.level_text}></td>
+            <td>
+                <a href="<{spUrl c=history a=detail id=$one.history_id tid=$tid sid=$sid}>">查看</a>
+               <a href="<{spUrl c=history a=edit id=$one.history_id tid=$tid sid=$sid}>">编辑</a>
+                <a href="javascript:void(0);" onclick="del('<{$one.history_id}>');">删除</a>
+                
+            </td>
+        </tr>
+        <{foreachelse}>
+        <tr><td colspan="5"><span id="no_record">无查询记录！</span></td></tr>
+        <{/foreach}>
+    </tbody>
+    <tfoot>
+        <tr><td colspan="5">
+
+                <a href="<{spUrl c=history a=create tid=$tid sid=$sid}>">新增<{T('crop')}>病史</a>
+            </td></tr>
+    </tfoot>
+</table>
+<{include file="../inc/page.html"}>
+
+<script type="text/javascript">
+	
+    function del(id)
+    {
+        
+        if(!confirm("您正在删除病史，继续吗？"))
+            return false;
+        else
+            jQuery.ajax({
+                type: 'get',
+                url: '<{spUrl c=history a=del}>' + '&id=' + id,
+                success: function (data,html){
+                    alert(data);
+                    jQuery.ajax({
+                        type: 'get',
+                        url: encodeURI('<{spUrl c=history a=queryList}>' + '<{$saveUrl}>'),
+                        success: function (data, html){jQuery('#datagrid').html(data);},
+                        error: function (){}
+                    });
+                },
+            error: function (){alert('请求失败');}
+        });
+    }
+	
+</script>

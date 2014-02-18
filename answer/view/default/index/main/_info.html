@@ -1,0 +1,20 @@
+<div class="calendar">
+    <p><{$month}></p>
+    <p class="day"><{$date}></p>
+    <p><{$week}></p>
+</div>
+<div class="sys_msg">
+	<p>当前<{T('title_org')}>：<{$org_name}></p>
+	<p>用户数量：<{$user_cnt}> 人</p>
+	<p>激活用户数量：<{$active_cnt}>人
+	</p>
+	<p>操作员人数：<{$operator_cnt}> 人</p>
+	
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	// 为表格的偶数行添加隔行变色的背景   
+	$('.sys_msg').find('p:even').css('background-color','#f5f5f5');
+});
+</script>
