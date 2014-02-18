@@ -9,6 +9,7 @@ class operatorModel extends spModel//UdModel
     
         const OPER_TYPE_SYS = '00';
 	const OPER_TYPE_NORMAL = '01';
+        const OPER_TYPE_BANK = '02';
         
         const OPER_STATUS_NORMAL = '00';
         const OPER_STATUS_FREEZE = '01';
@@ -163,7 +164,8 @@ class operatorModel extends spModel//UdModel
 	public static function getOperType($type) {
 		$rs = array(
                      self::OPER_TYPE_SYS =>'超级管理员',
-                     self::OPER_TYPE_NORMAL =>'普通管理员',
+                     self::OPER_TYPE_NORMAL =>'自定义题库管理员',
+                    self::OPER_TYPE_BANK =>'建行题库管理员',
                 );
 		return $type == '_ARRAY' ? $rs : $rs[$type];
     }
