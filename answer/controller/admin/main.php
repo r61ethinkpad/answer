@@ -79,7 +79,7 @@ class main extends tbController
 
 		if(false == $check_rs){
 			//通过验证
-			$rs = $operator->passwdSave($this->args);
+			$rs = $operator->passwdUpdate($this->args);
 			
 			$logargs = array(      
 				'opt_field' =>	'修改密码',     

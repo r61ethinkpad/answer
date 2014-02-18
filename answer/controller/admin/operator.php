@@ -252,7 +252,7 @@ class operator extends tbController
 		$operator = spClass("operatorModel"); 
 		$this->args = array(
 			'operator_id' => trim($this->spArgs("operator_id")),
-			'password'	 => encryptPasswd(trim($this->spArgs("passwd"))),
+			'password'	 => encryptPasswd(trim($this->spArgs("password"))),
 		);
 		$operator->verifier = $operator->verifier_passwd;
 		$check_rs = $operator->verifierModel($this->args);
