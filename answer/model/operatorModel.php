@@ -191,7 +191,7 @@ class operatorModel extends spModel//UdModel
                     'desc'=>'修改密码成功'
                 );
                 $model = spClass("operatorModel");
-                $ret = $model->update(array('operator_id'=>$args['operator_id']),array('password'=>$args['newpwd']));
+                $ret = $model->update(array('operator_id'=>$args['operator_id']),array('password'=>$args['password']));
                 if(!$ret)
                 {
                     return array(
@@ -200,6 +200,34 @@ class operatorModel extends spModel//UdModel
                     );
                 }
 		return $rs;
+	}
+        
+        
+        //修改密码
+	public function passwdUpdate($args=array()){
+		//$rs = $this->runUniweb('cmd_operator_passwd_update', $args);
+                $rs = array(
+                    'status'=>0,
+                    'desc'=>'密码修改成功'
+                );
+                
+                $info = $this->findCount(array('operator_id'=>$args['operator_id'],'password'=>$args['password']));
+                if($info == 0)
+                {
+                    return array(
+                        'status'=>9999,
+                        'desc'=>'密码修改失败,操作员原密码输入错误'
+                    );
+                }
+                
+                $ret = $this->update(array('operator_id'=>$args['operator_id']),array('password'=>$args['newpwd']));
+		if(!$ret){
+                    return array(
+                        'status'=>9999,
+                        'desc'=>'密码修改失败'
+                    );
+                }
+                return $rs;
 	}
 		
 
