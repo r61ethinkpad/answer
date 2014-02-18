@@ -10,7 +10,12 @@
 				<input type="text" name="operator_id" value="管理员帐号" maxlength="20" class="input_text grayTips mr5" />
 				<input type="text" name="operator_name" value="管理员名称" maxlength="20" class="input_text grayTips mr5" />
 				
-				
+				<select name="type" id="type">
+                                    <option value="">--管理员类型--</option>
+                                    <{foreach from=$operator_types item=value key=name}>
+                                    <option value="<{$name}>"/><{$value}></option>
+                                    <{/foreach}>
+                                </select>
 				<select name="status" id="operstatus">
 				<option value="" selected="selected" />--管理员状态--</option>
 				<{foreach from=$operator_status item=desc key=status}>

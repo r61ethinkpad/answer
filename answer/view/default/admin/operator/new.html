@@ -14,7 +14,7 @@
 	<!--<input type="submit" value="提交">-->
        	<table class="formList">
             <tr>
-                <td class="name"><span class='colRed'>*</span>操作员帐号：</td>
+                <td class="name"><span class='colRed'>*</span>管理员帐号：</td>
                 <td class="value">
 					<input name="operator_id" type="text" class="input_text" maxlength="20" value="<{$args.operator_id}>"/>
 					<span class="tip">字母、数字、下划线组合</span>
@@ -39,10 +39,15 @@
 				</td>
 			</tr>
 			<tr  class="line">
-                <td class="name">QQ号码：</td>
+                <td class="name">管理员类型：</td>
                 <td class="value">
-					<input name="qq_no" maxlength="15" type="text" class="input_text" value="<{$args.qq_no}>"/>
-					<span id="error_qq_no" class="colOrange"></span>
+                    <select name="type" id="type" class="input_text">
+                        <option value="">--选择--</option>
+                        <{foreach from=$operator_types item=value key=name}>
+                        <option value="<{$name}>"/><{$value}></option>
+                        <{/foreach}>
+                    </select>
+					<span id="error_type" class="colOrange"></span>
 				</td>
                 <td class="name">邮箱：</td>
                 <td class="value">
@@ -83,7 +88,7 @@ $(document).ready(function(){
 				password: { required:true, schar:true, minlength:6, maxlength:20},
 				name: { required:true, schar:true, minlength:2, maxlength:20},
 				phone: { required:true, number:true, minlength:11, maxlength:11},
-				qq_no: { number:true, minlength:4, maxlength:15},
+				type: { number:true},
 				email:'email',
 				type:{ required:true}
 			},
@@ -106,11 +111,11 @@ $(document).ready(function(){
 					}
 					else if (data.status == '0'){
 						//alert('操作员 '+data.data+' 添加成功');
-                                                $('#udError').html('操作员 '+data.data+' 添加成功').show();
+                                                $('#udError').html('管理员 '+data.data+' 添加成功').show();
 						//window.location.href='<{spUrl c=operator a=operAuth tid=$tid sid=$sid}>&operator_id='+data.data;
 					}
 					else{
-						$('#udError').html('添加操作员失败：'+ data.msg + '(' + data.status + ')').show();
+						$('#udError').html('添加管理员失败：'+ data.msg + '(' + data.status + ')').show();
 					}
 				},
 				error:function(){

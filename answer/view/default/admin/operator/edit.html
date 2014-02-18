@@ -14,11 +14,11 @@
 	<!--<input type="submit" value="提交">-->
 	<table class="formList">
             <tr>
-                <td class="name">操作员帐号：</td>
+                <td class="name">管理员帐号：</td>
                 <td class="value"><{$args.operator_id}></td>
 				<input type="hidden" name="operator_id" id="operator_id" value="<{$args.operator_id}>">
 				 <td class="name">注册时间：</td>
-                <td class="value"><{$args.reg_time}></td>
+                <td class="value"><{$args.record_time}></td>
 			</tr>
 			<tr  class='line'>
                  
@@ -43,10 +43,15 @@
 				</td>
 			</tr>
 			<tr>
-				 <td class="name">QQ号码：</td>
+				 <td class="name">管理员类型：</td>
                 <td class="value">
-					<input name="qq_no" maxlength="15" type="text" class="input_text" value="<{$args.qq_no}>"/>
-					<span id="error_qq_no" class="colOrange"></span>
+					<select name="type" id="type" class="input_text">
+                        <option value="">--选择--</option>
+                        <{foreach from=$operator_types item=value key=name}>
+                        <option value="<{$name}>" <{if $args.type == $name}> selected<{/if}>><{$value}></option>
+                        <{/foreach}>
+                    </select>
+					<span id="error_type" class="colOrange"></span>
 				</td>
                 <td class="name">邮箱：</td>
                 <td class="value">
@@ -113,12 +118,12 @@ $(document).ready(function(){
 					}
 					else if (data.status == '0'){
 						//alert('编辑操作员成功');
-						$('#udError').html('编辑操作员基本信息成功').show();
+						$('#udError').html('编辑管理员基本信息成功').show();
 						change();
 					
 					}
 					else{
-						$('#udError').html('编辑操作员失败：'+ data.msg + '(' + data.status + ')').show();
+						$('#udError').html('编辑管理员失败：'+ data.msg + '(' + data.status + ')').show();
 					}
 				},
 				error:function(){
