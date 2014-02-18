@@ -6,43 +6,31 @@
     <div class="tab">
         <ul class="tab-label">
 
-            <li  class="current"><a href="<{spUrl c=history a=index tid=$tid sid=$sid}>"><{T('crop')}>病史列表</a></li>
-
-            <li><a href="<{spUrl c=history a=create tid=$tid sid=$sid}>">新增<{T('crop')}>病史</a></li>
-
+            <li  class="current"><a href="<{spUrl c=record a=index tid=$tid sid=$sid}>">答题记录</a></li>
 
         </ul>
         <div class="tab-main">
             <form id='_query_form'>
                 <div class="tool-box">
-                    <input type="text" value="所属年份" name="year" class="Wdate grayTips input_text" maxlength="4" onFocus="WdatePicker({dateFmt:'yyyy'})" />
-                    <select name="province_code" id="province_code">
-                        <option value="" selected="selected" />--所属省--</option>
-                        <{foreach from=$province_list item=value key=name}>
+                    <select name="over_point" id="over_point">
+                        <option value="" selected="selected" />--截至关卡--</option>
+                        <{foreach from=$exam_points item=value key=name}>
                         <option value="<{$name}>"/><{$value}></option>
                         <{/foreach}>
                     </select>
 
-                    <select name="area_code" id="area_code">
-                        <option value="" selected="selected" />--所属地市--</option>
+                    <input class="Wdate" maxlength="10" type="text" id="date1" name='stime' value="<{$firstday}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
+		        <span>到</span>
+				<input class="Wdate" maxlength="10" type="text" id="date1" name='etime' value="<{$today}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
+				
 
-                    </select>
-                    <select name="level_code" id="level_code">
-                        <option value="" selected="selected" />--病害等级--</option>
-                        <{foreach from=$level_list item=value key=name}>
-                        <option value="<{$name}>"><{$value}></option>
-                        <{/foreach}>
-                    </select>
-                    <input type="text" value="输入病害名称" name="pest_title" class="grayTips input_text" maxlength="32"/>
-
-
-                    <a class="search_btn" onclick="listQuery('_query_form', '<{spUrl c=history a=queryList}>', 'datagrid');"></a>
+                    <a class="search_btn" onclick="listQuery('_query_form', '<{spUrl c=record a=queryList}>', 'datagrid');"></a>
 
                 </div>
             </form>
 
             <div id="datagrid">
-                <{include file="history/_list.html"}>
+                <{include file="record/_list.html"}>
             </div>
         </div>
 
@@ -57,7 +45,7 @@
         //加载列表
         jQuery.ajax({
             type: 'get',
-            url: "<{spUrl c=history a=queryList}>",
+            url: "<{spUrl c=record a=queryList}>",
             data: jQuery('#_query_form').serialize(),
             beforeSend: function(XMLHttpRequest){
                 $("#no_record").html("<img src='view/default/js/JQwindow/loading.gif' class='loading' />数据加载中...");
@@ -69,7 +57,7 @@
         //搜索区域回车事件
         $('input,select').live("keypress", function(e) {
             if (e.keyCode == 13) {
-                listQuery('_query_form', '<{spUrl c=history a=queryList}>', 'datagrid');
+                listQuery('_query_form', '<{spUrl c=record a=queryList}>', 'datagrid');
                 return false;
             }
         }); 

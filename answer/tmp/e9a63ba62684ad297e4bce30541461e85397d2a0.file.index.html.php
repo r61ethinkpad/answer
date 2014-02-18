@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 14:11:08
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 22:19:12
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/operator/index.html" */ ?>
-<?php /*%%SmartyHeaderCode:20386711995302f97c0bf988-68975696%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:249288553036be0c86744-07325854%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'e9a63ba62684ad297e4bce30541461e85397d2a0' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/operator/index.html',
-      1 => 1388367871,
+      1 => 1392733150,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '20386711995302f97c0bf988-68975696',
+  'nocache_hash' => '249288553036be0c86744-07325854',
   'function' => 
   array (
   ),
@@ -32,7 +32,20 @@ $_smarty_tpl->decodeProperties(array (
 				<input type="text" name="operator_id" value="管理员帐号" maxlength="20" class="input_text grayTips mr5" />
 				<input type="text" name="operator_name" value="管理员名称" maxlength="20" class="input_text grayTips mr5" />
 				
-				
+				<select name="type" id="type">
+                                    <option value="">--管理员类型--</option>
+                                    <?php  $_smarty_tpl->tpl_vars['value'] = new Smarty_Variable;
+ $_smarty_tpl->tpl_vars['name'] = new Smarty_Variable;
+ $_from = $_smarty_tpl->getVariable('operator_types')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+if ($_smarty_tpl->_count($_from) > 0){
+    foreach ($_from as $_smarty_tpl->tpl_vars['value']->key => $_smarty_tpl->tpl_vars['value']->value){
+ $_smarty_tpl->tpl_vars['name']->value = $_smarty_tpl->tpl_vars['value']->key;
+?>
+                                    <option value="<?php echo $_smarty_tpl->tpl_vars['name']->value;?>
+"/><?php echo $_smarty_tpl->tpl_vars['value']->value;?>
+</option>
+                                    <?php }} ?>
+                                </select>
 				<select name="status" id="operstatus">
 				<option value="" selected="selected" />--管理员状态--</option>
 				<?php  $_smarty_tpl->tpl_vars['desc'] = new Smarty_Variable;

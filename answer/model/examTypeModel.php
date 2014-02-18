@@ -13,7 +13,7 @@ class examTypeModel extends spModel
 			'type_name' => array(  //
 				'notnull' => TRUE, // uname不能为空
 				'minlength' => 1,  // uname长度不能小于3
-				'maxlength' => 20  // uname长度不能大于12
+				'maxlength' => 32  // uname长度不能大于12
 			),
 			
 		),
@@ -21,7 +21,7 @@ class examTypeModel extends spModel
 			'type_name' => array(
 				'notnull' => "分类名称不能为空",
 				'minlength' => "分类名称不能少于1个字符",
-				'maxlength' => "分类名称不能大于20个字符"
+				'maxlength' => "分类名称不能大于32个字符"
 			),
 		)
 	);
@@ -43,12 +43,12 @@ class examTypeModel extends spModel
         }
         $params = array();
         
-		$bank_type_id = $GLOBALS['sysparams']['bank_type_id'];
+	$bank_type_id = $GLOBALS['sysparams']['bank_type_id'];
         $condition = " type_id != '".$bank_type_id."'";
         
         if($args['type_name'] !="" && $args['type_name'] != null)
         {
-            $condition .= " type_name like '%".$args['type_name']."%'";
+            $condition .= "and  type_name like '%".$args['type_name']."%'";
         }
         
         

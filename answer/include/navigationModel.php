@@ -61,11 +61,20 @@ class navigationModel extends spModel {
                 
                 array(
                     "name" => T('nav_answer_record'),//答题记录
-                    "controller" => "history",
+                    "controller" => "record",
                     "action" => "index",
                     "mainflag" => 0,
-                    "hassub" => 0,
+                    "hassub" => 1,
                     "tid" => 2,
+                    "sid" => 1,
+                    "subitem"=>array(
+                        array(
+                            "name" => T('nav_answer_record'),//答题记录,
+                            "controller" => "record",
+                            "action" => "index",
+                            "sid" => 1,
+                        ),
+                    ),
                    
                 ),
 				

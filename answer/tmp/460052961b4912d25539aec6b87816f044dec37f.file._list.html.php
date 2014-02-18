@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 17:15:57
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 23:44:40
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/optLog/_list.html" */ ?>
-<?php /*%%SmartyHeaderCode:1106921569530324cdf00da9-27154701%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:109823435253037fe8600e79-11776656%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '460052961b4912d25539aec6b87816f044dec37f' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/optLog/_list.html',
-      1 => 1388369484,
+      1 => 1392738275,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1106921569530324cdf00da9-27154701',
+  'nocache_hash' => '109823435253037fe8600e79-11776656',
   'function' => 
   array (
   ),
@@ -55,10 +55,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 		<tr><td colspan="7">无查询记录！</td></tr>
 		<?php } ?>
 	</tbody>
-	 <tfoot>
-        <tr><td colspan="7">
-		</td></tr>
-    </tfoot>
+	
 	
 </table>
 </form>

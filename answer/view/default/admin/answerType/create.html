@@ -1,0 +1,92 @@
+
+<div id="content">
+    <div class="tab">
+        <{include file="answerType/_topTitle.html"}>
+        <div class="tab-main">
+            <p id="udError" class="dBox" style="display:none;"></p>
+            <form id="_create_form" action="<{spUrl c=answerType a=save tid=$tid sid=$sid}>" method="post">
+                <table class="formList">
+                    
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>题库分类名称：</td>
+                        <td class="value">
+                            <input type="text" name="answerType[type_name]" id="type_name" value="" class="input_text" maxlength="32"/>
+                            <span class="tip">汉字、字母、数字、下划线组合</span>
+                            <span class="colOrange" id="error_type_name"><{$error_array.type_name}></span>
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr class="btnBox">
+                        <td colspan="2">
+                            <span class="sBtn">
+                                <a class="left">确定</a><a class="right"></a>
+                            </span>
+                            <span class="sBtn-cancel">
+                                <a class="left" href="<{spUrl c=answerType a=index tid=$tid sid=$sid}>">返回</a><a class="right"></a>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+	
+		
+        //屏蔽回车事件
+        $('input,select').live("keypress", function(e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        }); 
+					
+        //jQuery validate
+        v_addMethod();
+        $(".sBtn").click(function(){
+            $('#_create_form').find('.tip').hide();
+            $("#_create_form").validate({
+                rules: {				
+                    'answerType[type_name]': { required:true, minlength:1, maxlength:32, v_preg:'^[\u4e00-\u9fa5a-zA-Z0-9_]+$'}
+                }
+			
+            });
+            
+            
+            if($("#_create_form").valid()){
+               
+               
+                var options = {
+                    dataType:'json',
+                    success:function(data){
+                        $('#udError').hide();
+                        $('.colOrange').hide();
+                        if(data.status == '9999'){
+                            var error = data.data;
+                            for(var key in error){
+                                $('#error_'+key).html(error[key]).show();
+                            }
+                        }
+                        else if (data.status == '0'){
+                            
+                            $('#udError').html('题库分类添加成功').show();
+                        }
+                        else{
+                            $('#udError').html('题库分类添加失败：'+ data.msg + '(' + data.status + ')').show();
+                        }
+                    },
+                    error:function(){
+                        $('#udError').html('请求失败').show();
+                    }
+                }
+                $('#_create_form').ajaxSubmit(options);
+                return false;
+            }
+        });
+        
+    });
+</script>
