@@ -6,7 +6,6 @@ if (!defined('TBOWCARDUP')) {
 
 /*
   特别注意：
-  修改此文件一定记得修改四川联通的补丁文件
  */
 
 class navigationModel extends spModel {

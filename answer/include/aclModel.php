@@ -150,8 +150,8 @@ class aclModel extends spModel//udModel
 		}
                 
                 //return $nav;
-		//$auth = $_SESSION['functionauth'];//dump($auth);
-		$auth = array('0');
+		$auth = $_SESSION['functionauth'];//dump($auth);
+		//$auth = array('0');
                 //dump($auth);
 		if(empty($auth)){		//权限为空，不提供菜单
 			return array();
@@ -201,10 +201,7 @@ class aclModel extends spModel//udModel
 			else{	//无二级菜单
 				$c = $row['controller'];
 				$a = $row['action'];
-				/*if(!in_array($c.'/'.$a, $authlist)){
-					//去掉该一级菜单
-					unset($nav[$key]);
-				}*/
+				
 				if(!$this->checkCA($c, $a)){
 					//去掉该一级菜单
 					unset($nav[$key]);
@@ -233,7 +230,7 @@ class aclModel extends spModel//udModel
                 }
 		
 		
-		$nocheck = spClass('permissionModel')->getCorpNoCheckCA();
+		$nocheck = spClass('permissionModel')->getAdminNoCheckCA();
 		
 		//$nocheck = spClass('permissionModel')->getNoCheckCA();
 		
@@ -241,9 +238,7 @@ class aclModel extends spModel//udModel
 			in_array($action, $nocheck[$controller])){
 			return true;
 		}
-		/*if(in_array($controller, array('main', 'notice', 'advice'))){
-			return true;
-		}*/
+		
 		
 		$auth = $_SESSION['functionauth'];   
 		if(empty($auth)){		//权限为空
