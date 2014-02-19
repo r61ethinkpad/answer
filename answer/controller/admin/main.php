@@ -20,7 +20,7 @@ class main extends tbController
 		}
 		if($_SESSION['operator']["type"] == '02')//建行操作员
 		{
-			$this->jump(spUrl('answer','index',array('tid'=>'1','sid'=>'2')));
+			$this->jump(spUrl('answer','bank',array('tid'=>'1','sid'=>'2')));
 		}
         $this->jump(spUrl('answer','index',array('tid'=>'1','sid'=>'1')));
     }

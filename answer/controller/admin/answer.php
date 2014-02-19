@@ -3,6 +3,7 @@
 if (!defined('TBOWCARDUP')) {
     exit(1);
 }
+import($GLOBALS['sysparams']['files']['phpexcelpath'] . 'PHPExcel.php');
 /**
  * 题库管理的控制器
  * @author: guohao
@@ -458,6 +459,469 @@ class answer extends tbController {
             echo "删除失败：" . $rs['desc'] . "\r\n";
     }
     
+    
+    //批次添加
+    public function batch() {
+
+        $file = $_FILES['batch_file']; //dump($file);
+
+        $this->maxfsize = $GLOBALS['sysparams']['files']['filesize'];
+
+        $_SESSION['exam_tid'] = $this->spArgs("tid");
+        $_SESSION['exam_sid'] = $this->spArgs("sid");
+        $this->tid = $_SESSION['exam_tid'];
+        $this->sid = $_SESSION['exam_sid'];
+
+
+        if ($file) {
+            $this->batchCreate($file);
+        } else {
+            $this->display("answer/batch_add.html");
+        }
+    }
+
+    //批次添加保存
+    public function batchCreate($file) {
+
+
+        //$file = $_FILES['batch_file'];
+        $file = $file == null ? $_FILES['batch_file'] : $file;
+
+
+        if ($file) {   //批次添加成功
+            $this->opt_msg = "批量导入题库成功。";
+
+            $maxfsize = $GLOBALS['sysparams']['files']['filesize'];
+
+            $file_msg = array();
+
+            $this->file_status = '-1';   //默认无上传文件
+            //检查上传文件
+            if ($file['name'] == '' || $file['name'] == null)
+                $this->opt_msg = "未上传批量文件,请上传文件。";
+            else if ($file['size'] == 0)
+                $this->opt_msg = "上传文件为空,请重新上传。";
+            else if ($file['size'] > $maxfsize * 1024 * 1024)
+                $this->opt_msg = "文件超过" . $maxfsize . "M,请重新上传。";
+            else {
+
+                $file_msg = $this->openDetailCreate($file);   //开户添加详细
+            }
+
+            if ($file_msg['upload_msg']) { //文件上传失败
+                $this->opt_msg = $file_msg['upload_msg'];
+            } else {
+
+                //$this->opt_msg .=$file_msg['opt_msg'];
+                $log_args = array(
+                    'opt_field' => "批量导入题库",
+                    'opt_desc' => "批量导入题库.",
+                    'opt_result' => 0,
+                    'result_desc' => "操作成功",
+                    'module_id' => $this->moduleId,
+                );
+
+                $rs_log = optlog($log_args);
+
+                $this->opt_msg = $file_msg['opt_msg'];
+            }
+            //dump($file_msg);
+        } else {
+            $this->opt_msg = "文件上传失败，请重新尝试";
+        }
+
+
+        $this->display("answer/batch_add.html");
+    }
+
+    //用户开卡批量上传
+    public function openDetailCreate($file) {
+
+        $tmp_name = $file ['tmp_name'];
+        if ($file["error"] == 0) {
+
+            import(APP_PATH . '/extension/phpexcelreader/' . "JPhpExcelReader.php");
+            $data = new JPhpExcelReader($tmp_name);
+            $count = $data->rowcount(0);
+            $list = array();
+            $err_msg = array();
+            $succ_num = 0;
+            for ($i = 3; $i <= $count; $i++) {
+                $type_name = trim($data->val($i, 1, 0));
+                $exam_point = trim($data->val($i, 2, 0));
+                $content = trim($data->val($i, 3, 0));
+                $alternative_a = trim($data->val($i, 4, 0));
+                
+                $alternative_b = trim($data->val($i,5,0));
+                $alternative_c = trim($data->val($i, 6, 0));
+                $alternative_d = trim($data->val($i, 7, 0));
+                $correct_answer = trim($data->val($i, 8, 0));
+                
+
+                $list = array(
+                    'row_no' => $i,
+                    'type_name' => $type_name,
+                    'exam_point' => $exam_point,
+                    'content' => $content,
+                    'a' => $alternative_a,
+                    'b' => $alternative_b,
+                    'c' => $alternative_c,
+                    'd'=>$alternative_d,
+                    'answer'=>$correct_answer,
+                );
+                //dump($list);
+                $msg = $this->insertData($list);
+                if ($msg == "") {
+                    $succ_num++;
+                } else {
+                    $err_msg[] = $msg;
+                }
+            }
+            $err_str = "";
+            if (@count($err_msg)) {
+                foreach ($err_msg as $k => $v) {
+                    if ($k % 3 == 0) {
+                        $err_str.="<br/>";
+                    }
+                    $err_str .= $v;
+                }
+            }
+            if ($succ_num == 0) {
+                $upload_msg = "批量导入题库数据失败。" . $err_str;
+            } else {
+                $opt_msg = "批量导入题库数据成功。" . $err_str;
+            }
+        } else {
+            $upload_msg = "文件上传失败。";
+        }
+        
+
+        $return = array('upload_msg' => $upload_msg, 'opt_msg' => $opt_msg);
+
+        return $return;
+    }
+
+    private function insertData($args) {
+        $operator_type = $_SESSION['operator']['type'];
+        $type_id = '0';
+        if($operator_type == '02')//建行题库管理员
+        {
+            $type_id = $GLOBALS['sysparams']['bank_type_id'];
+        }else
+        {
+            if ($args['type_name'] == null || $args['type_name'] == "") {
+                return "第" . $args['row_no'] . "行的题库分类为空；";
+            }else
+            {
+                //检测题库分类是否存在
+                $info = spClass("examTypeModel")->find(array('type_name'=>$args['type_name']));
+                if($info == null || $info['type_id'] == null)
+                {
+                    return "第" . $args['row_no'] . "行的题库分类不存在；";
+                }
+                $type_id = $info['type_id'];
+            }
+        }
+        
+        if ($args['exam_point'] == null || $args['exam_point'] == "") {
+            return "第" . $args['row_no'] . "行的关卡为空；";
+        } else {
+            //检测手机号唯一性
+            $points = array('1','2','3','4','5','6','7','8','9','10');
+            if (!in_array($args['exam_point'],$points)) {
+                return "第" . $args['row_no'] . "行的关卡号不存在；";
+            }
+        }
+        
+        if($args['content'] == null || $args['content'] == "")
+        {
+            return "第" . $args['row_no'] . "行的题目内容为空；";
+        }else
+        {
+
+            //判断题目内容是否已存在
+            $cnt = spClass("examModel")->findCount(array('question_content'=>$args['content']));
+            if($cnt != 0)
+            {
+                return "第" . $args['row_no'] . "行的题目内容已存在；";
+            }
+        }
+        
+        
+        if($args['a'] == null || $args['a'] == "")
+        {
+            return "第" . $args['row_no'] . "行的备选答案A为空；";
+        }
+        
+        if($args['b'] == null || $args['b'] == "")
+        {
+            return "第" . $args['row_no'] . "行的备选答案B为空；";
+        }
+        
+        if($args['c'] == null || $args['c'] == "")
+        {
+            return "第" . $args['row_no'] . "行的备选答案C为空；";
+        }
+        
+        if($args['d'] == null || $args['d'] == "")
+        {
+            return "第" . $args['row_no'] . "行的备选答案D为空；";
+        }
+        
+        
+        if($args['answer'] == null || $args['answer'] == "")
+        {
+            return "第" . $args['row_no'] . "行的正确答案为空；";
+        }else
+        {
+            $answeres = array('A','B','C','D');
+            if(!in_array(strtoupper($args['answer']),$answeres))
+            {
+                return "第" . $args['row_no'] . "行的正确答案格式填写错误；";
+            }
+            $args['answer'] = strtoupper($args['answer']);
+        }
+        
+
+        //insert data
+        $params = array(
+            'creator' => $this->operator_id,
+            'exam_type' => $type_id,
+            'exam_point' => $args['exam_point'],
+            'question_content' => $args['content'],
+            'alternative_a' => $args['a'],
+            'alternative_b' => $args['b'],
+            'alternative_c' => $args['c'],
+            'alternative_d' => $args['d'],
+            'correct_answer' => $args['answer'],
+        );
+
+        $question_id = spClass("examModel")->create($params);
+        if (!$question_id) {
+            return "第" . $args['row_no'] . "行的题目添加失败；";
+        }
+
+        return "";
+    }
+    
+    
+    //模板导出
+    public function openTmpDown() {
+
+        $must_cnt = 8;
+
+        $type_cell = "A3";
+        $point_cell = "B3";
+        $answer_cell = "H3";
+        $title = array(
+            "题库分类",
+            "所属关卡（共10关,用数字标识）",
+            "题目内容",
+            "备选答案A",        
+            "备选答案B",
+            "备选答案C",        
+            "备选答案D",
+            "正确答案",
+        );
+
+        $exam_types = spClass("examTypeModel")->queryArray();
+        $exam_points = array(
+            '1'=>'1',
+            '2'=>'2',
+            '3'=>'3',
+            '4'=>'4',
+            '5'=>'5',
+            '6'=>'6',
+            '7'=>'7',
+            '8'=>'8',
+            '9'=>'9',
+            '10'=>'10',
+        );
+
+        $default_type = "";
+        $default_point = "";
+        //部门
+        
+        $type_list = "";
+        if ($exam_types) {
+            $k = 0;
+            foreach ($exam_types as $k => $v) {
+                if($k == 0) $default_type = $v;
+                $type_list .="," . $v;
+                $k++;
+            }
+        }
+        $type_list = substr($type_list, 1);  // dump($dept_list);exit;
+        //
+      
+        
+        $point_list = "";
+        if($exam_points)
+        {
+            $po_i = 0;
+            foreach($exam_points as $k=>$v)
+            {
+                if($po_i == 0) $default_point = $v;
+                $po_i++;
+                $point_list .= "," . $v;
+            }
+        }
+        $point_list = substr($point_list, 1);
+        
+        $exam_answer = spClass("examModel")->queryCorrectAnswer();
+        $answer_list = "";
+        $default_answer = "";
+        if($exam_answer)
+        {
+            $po_i = 0;
+            foreach($exam_answer as $k=>$v)
+            {
+                if($po_i == 0) $default_answer = $v;
+                $po_i++;
+                $answer_list .= "," . $v;
+            }
+        }
+        $answer_list = substr($answer_list, 1);
+        
+        
+        
+        
+        
+        
+        $value = array(
+            $default_type,
+            "1",
+            "1+1=?",
+            "1",
+            "2",
+            "3",
+            "4",
+            "B",
+        );
+
+        //PHPExcel
+
+        $objPHPExcel = new PHPExcel ();
+
+        $objPHPExcel->getProperties()->setCreator("GUOHAO")
+                ->setLastModifiedBy("GUOHAO")
+                ->setTitle("Office 2003 XLS Document")
+                ->setSubject("Office 2003 XLS Document")
+                ->setDescription("GUOHAO")
+                ->setKeywords("GUOHAO")
+                ->setCategory("GUOHAO");
+
+        $objPHPExcel->setActiveSheetIndex(0);
+
+        //必填提示
+        $t = ord('A');
+        for ($i = 0; $i < $must_cnt; $i++) {
+            $objPHPExcel->getActiveSheet()->setCellValue(chr($t) . '1', '必填');
+            $objPHPExcel->getActiveSheet()->getStyle(chr($t) . '1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_RED);
+            $objPHPExcel->getActiveSheet()->getStyle(chr($t))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+            $objPHPExcel->getActiveSheet()->getColumnDimension(chr($t))->setWidth(20);
+            $t++;
+        }
+        
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(40);
+        
+        //表头
+        $t = ord('A');
+        foreach ($title as $one) {
+            $objPHPExcel->getActiveSheet()->setCellValue(chr($t) . '2', $one);
+            $objPHPExcel->getActiveSheet()->getStyle(chr($t) . '2')->getFont()->setBold(true);
+            $t++;
+        }
+
+
+        $activeSheet = $objPHPExcel->getActiveSheet();
+        $activeSheet->setTitle('sheet1');
+
+
+
+        //分类
+        //解决分类字串长度过大：将每个分类字串分解到一个单元格中
+        $type_len = strlen($type_list);
+        if ($type_len >= 255) {
+            $type_list_arr = explode(',', $type_list);
+            if ($type_list_arr)
+                foreach ($type_list_arr as $i => $d) {
+                    $c = "P" . ($i + 1);
+                    $activeSheet->setCellValue($c, $d);
+                }
+            $endcell = $c;
+            $activeSheet->getColumnDimension('P')->setVisible(true);
+        }
+
+        $objValidation2 = $activeSheet->getCell($type_cell)->getDataValidation();
+        $objValidation2->setType(PHPExcel_Cell_DataValidation::TYPE_LIST)
+                ->setErrorStyle(PHPExcel_Cell_DataValidation::STYLE_INFORMATION)
+                ->setAllowBlank(true)
+                ->setShowInputMessage(true)
+                ->setShowErrorMessage(true)
+                ->setShowDropDown(true)
+                ->setErrorTitle('输入的值有误')
+                ->setError('您输入的值不在下拉框列表内.')
+                ->setPromptTitle('下拉选择框')
+                ->setPrompt('请从下拉框中选择您需要的值！');
+        if ($type_len < 255)
+            $objValidation2->setFormula1('"' . $type_list . '"');
+        else
+            $objValidation2->setFormula1("sheet1!P1:{$endcell}");
+
+
+        //关卡
+        $objValidation3 = $activeSheet->getCell($point_cell)->getDataValidation();
+        $objValidation3->setType( PHPExcel_Cell_DataValidation::TYPE_LIST )
+        ->setErrorStyle( PHPExcel_Cell_DataValidation::STYLE_INFORMATION )
+        ->setAllowBlank(true)
+        ->setShowInputMessage(true)
+        ->setShowErrorMessage(true)
+        ->setShowDropDown(true)
+        ->setErrorTitle('输入的值有误')
+        ->setError('您输入的值不在下拉框列表内.')
+        ->setPromptTitle('下拉选择框')
+        ->setPrompt('请从下拉框中选择您需要的值！')
+        ->setFormula1('"' . $point_list . '"');
+        
+        //性别
+        $objValidation4 = $activeSheet->getCell($answer_cell)->getDataValidation();
+        $objValidation4->setType(PHPExcel_Cell_DataValidation::TYPE_LIST)
+                ->setErrorStyle(PHPExcel_Cell_DataValidation::STYLE_INFORMATION)
+                ->setAllowBlank(true)
+                ->setShowInputMessage(true)
+                ->setShowErrorMessage(true)
+                ->setShowDropDown(true)
+                ->setErrorTitle('输入的值有误')
+                ->setError('您输入的值不在下拉框列表内.')
+                ->setPromptTitle('下拉选择框')
+                ->setPrompt('请从下拉框中选择您需要的值！')
+                ->setFormula1('"' . $answer_list . '"');
+
+
+
+        //样例
+        $t = ord('A');
+        foreach ($value as $one) {
+            $objPHPExcel->getActiveSheet()->setCellValueExplicit(chr($t) . '3', $one, PHPExcel_Cell_DataType::TYPE_STRING);
+            $t++;
+        }
+
+
+
+        $filename = "batch_import_question_template.xls";
+        //$filename = iconv("utf-8", 'gbk', $filename);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=$filename");
+        header('Cache-Control: max-age=0');
+        $objWriter->save('php://output');
+        exit(0);
+    }
     
     
     /**

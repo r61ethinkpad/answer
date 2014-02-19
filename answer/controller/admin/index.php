@@ -71,7 +71,7 @@ class index extends tbController {
                     $_SESSION["login"] = true; //已经登录
                     
                     $this->sessionOperator($rs['data']);
-                    
+                    $this->sessionFunctionAuth($rs['data']);
                     
                     
                     $logargs = array(
@@ -105,15 +105,88 @@ class index extends tbController {
         if ($operatorInfo) {
             $_SESSION['operator']["id"] = $operatorInfo['operator_id'];
             $_SESSION['operator']["name"] = $operatorInfo['name'];
-            $_SESSION['operator']["type"] = $operatorInfo['type'];
-           
-            $_SESSION['operator']["login_time"] = date('H:i:s');
-           
+            $_SESSION['operator']["type"] = $operatorInfo['type'];          
+            $_SESSION['operator']["login_time"] = date('H:i:s');          
             //超级管理员 or 校企级管理员
             $_SESSION['operator']['admin'] = 1;
             
+            
         }
         return true;
+    }
+    
+    //操作员功能权限放session
+    private function sessionFunctionAuth($operator) {
+        if (@count($operator) == 0 || $operator == null) {
+            exit;
+        }
+        
+        //得到当前操作员的功能权限
+        $list = $this->operatorAuth($operator['type']);
+        
+        //$auth = spClass('operatorModel')->getAuth($operator_id, 0);
+        if($_SESSION['operator']['type'] == '00'){//超级管理员包括 0
+            array_push($list, '0');
+        }
+        
+        if(@count($list) == 0)
+        {
+            return false;            
+        }
+        $_SESSION['functionauth'] = $list;
+
+        //权限列表放session里
+        $permission = spClass('permissionModel')->getCorpPermission();
+        
+        $authlist = array();
+        foreach ($list as $id => $authid) {
+            $child = $permission[$authid]['children'];
+            foreach ($child as $childkey => $value) {
+                $authlist[] = $value;
+            }
+        }
+        $authlist = array_unique($authlist);
+        $_SESSION['authlist'] = $authlist;
+        
+        return true;
+    }
+    
+    private function operatorAuth($type)
+    {
+        $list = array();
+        switch ($type) {
+            case '01'://自定义题库管理员
+                $list = array(
+                    'custom_exam_manage',
+                );
+                break;
+            case '02'://建行题库管理员
+                $list = array(
+                    'bank_exam_manage',
+                );
+                break;
+            case '00'://超级管理员
+                $list = array(
+                    'system_optlog',
+                    'operator_manage',
+                    'custom_exam_manage',
+                    'bank_exam_manage',
+                    'answer_record_view',
+                    'exam_type_manage',
+                    'game_manage',
+                );
+                break;
+            case '04'://建行客户
+                $list = array(
+                    'game_manage',
+                );
+                break;
+            default:
+                $list = array();
+                break;
+        }
+        
+        return $list;
     }
 
 
