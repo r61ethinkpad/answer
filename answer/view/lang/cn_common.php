@@ -123,7 +123,7 @@ return array(
     //用户管理
     'nav_sub_user_manage' => '用户管理',
     
-    'project_name'=>'有奖答题系统',
+    'project_name'=>'有奖答题题库管理系统',
 	
 	//导航栏
 	'nav_exam'=>'题库管理',
