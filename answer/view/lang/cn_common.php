@@ -135,6 +135,7 @@ return array(
 	'nav_answer_record'=>'用户答题记录',
 	'nav_operator_manage'=>'管理员管理',
         'nav_opt_log'=>'管理员日志',
+        'nav_batch_exam'=>'批量导入题库',
 	//题库管理
 	'any_exam_type'=>'任意题库分类',
 	'any_exam_point'=>'任意关卡',
