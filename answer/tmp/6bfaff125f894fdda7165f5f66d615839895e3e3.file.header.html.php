@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-16 16:03:03
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-19 09:03:26
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/../inc/header.html" */ ?>
-<?php /*%%SmartyHeaderCode:337266290530070b7951895-39884840%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1220286627530402de833be1-91938496%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '6bfaff125f894fdda7165f5f66d615839895e3e3' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/../inc/header.html',
-      1 => 1392436174,
+      1 => 1392771804,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '337266290530070b7951895-39884840',
+  'nocache_hash' => '1220286627530402de833be1-91938496',
   'function' => 
   array (
   ),
@@ -24,10 +24,10 @@ $_smarty_tpl->decodeProperties(array (
 <!-- header start -->
 <div id="header">
     <div id="header-top">
-        <div class="floatL">
-            <img src="view/<?php echo $_smarty_tpl->getVariable('tplName')->value;?>
-/images/login/logo.gif"/>
-            
+        <div class="floatL" style="font-size: 48px;font-weight: bolder;">
+<!--            <img src="view/<?php echo $_smarty_tpl->getVariable('tplName')->value;?>
+/images/login/logo.gif"/>-->
+            答题有奖题库管理系统
         </div>
         <?php if ($_smarty_tpl->getVariable('msgFlag')->value==true){?>
 		<div class="menu">

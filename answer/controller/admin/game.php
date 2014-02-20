@@ -5,12 +5,10 @@ if (!defined('TBOWCARDUP')) {
 }
 
 /**
- * 病史管理的控制器
+ * 答题游戏的控制器
  * @author: guohao
  */
-class record extends tbController {
-
-    public $moduleId = '4'; //病史管理
+class game extends tbController {
 
     public function __construct() {
         parent::__construct();
@@ -21,24 +19,16 @@ class record extends tbController {
      */
     public function index() {
 
-        $_SESSION['history_tid'] = $this->spArgs("tid");
-        $_SESSION['history_sid'] = $this->spArgs("sid");
+        
 
-        $this->tid = $_SESSION['history_tid'];
-        $this->sid = $_SESSION['history_sid'];
-
-
-        //$this->growth_period = spClass("growthPeriodModel")->queryArray();
-
-        $this->province_list = $GLOBALS['dataconfig']['province_code'];
-
-        $this->level_list = spClass("historyModel")->getLevelArray();
-
-        $acl = spClass('aclModel');
-        $this->authconfig = array(
-            'create' => $acl->checkCA('history', 'create'),
-        );
-        $this->display("history/index.html");
+        $this->exam_types = spClass("examTypeModel")->queryArray();
+        dump($this->exam_types);
+        $this->displayPartial("game/index.html");
+    }
+    
+    public function enterGame()
+    {
+        $this->displayPartial("game/index.html");
     }
 	
 }

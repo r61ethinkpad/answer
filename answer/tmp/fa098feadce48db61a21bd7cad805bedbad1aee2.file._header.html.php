@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-16 20:46:59
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-19 09:26:41
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/../inc/_header.html" */ ?>
-<?php /*%%SmartyHeaderCode:2843659105300b343843b83-07564856%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19479716995304085133c412-46888879%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'fa098feadce48db61a21bd7cad805bedbad1aee2' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/../inc/_header.html',
-      1 => 1392554816,
+      1 => 1392773198,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2843659105300b343843b83-07564856',
+  'nocache_hash' => '19479716995304085133c412-46888879',
   'function' => 
   array (
   ),
@@ -21,7 +21,8 @@ $_smarty_tpl->decodeProperties(array (
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>有奖答题系统</title>
+<title><?php echo T('project_name');?>
+</title>
 <link href="view/<?php echo $_smarty_tpl->getVariable('tplName')->value;?>
 /css/admin/frame_reset.css" rel="stylesheet" type="text/css" />
 <link href="view/<?php echo $_smarty_tpl->getVariable('tplName')->value;?>

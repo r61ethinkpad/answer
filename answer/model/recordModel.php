@@ -22,6 +22,11 @@ class recordModel extends spModel {
     public static function queryList($args)
     {
         $condition = "";
+        if($args['user_id'] != null && $args['user_id'] != "")
+        {
+            if($condition!="") $condition .= " AND ";
+            $condition .= " user_id = '".$args['user_id']."'";
+        }
         
         if($args['over_point'] != null && $args['over_point'] != "")
         {

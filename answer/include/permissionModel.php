@@ -56,6 +56,10 @@ class permissionModel extends spModel {
                     'answer/update',
                     'answer/del',
                     'answer/detail',
+                    //batch import data
+                    'answer/batch',
+                    'answer/batchCreate',
+                    'answer/openTmpDown',
                 )
             ),
             'bank_exam_manage' => array(
@@ -70,6 +74,11 @@ class permissionModel extends spModel {
                     'answer/update',
                     'answer/del',
                     'answer/detail',
+                    
+                    //batch import data
+                    'answer/batch',
+                    'answer/batchCreate',
+                    'answer/openTmpDown',
                 )
             ),
             'answer_record_view' => array(

@@ -55,6 +55,12 @@ class navigationModel extends spModel {
                             "action" => "bank",
                             "sid" => 2,
                         ),
+                        array(
+                            "name" => T("nav_batch_exam"),
+                            "controller" => "answer",
+                            "action" => "batch",
+                            "sid" => 3,
+                        ),
 					),
                 ),
                 

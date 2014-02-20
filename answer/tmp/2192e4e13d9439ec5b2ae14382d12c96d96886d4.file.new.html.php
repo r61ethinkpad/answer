@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 21:37:11
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 23:50:14
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/operator/new.html" */ ?>
-<?php /*%%SmartyHeaderCode:45124405530362074cc1e3-67972241%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:117945026953038136dee474-31711699%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2192e4e13d9439ec5b2ae14382d12c96d96886d4' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/operator/new.html',
-      1 => 1392730578,
+      1 => 1392730756,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '45124405530362074cc1e3-67972241',
+  'nocache_hash' => '117945026953038136dee474-31711699',
   'function' => 
   array (
   ),
@@ -34,7 +34,7 @@ $_smarty_tpl->decodeProperties(array (
 	<!--<input type="submit" value="提交">-->
        	<table class="formList">
             <tr>
-                <td class="name"><span class='colRed'>*</span>操作员帐号：</td>
+                <td class="name"><span class='colRed'>*</span>管理员帐号：</td>
                 <td class="value">
 					<input name="operator_id" type="text" class="input_text" maxlength="20" value="<?php echo $_smarty_tpl->getVariable('args')->value['operator_id'];?>
 "/>
@@ -63,7 +63,7 @@ $_smarty_tpl->decodeProperties(array (
 				</td>
 			</tr>
 			<tr  class="line">
-                <td class="name">操作员类型：</td>
+                <td class="name">管理员类型：</td>
                 <td class="value">
                     <select name="type" id="type" class="input_text">
                         <option value="">--选择--</option>
@@ -145,12 +145,12 @@ $(document).ready(function(){
 					}
 					else if (data.status == '0'){
 						//alert('操作员 '+data.data+' 添加成功');
-                                                $('#udError').html('操作员 '+data.data+' 添加成功').show();
+                                                $('#udError').html('管理员 '+data.data+' 添加成功').show();
 						//window.location.href='<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['spUrl'][0][0]->__template_spUrl(array('c'=>'operator','a'=>'operAuth','tid'=>$_smarty_tpl->getVariable('tid')->value,'sid'=>$_smarty_tpl->getVariable('sid')->value),$_smarty_tpl);?>
 &operator_id='+data.data;
 					}
 					else{
-						$('#udError').html('添加操作员失败：'+ data.msg + '(' + data.status + ')').show();
+						$('#udError').html('添加管理员失败：'+ data.msg + '(' + data.status + ')').show();
 					}
 				},
 				error:function(){

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 22:16:04
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 23:56:51
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/operator/passwd.html" */ ?>
-<?php /*%%SmartyHeaderCode:52548475453036b245a5145-57187339%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:139047747530382c37f3987-53255654%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1c6bac8e70cc937191278e6917b944b43970b493' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/operator/passwd.html',
-      1 => 1387854425,
+      1 => 1392738764,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '52548475453036b245a5145-57187339',
+  'nocache_hash' => '139047747530382c37f3987-53255654',
   'function' => 
   array (
   ),
@@ -34,7 +34,7 @@ $_smarty_tpl->decodeProperties(array (
 			<tr>
                 <td class="name"><span class='colRed'>*</span>新密码：</td>
 				<td class="value">
-					<input name="passwd" id="passwd" type="password" class="input_text" maxlength="20" value=""/>
+					<input name="password" id="password" type="password" class="input_text" maxlength="20" value=""/>
 					<span class="colOrange"><?php echo $_smarty_tpl->getVariable('error_array')->value['passwd'];?>
 </span>
 				</td>
@@ -73,8 +73,8 @@ $(document).ready(function(){
 		$('#_operpasswd_form').find('.tip').hide();
 		$("#_operpasswd_form").validate({
 			rules: {
-				passwd: { required:true, schar:true, minlength:6, maxlength:20},
-				passwd2: { required:true, equalTo:"#passwd", minlength:6, maxlength:20}
+				password: { required:true, schar:true, minlength:6, maxlength:20},
+				passwd2: { required:true, equalTo:"#password", minlength:6, maxlength:20}
 			},
 			messages:{
 				passwd2: {equalTo:'两次输入不一致'}

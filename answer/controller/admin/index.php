@@ -151,6 +151,18 @@ class index extends tbController {
         return true;
     }
     
+    /**
+     * 
+     * @param type $type
+     * @return array
+     * type:
+     * 00-超级管理员
+     * 01-自定义题库管理员
+     * 02-建行题库管理员
+     * 03
+     * 04-银行客户
+     * 05-系统客户-查询客户答题积分的
+     */
     private function operatorAuth($type)
     {
         $list = array();
@@ -181,6 +193,11 @@ class index extends tbController {
                     'game_manage',
                 );
                 break;
+            case '05'://系统客户查询用户的答题记录
+                $list = array(
+                    'answer_record_view',
+                );
+                break;
             default:
                 $list = array();
                 break;
@@ -195,5 +212,107 @@ class index extends tbController {
         $this->errorinfo = '您没有权限使用这个功能！';
         $this->display("../inc/error.html");
     }
+    
+    
+    public function jumpToError()
+    {
+        $no = $this->spArgs("msg_no");
+        switch ($no) {
+            case '1':
+                $this->errorinfo = "验证码错误";
+                break;
+            case '2':
+                $this->errorinfo = "参数格式错误";
+                break;
+            case '3':
+                $this->errorinfo = "银行客户账户为空";
+                break;
+            case '4':
+                $this->errorinfo = "客户的操作类型不能确定";
+                break;
+            case '5':
+                $this->errorinfo = "验证码错误";
+                break;
+
+            default:
+                $this->errorinfo = "未知错误";
+                break;
+        }
+        //dump($this->errorinfo);
+        $this->displayPartial("../inc/so_error.html");
+    }
+    
+    /**
+     * 单点登录。
+     * 用途： 客户玩游戏和父平台 查询用户的得分，都通过这个链接登录
+     * 
+     * 格式。key=base64_encode(pwd+json_encode(data))
+     * pwd = 666666
+     * data = array(
+     *      'user_id'=>'100001',
+     *      'opt_type'=>'1',// '1'=>game '2'=> get score
+     *      'game_date'=>'20140219',//查询积分时用，可以指定某一天的积分，空，则查询当前用户所有的答题记录
+     * )
+     */
+    public function soLogin()
+    {
+        $sync_pwd = '666666';//单点登录协议密码
+        $default_opt_type = array('1','2');
+        $key = trim($this->spArgs("key"));
+        if($key == null || $key == "")
+        {
+            $this->jump(spUrl('index', 'jumpToError'));
+        }
+        $key_content = base64_decode($key);
+        $verdify_key = substr($key_content, 0,6);
+        if($verdify_key != $sync_pwd)
+        {
+            $this->jump(spUrl('index', 'jumpToError',array("msg_no"=>"1")));
+            
+        }
+        $data = (array)json_decode(substr($key_content, 6));
+        if(!is_array($data))
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'2')));
+        }
+        
+        $user_id = $data['user_id'];
+        $opt_type = $data['opt_type'];
+        $game_date = $data['game_date'];
+        
+        if($user_id == null || $user_id == "")
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'3')));
+        }
+        
+        if($opt_type == null || $opt_type == "" || !in_array($opt_type, $default_opt_type))
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'4')));
+        }
+        
+        //把客户信息存入session中
+        $_SESSION['so_login']['user_id'] = $user_id;
+        $_SESSION['so_login']['name'] = "银行答题客户";
+        $_SESSION['so_login']['type'] = $opt_type;
+        $_SESSION['so_login']['login_time'] = date('H:i:s');
+        
+        $_SESSION["login"] = true; //已经登录   
+        
+        if($opt_type == '1')//go to game
+        {
+            $this->sessionFunctionAuth(array('type'=>'04'));
+            
+            $this->jump(spUrl('game','index'));
+        }else if ($opt_type == '2')
+        {
+            $this->sessionFunctionAuth(array('type'=>'05'));
+            $this->jump(spUrl('record','index'));
+        }
+       
+    }
+    
+    
+    
+    
 
 }

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 23:41:13
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-19 17:10:06
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/record/index.html" */ ?>
-<?php /*%%SmartyHeaderCode:58439450253037f1963ae68-45295330%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1326469062530474ee647054-86625511%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'fc68f959c20c47cb357b2c8ef9da3ad4a4f880f8' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/record/index.html',
-      1 => 1392738070,
+      1 => 1392801002,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '58439450253037f1963ae68-45295330',
+  'nocache_hash' => '1326469062530474ee647054-86625511',
   'function' => 
   array (
   ),
@@ -35,6 +35,7 @@ $_smarty_tpl->decodeProperties(array (
         <div class="tab-main">
             <form id='_query_form'>
                 <div class="tool-box">
+                    <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
                     <select name="over_point" id="over_point">
                         <option value="" selected="selected" />--截至关卡--</option>
                         <?php  $_smarty_tpl->tpl_vars['value'] = new Smarty_Variable;
