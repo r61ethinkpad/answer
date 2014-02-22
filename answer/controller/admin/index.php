@@ -251,7 +251,7 @@ class index extends tbController {
      * data = array(
      *      'user_id'=>'100001',
      *      'opt_type'=>'1',// '1'=>game '2'=> get score
-     *      'query_user'=>'20140219',//查询用户积分时用
+     *      'query_user'=>'100001',//查询用户积分时用
      * )
      */
     public function soLogin()
