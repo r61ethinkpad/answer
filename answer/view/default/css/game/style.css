@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+/* layout
+--------------------------------------------------------------------*/
+body { background:url(../../images/game/bg.gif); font:normal 18px "MicroSoft YaHei","SimHei"; color:#5e3c16; text-align:center;}
+.question_box {
+	margin:0 auto;
+	width:549px;
+	text-align:left;
+	position:relative;
+}
+p { line-height:24px; text-align:justify; text-justify:inter-ideograph; clear:both; overflow:hidden; margin-left:7px; font-weight:bold; font-size:20px;}
+p a { width:438px; display:block; font-size:16px; font-weight:normal; cursor:pointer;}
+p a:hover { color:#F60;}
+.p_a_selected{color:#F60;}
+a {color:#2b2b2b; text-decoration:none;}
+a:active { star:expression(this.onFocus=this.blur());}
+:focus { outline:0;}
+.floatL { float:left;}
+.floatR { float:right;}
+.floatR .right { width:24px; height:24px; padding-left:26px; background:url(../../images/game/right.png) no-repeat; color:#063;}
+.floatR .wrong { width:24px; height:24px; padding-left:26px; background:url(../../images/game/wrong.png) no-repeat; color:#F00; margin-left:10px;}
+.colRed { color:#F60; margin-bottom:20px;}
+
+/* question_box
+--------------------------------------------------------------------*/
+.question_box { background:url(../../images/game/bg.png) no-repeat; width:449px; height:334px; padding:130px 50px 30px; margin-top:20px;}
+.question_box .question_title { margin-left:7px;}
+.question_box .question_main { margin-top:20px;}
+.question_box .question_main .btn_box { position:absolute; bottom:50px; text-align:center; width:438px;}
+.info { font-size:14px; width:549px; margin:5px auto; line-height:18px; font-weight:normal;}
+.question_box .question_main .btn_box .btn_blue, .question_box .question_main .btn_box .btn_red
+{ float:none; display:inline-block;}
+.question_box .question_main .wrongTxt p { text-align:center; margin-top:5px;}
+
+.btn_blue { width:135px; height:54px; line-height:54px; color:#fff; background:url(../../images/game/btn_blue.png) no-repeat; float:left; margin:10px 7px 0 7px; text-align:center; cursor:pointer; font-size:24px;}
+.btn_blue:hover { background-position:0 -54px;}
+.btn_blue_select { background-position:0 -54px;}
+.btn_red { width:135px; height:54px; line-height:54px; color:#fff; background:url(../../images/game/btn_red.png) no-repeat; float:left; margin:10px 7px 0 7px; text-align:center; cursor:pointer; font-size:24px;}
+.btn_red:hover { background-position:0 -54px;}
+.btn_start { width:170px; height:68px; background:url(../../images/game/btn_start.png) no-repeat; display:inline-block; cursor:pointer;}
+.btn_start:hover { background-position:0 -68px;}
+
+

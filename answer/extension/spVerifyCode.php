@@ -101,7 +101,7 @@ class spVerifyCode {
 	}
 
 	protected function getcolor($color) {
-		$color = eregi_replace ("^#","",$color);
+		$color = str_replace("#","",$color);
 		$r = $color[0].$color[1];
 		$r = hexdec ($r);
 		$b = $color[2].$color[3];

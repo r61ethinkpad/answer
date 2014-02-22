@@ -17,6 +17,22 @@ class recordModel extends spModel {
         $this->table = $table ? $table : "answer_record";
         parent::__construct();
     }
+
+    public static function GetPointFieldName($point){
+        $ar=array(
+            '1'=>'first_scores',
+            '2'=>'second_scores',
+            '3'=>'third_scores',
+            '4'=>'fourth_scores',
+            '5'=>'fifth_scores',
+            '6'=>'sixth_scores',
+            '7'=>'seventh_scores',
+            '8'=>'eighth_scores',
+            '9'=>'ninth_scores',
+            '10'=>'tenth_scores',
+        );
+        return $ar[$point];
+    }
     
 
     public static function queryList($args)
@@ -138,6 +154,26 @@ class recordModel extends spModel {
                 '_pg_'=>$pager
             );
         
+    }
+
+    public static function add($user_id){
+        $row=array(
+            'user_id'=>$user_id,
+            'answer_time'=>date("Y-m-d H:i:s"),
+            'record_time'=>date("Y-m-d H:i:s"),
+        );
+        if(count($_SESSION['records'])){
+            $over_point=null;
+            foreach($_SESSION['records'] as $k=>$v){
+                $row[self::GetPointFieldName($k)]=$v;
+                $over_point=$k;
+            }
+            $row['over_point']=$over_point;
+            //print_r($row);
+            return spClass("recordModel")->create($row);
+        }else{
+            return false;
+        }
     }
 
 }

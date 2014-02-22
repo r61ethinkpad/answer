@@ -95,7 +95,6 @@ class permissionModel extends spModel {
                 'children' => array(
                     'answerType/index',
                     'answerType/queryList',
-                    
                     'answerType/create',
                     'answerType/save',
                     'answerType/del'
@@ -107,7 +106,9 @@ class permissionModel extends spModel {
                 'description' => '答题游戏管理',
                 'children' => array(
                     'game/index',
-                    'game/next',
+                    'game/question',
+                    'game/answer',
+                    'game/right',
                 )
             ),
         );

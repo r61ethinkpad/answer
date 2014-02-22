@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="08e1dc6d-2866-445b-9040-61af39bdff1a" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/bg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/btn_blue.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/btn_red.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/btn_start.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/cry.PNG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/love.PNG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/right.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/images/game/wrong.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/admin/game/over.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/admin/game/question.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/css/game/reset.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/admin/game/right.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/css/game/style.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/answer/view/default/admin/game/wrong.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/188973a85c279c5b7051d0d842448f68f7a5d111.file.footer.html.php" afterPath="$PROJECT_DIR$/answer/tmp/188973a85c279c5b7051d0d842448f68f7a5d111.file.footer.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/1c6bac8e70cc937191278e6917b944b43970b493.file.passwd.html.php" afterPath="$PROJECT_DIR$/answer/tmp/1c6bac8e70cc937191278e6917b944b43970b493.file.passwd.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/1f94908a074925f4cc316d6bbb46f51a1a27272e.file.create.html.php" afterPath="$PROJECT_DIR$/answer/tmp/1f94908a074925f4cc316d6bbb46f51a1a27272e.file.create.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/2192e4e13d9439ec5b2ae14382d12c96d96886d4.file.new.html.php" afterPath="$PROJECT_DIR$/answer/tmp/2192e4e13d9439ec5b2ae14382d12c96d96886d4.file.new.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/34202a8ce9c29de58db1aff38e04cdb1c16889bd.file.error.html.php" afterPath="$PROJECT_DIR$/answer/tmp/34202a8ce9c29de58db1aff38e04cdb1c16889bd.file.error.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/3c9e9443b82c8d359d6ee699cd05d92208f9c6cd.file.index.html.php" afterPath="$PROJECT_DIR$/answer/tmp/3c9e9443b82c8d359d6ee699cd05d92208f9c6cd.file.index.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/3d28a19f8438fa5c7cd254e02b87e90d909264f0.file._list.html.php" afterPath="$PROJECT_DIR$/answer/tmp/3d28a19f8438fa5c7cd254e02b87e90d909264f0.file._list.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/460052961b4912d25539aec6b87816f044dec37f.file._list.html.php" afterPath="$PROJECT_DIR$/answer/tmp/460052961b4912d25539aec6b87816f044dec37f.file._list.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/49bebc2745d2e41b2df1226b78711e5a815f9cea.file.page.html.php" afterPath="$PROJECT_DIR$/answer/tmp/49bebc2745d2e41b2df1226b78711e5a815f9cea.file.page.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/534ea36d36978a601b1b669ca1b0f7f8613db36a.file.so_error.html.php" afterPath="$PROJECT_DIR$/answer/tmp/534ea36d36978a601b1b669ca1b0f7f8613db36a.file.so_error.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/53db554b6e3f64bff6e80bb12b802541208ea55b.file.create.html.php" afterPath="$PROJECT_DIR$/answer/tmp/53db554b6e3f64bff6e80bb12b802541208ea55b.file.create.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/59985464ada261281472db7b36c56f9973621cb4.file._list.html.php" afterPath="$PROJECT_DIR$/answer/tmp/59985464ada261281472db7b36c56f9973621cb4.file._list.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/59b5e8441e15a236cd68b95bc6d68436b3ddf3a7.file.index.html.php" afterPath="$PROJECT_DIR$/answer/tmp/59b5e8441e15a236cd68b95bc6d68436b3ddf3a7.file.index.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/5d152ead39de5d2acaab45f3e3655454e158ac05.file._list.html.php" afterPath="$PROJECT_DIR$/answer/tmp/5d152ead39de5d2acaab45f3e3655454e158ac05.file._list.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/6bfaff125f894fdda7165f5f66d615839895e3e3.file.header.html.php" afterPath="$PROJECT_DIR$/answer/tmp/6bfaff125f894fdda7165f5f66d615839895e3e3.file.header.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/710c9a21632a1af7bbda605b5879d2ff853d9564.file._list.html.php" afterPath="$PROJECT_DIR$/answer/tmp/710c9a21632a1af7bbda605b5879d2ff853d9564.file._list.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/716917dc5cb166f4c815e83801c60c28e33f17f2.file.passwd.html.php" afterPath="$PROJECT_DIR$/answer/tmp/716917dc5cb166f4c815e83801c60c28e33f17f2.file.passwd.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/72c8c59158134b4d93cf723b3c6fa7d308f6fe66.file.index.html.php" afterPath="$PROJECT_DIR$/answer/tmp/72c8c59158134b4d93cf723b3c6fa7d308f6fe66.file.index.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/787facf35d52ec0f6e3e4aed22b9bf8f4327ef8f.file.login.html.php" afterPath="$PROJECT_DIR$/answer/tmp/787facf35d52ec0f6e3e4aed22b9bf8f4327ef8f.file.login.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/7bef11dfd4b7d152b71cee88cb6b3c4e22dd7a57.file.index.html.php" afterPath="$PROJECT_DIR$/answer/tmp/7bef11dfd4b7d152b71cee88cb6b3c4e22dd7a57.file.index.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/84712e51ba1e063db68a4a99dd5784f470fcabd7.file.index.html.php" afterPath="$PROJECT_DIR$/answer/tmp/84712e51ba1e063db68a4a99dd5784f470fcabd7.file.index.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/8aa9d51818cf709d9a35381fbd8129d6da832abf.file.edit.html.php" afterPath="$PROJECT_DIR$/answer/tmp/8aa9d51818cf709d9a35381fbd8129d6da832abf.file.edit.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/8af4c489e9c964e2e373c6dbdd5a91153b7c5f4e.file._topTitle.html.php" afterPath="$PROJECT_DIR$/answer/tmp/8af4c489e9c964e2e373c6dbdd5a91153b7c5f4e.file._topTitle.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/8f779a4c25585c34299e1ac3be1f63faca9aebc6.file._login.html.php" afterPath="$PROJECT_DIR$/answer/tmp/8f779a4c25585c34299e1ac3be1f63faca9aebc6.file._login.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/9922cabab254d29ae843455df72d5d473a540710.file.bank.html.php" afterPath="$PROJECT_DIR$/answer/tmp/9922cabab254d29ae843455df72d5d473a540710.file.bank.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/a6206c2216f1d76e8b8af5b86271782731ad1b10.file.batch_add.html.php" afterPath="$PROJECT_DIR$/answer/tmp/a6206c2216f1d76e8b8af5b86271782731ad1b10.file.batch_add.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/add2ed12e7c50fbe42a6d3fa93d5cf97b928bdc4.file.detail.html.php" afterPath="$PROJECT_DIR$/answer/tmp/add2ed12e7c50fbe42a6d3fa93d5cf97b928bdc4.file.detail.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/c3726fcee8c05eace18bcf9e92e86288494930cf.file.edit.html.php" afterPath="$PROJECT_DIR$/answer/tmp/c3726fcee8c05eace18bcf9e92e86288494930cf.file.edit.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/c40893d41d72656fcee6214d929b7cbccd69572f.file._login_header.html.php" afterPath="$PROJECT_DIR$/answer/tmp/c40893d41d72656fcee6214d929b7cbccd69572f.file._login_header.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/config/config.php" afterPath="$PROJECT_DIR$/answer/config/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/d8b9f0c934c7a6bb0b8f45a582884af9cdcfae28.file._name.html.php" afterPath="$PROJECT_DIR$/answer/tmp/d8b9f0c934c7a6bb0b8f45a582884af9cdcfae28.file._name.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/e1523fe56087a582b651d1d1bb31ba8f408b6b78.file._list.html.php" afterPath="$PROJECT_DIR$/answer/tmp/e1523fe56087a582b651d1d1bb31ba8f408b6b78.file._list.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/e9a63ba62684ad297e4bce30541461e85397d2a0.file.index.html.php" afterPath="$PROJECT_DIR$/answer/tmp/e9a63ba62684ad297e4bce30541461e85397d2a0.file.index.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/model/examModel.php" afterPath="$PROJECT_DIR$/answer/model/examModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/f8d000665d533faebce87fb57555d37a5e995308.file._topTitle.html.php" afterPath="$PROJECT_DIR$/answer/tmp/f8d000665d533faebce87fb57555d37a5e995308.file._topTitle.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/fa098feadce48db61a21bd7cad805bedbad1aee2.file._header.html.php" afterPath="$PROJECT_DIR$/answer/tmp/fa098feadce48db61a21bd7cad805bedbad1aee2.file._header.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/tmp/fc68f959c20c47cb357b2c8ef9da3ad4a4f880f8.file.index.html.php" afterPath="$PROJECT_DIR$/answer/tmp/fc68f959c20c47cb357b2c8ef9da3ad4a4f880f8.file.index.html.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/controller/admin/game.php" afterPath="$PROJECT_DIR$/answer/controller/admin/game.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/view/default/admin/game/index.html" afterPath="$PROJECT_DIR$/answer/view/default/admin/game/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/view/default/admin/game/next.html" afterPath="$PROJECT_DIR$/answer/view/default/admin/game/next.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/include/permissionModel.php" afterPath="$PROJECT_DIR$/answer/include/permissionModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/model/recordModel.php" afterPath="$PROJECT_DIR$/answer/model/recordModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/extension/spVerifyCode.php" afterPath="$PROJECT_DIR$/answer/extension/spVerifyCode.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/answer/include/tbController.php" afterPath="$PROJECT_DIR$/answer/include/tbController.php" />
+    </list>
+    <ignored path="answer.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="answer" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="game.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answer/controller/admin/game.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="98" column="17" selection-start="3435" selection-end="3435" vertical-scroll-proportion="-6.58" vertical-offset="1141" max-vertical-offset="1680">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="over.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/over.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="26" selection-start="576" selection-end="576" vertical-scroll-proportion="-3.0" vertical-offset="78" max-vertical-offset="630">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="next.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/next.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="14" selection-start="940" selection-end="940" vertical-scroll-proportion="-11.875" vertical-offset="0" max-vertical-offset="495">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="right.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/right.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="10" selection-start="859" selection-end="859" vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="555">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wrong.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/wrong.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="10" selection-start="873" selection-end="873" vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="555">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="standard_8.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_8.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="975" column="37" selection-start="31218" selection-end="31218" vertical-scroll-proportion="-10.791667" vertical-offset="14366" max-vertical-offset="16530">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="examModel.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answer/model/examModel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="158" column="38" selection-start="4765" selection-end="4765" vertical-scroll-proportion="-11.041667" vertical-offset="2105" max-vertical-offset="3240">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="question.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/question.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="8" selection-start="1774" selection-end="1774" vertical-scroll-proportion="-16.25" vertical-offset="165" max-vertical-offset="810">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="8" selection-start="1099" selection-end="1099" vertical-scroll-proportion="0.5" vertical-offset="129" max-vertical-offset="705">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/answer/controller/admin/index.php" />
+        <option value="$PROJECT_DIR$/answer/config/config.php" />
+        <option value="$PROJECT_DIR$/answer/extension/spVerifyCode.php" />
+        <option value="$PROJECT_DIR$/answer/view/default/admin/game/right.html" />
+        <option value="$PROJECT_DIR$/answer/view/default/admin/game/wrong.html" />
+        <option value="$PROJECT_DIR$/answer/view/default/css/game/style.css" />
+        <option value="$PROJECT_DIR$/answer/include/permissionModel.php" />
+        <option value="$PROJECT_DIR$/answer/include/tbController.php" />
+        <option value="$PROJECT_DIR$/answer/model/recordModel.php" />
+        <option value="$PROJECT_DIR$/answer/model/examModel.php" />
+        <option value="$PROJECT_DIR$/answer/view/default/admin/game/next.html" />
+        <option value="$PROJECT_DIR$/answer/view/default/admin/game/over.html" />
+        <option value="$PROJECT_DIR$/answer/controller/admin/game.php" />
+        <option value="$PROJECT_DIR$/answer/view/default/admin/game/question.html" />
+        <option value="$PROJECT_DIR$/answer/view/default/admin/game/index.html" />
+      </list>
+    </option>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="30" />
+    <option name="y" value="22" />
+    <option name="width" value="1237" />
+    <option name="height" value="760" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="default" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="include" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extension" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="answer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../maize" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/answer/view/default/admin/game" />
+      <recent name="$PROJECT_DIR$/answer/view/default/images/game" />
+      <recent name="$PROJECT_DIR$/answer/view/default/css/game" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <list size="0" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="08e1dc6d-2866-445b-9040-61af39bdff1a" name="Default" comment="" />
+      <created>1393034133143</created>
+      <updated>1393034133143</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="30" y="22" width="1237" height="760" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24937028" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/answer/view/default/images/game/right.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/controller/admin/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="295" column="50" selection-start="8685" selection-end="8685" vertical-scroll-proportion="1.8282313" vertical-offset="3350" max-vertical-offset="4860">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/view/default/css/game/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="24" selection-start="579" selection-end="579" vertical-scroll-proportion="0.24874792" vertical-offset="46" max-vertical-offset="750">
+          <folding>
+            <marker date="1393060824000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/include/tbController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="25" selection-start="1121" selection-end="1121" vertical-scroll-proportion="0.48979592" vertical-offset="432" max-vertical-offset="2310">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/include/aclModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="142" column="35" selection-start="4098" selection-end="4113" vertical-scroll-proportion="-1.3879782" vertical-offset="2892" max-vertical-offset="4005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/include/permissionModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="33" selection-start="3645" selection-end="3645" vertical-scroll-proportion="0.6938776" vertical-offset="1242" max-vertical-offset="1845">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/model/recordModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="165" column="29" selection-start="5208" selection-end="5208" vertical-scroll-proportion="0.5043478" vertical-offset="2185" max-vertical-offset="2760">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_8.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="975" column="37" selection-start="31218" selection-end="31218" vertical-scroll-proportion="-10.791667" vertical-offset="14366" max-vertical-offset="16530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/wrong.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="10" selection-start="873" selection-end="873" vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="555">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/model/examModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="158" column="38" selection-start="4765" selection-end="4765" vertical-scroll-proportion="-11.041667" vertical-offset="2105" max-vertical-offset="3240">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/over.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="26" selection-start="576" selection-end="576" vertical-scroll-proportion="-3.0" vertical-offset="78" max-vertical-offset="630">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/next.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="14" selection-start="940" selection-end="940" vertical-scroll-proportion="-11.875" vertical-offset="0" max-vertical-offset="495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/controller/admin/game.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="17" selection-start="3435" selection-end="3435" vertical-scroll-proportion="-6.58" vertical-offset="1141" max-vertical-offset="1680">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/right.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="10" selection-start="859" selection-end="859" vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="555">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/question.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="8" selection-start="1774" selection-end="1774" vertical-scroll-proportion="-16.25" vertical-offset="165" max-vertical-offset="810">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/answer/view/default/admin/game/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="8" selection-start="1099" selection-end="1099" vertical-scroll-proportion="0.5" vertical-offset="129" max-vertical-offset="705">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

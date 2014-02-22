@@ -1,14 +1,42 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Game</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <div>Welcome to my site!</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>答题送积分</title>
+    <link href="view/<{$tplName}>/css/game/reset.css" rel="stylesheet" type="text/css"/>
+    <link href="view/<{$tplName}>/css/game/style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="view/<{$tplName}>/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="question_box">
+    <div class="question_title clearfix">
+        <span class="floatL">选择题目类型</span>
+    </div>
+    <div class="question_main">
+        <div class="timu clearfix" id="question_type_list">
+            <{foreach $exam_types as $k=>$v}>
+            <a class="btn_blue" onclick="question_type_select(this,'<{$k}>')"><{$v}></a>
+            <{/foreach}>
+        </div>
+        <div class="btn_box clearfix">
+            <a class="btn_start" onclick="go_question();"></a>
+        </div>
+    </div>
+</div>
+</body>
 </html>
+<script>
+    var question_type=null;
+    var question_type_select=function(obj,type){
+        $("#question_type_list a").removeClass("btn_blue_select");
+        $(obj).addClass("btn_blue_select");
+        question_type=type;
+    }
+    var go_question=function(){
+        if(question_type){
+            window.location.href="<{spUrl c=game a=question}>&type="+question_type;
+        }else{
+            alert("请选择题目类型！");
+        }
+    }
+</script>

@@ -5,7 +5,7 @@ if (!defined('TBOWCARDUP')) {
 }
 
 // 定义框架目录
-define("SP_PATH", dirname(__FILE__) . "/../../libs/SpeedPHP-3.1.89");
+define("SP_PATH", dirname(__FILE__) . "/../../libs/SpeedPHP");
 
 // 默认时区设置
 @date_default_timezone_set('PRC');
@@ -72,8 +72,8 @@ $spConfig = array(
     "db" => array(
         'driver' => 'mysql',
         'host' => 'localhost',
-        'login' => 'usr_answercp',
-        'password' => 'db_answercp',
+        'login' => 'root',
+        'password' => '',
         'database' => 'dbanswercp',
         'prefix' => 'pc_'
     ),

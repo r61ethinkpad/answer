@@ -144,6 +144,36 @@ class examModel extends spModel {
         return $rs;
     }
 
+    public static function GetOneExamById($question_id,$files=null){
+        $model = spClass("examModel");
+        return $model->find("question_id=$question_id",null,$files);
+    }
+
+    public static function GetRandExamIdsByTypeAndPoint($type,$point,$c=10){
+        $model = spClass("examModel");
+        $rows=$model->findAll("exam_type=$type and exam_point=$point",null,"question_id");
+        $total_count=count($rows);
+        if($total_count<$c-1){return false;}//如果小于10道题则返回失败；
+        $randExamIds=false;
+        for($i=0;$i<$c-1;$i++){
+            $r=rand(0,$total_count-1);
+            //echo "$r|";
+            if(!$randExamIds||array_search($rows[$r]['question_id'],$randExamIds)===false){
+                $randExamIds[]=$rows[$r]['question_id'];
+            }else{
+                $i--;continue;
+            }//如果得到重复的题号则重新生成随机；
+        }
+        //获取建行题
+        $rows=$model->findAll("exam_type='9999' and exam_point=$point",null,"question_id");
+        $total_count=count($rows);
+        if($total_count<1){return false;}//如果小于10道题则返回失败；
+        $r=rand(0,$total_count-1);
+        $randExamIds[]=$rows[$r]['question_id'];
+        //print_r($randExamIds);
+        return $randExamIds;
+    }
+
     /**
      * 关卡字典函数
      * @return type
@@ -175,5 +205,7 @@ class examModel extends spModel {
             'D' => 'D',
         );
     }
+
+
 
 }
