@@ -231,7 +231,7 @@ class index extends tbController {
                 $this->errorinfo = "客户的操作类型不能确定";
                 break;
             case '5':
-                $this->errorinfo = "验证码错误";
+                $this->errorinfo = "查询的用户编号错误";
                 break;
 
             default:
@@ -251,7 +251,7 @@ class index extends tbController {
      * data = array(
      *      'user_id'=>'100001',
      *      'opt_type'=>'1',// '1'=>game '2'=> get score
-     *      'game_date'=>'20140219',//查询积分时用，可以指定某一天的积分，空，则查询当前用户所有的答题记录
+     *      'query_user'=>'20140219',//查询用户积分时用
      * )
      */
     public function soLogin()
@@ -278,7 +278,7 @@ class index extends tbController {
         
         $user_id = $data['user_id'];
         $opt_type = $data['opt_type'];
-        $game_date = $data['game_date'];
+        $query_user = $data['query_user'];
         
         if($user_id == null || $user_id == "")
         {
@@ -288,6 +288,10 @@ class index extends tbController {
         if($opt_type == null || $opt_type == "" || !in_array($opt_type, $default_opt_type))
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'4')));
+        }
+        if($opt_type == '2' && ($query_user==null || $query_user == ""))
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'5')));
         }
         
         //把客户信息存入session中
@@ -305,6 +309,13 @@ class index extends tbController {
             $this->jump(spUrl('game','index'));
         }else if ($opt_type == '2')
         {
+            $_SESSION['so_login']['query_user'] = $query_user;
+            $_SESSION['so_login']['name'] = "积分查询管理员";
+            
+            $_SESSION['operator']["id"] = $user_id;
+            $_SESSION['operator']["name"] = "积分查询管理员";        
+            $_SESSION['operator']["login_time"] = date('H:i:s');  
+            
             $this->sessionFunctionAuth(array('type'=>'05'));
             $this->jump(spUrl('record','index'));
         }

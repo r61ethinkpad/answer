@@ -30,6 +30,11 @@ class record extends tbController {
         $this->firstday = date('Y-m-01');
 	$this->today = date('Y-m-d');
         
+        //如果单点登录过来的，就会有这个值
+        $this->query_user = $_SESSION['so_login']['query_user'];
+        
+        //dump($this->query_user);
+        
         $this->exam_points = spClass("examModel")->queryExamPoints();
         $this->display("record/index.html");
     }
