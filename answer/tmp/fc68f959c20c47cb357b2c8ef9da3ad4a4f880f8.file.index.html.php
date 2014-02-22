@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-19 17:10:06
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-22 11:09:54
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/record/index.html" */ ?>
-<?php /*%%SmartyHeaderCode:1326469062530474ee647054-86625511%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1135887423530815021a49f4-48643223%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'fc68f959c20c47cb357b2c8ef9da3ad4a4f880f8' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/record/index.html',
-      1 => 1392801002,
+      1 => 1393038588,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1326469062530474ee647054-86625511',
+  'nocache_hash' => '1135887423530815021a49f4-48643223',
   'function' => 
   array (
   ),
@@ -35,7 +35,12 @@ $_smarty_tpl->decodeProperties(array (
         <div class="tab-main">
             <form id='_query_form'>
                 <div class="tool-box">
+                    <?php if ($_smarty_tpl->getVariable('query_user')->value==''||$_smarty_tpl->getVariable('query_user')->value==null){?>
                     <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
+                    <?php }else{ ?>
+                    <input type="hidden" name="user_id" value="<?php echo $_smarty_tpl->getVariable('query_user')->value;?>
+"/>
+                    <?php }?>
                     <select name="over_point" id="over_point">
                         <option value="" selected="selected" />--截至关卡--</option>
                         <?php  $_smarty_tpl->tpl_vars['value'] = new Smarty_Variable;

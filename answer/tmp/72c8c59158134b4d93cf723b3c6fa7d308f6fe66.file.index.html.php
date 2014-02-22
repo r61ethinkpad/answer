@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 22:36:30
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-22 09:00:26
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/answerType/index.html" */ ?>
-<?php /*%%SmartyHeaderCode:51205118253036feef34673-51288196%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:10952258065307f6aa669f19-42843035%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '72c8c59158134b4d93cf723b3c6fa7d308f6fe66' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/answerType/index.html',
-      1 => 1392734185,
+      1 => 1392800919,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '51205118253036feef34673-51288196',
+  'nocache_hash' => '10952258065307f6aa669f19-42843035',
   'function' => 
   array (
   ),
@@ -32,7 +32,7 @@ $_smarty_tpl->decodeProperties(array (
                 <div class="tool-box">
                     
 
-                    <input type="text" value="输入分类名称" name="type_name" class="grayTips input_text" maxlength="128" style="width:400px;"/>
+                    <input type="text" value="输入分类名称" name="type_name" class="grayTips input_text" maxlength="32" style="width:400px;"/>
                     <a class="search_btn" onclick="listQuery('_query_form', '<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['spUrl'][0][0]->__template_spUrl(array('c'=>'answerType','a'=>'queryList'),$_smarty_tpl);?>
 ', 'datagrid');;"></a>
 
