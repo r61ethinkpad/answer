@@ -233,6 +233,9 @@ class index extends tbController {
             case '5':
                 $this->errorinfo = "查询的用户编号错误";
                 break;
+            case '6':
+                $this->errorinfo = "您一周内已经答题3次了";
+                break;
 
             default:
                 $this->errorinfo = "未知错误";
@@ -293,6 +296,12 @@ class index extends tbController {
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'5')));
         }
+        //判断是否有条件答题
+//        if($opt_type == '1' && false == $this->canBeginGame($user_id))
+//        {
+//            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'6')));
+//        }
+        
         
         //把客户信息存入session中
         $_SESSION['so_login']['user_id'] = $user_id;
@@ -320,6 +329,38 @@ class index extends tbController {
             $this->jump(spUrl('record','index'));
         }
        
+    }
+    
+    
+    //author:zhxia 获取指定日期所在星期的开始时间与结束时间
+    private function getWeekRange($date){
+        $ret=array();
+        $timestamp=strtotime($date);
+        $w=strftime('%u',$timestamp);
+        $ret['sdate']=date('Y-m-d',$timestamp-($w-1)*86400);
+        $ret['edate']=date('Y-m-d',$timestamp+(7-$w)*86400);
+        return $ret;
+    }
+    
+    /**
+     * 用户一周内只能答题3次
+     * @param type $user_id
+     * @return type
+     */
+    private function canBeginGame($user_id)
+    {
+        $legal_date = $this->getWeekRange(date('Y-m-d'));
+        $a = array(
+            'stime'		=>	$legal_date['sdate'],
+            'etime'		=>	$legal_date['edate'],
+            'user_id'           =>      $user_id,
+            
+        );
+        //echo json_encode($a);
+        //dump($_SESSION);
+        $rs = spClass("recordModel")->caculateNum($a);
+        
+        return $rs >= 3 ? false  : true ;
     }
     
     
