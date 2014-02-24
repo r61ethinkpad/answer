@@ -63,7 +63,7 @@ class game extends tbController {
             }else{
                 $_SESSION['wrong']++;
                 $_SESSION['total_wrong']++;
-                if($_SESSION['wrong']>2){
+                if($_SESSION['wrong']>3){
                     $records=$_SESSION['records'];
                     $records[$_SESSION['point']]=$_SESSION['right'];
                     $_SESSION['records']=$records;
