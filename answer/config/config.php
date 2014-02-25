@@ -72,8 +72,8 @@ $spConfig = array(
     "db" => array(
         'driver' => 'mysql',
         'host' => 'localhost',
-        'login' => 'root',
-        'password' => '',
+        'login' => 'usr_answercp',
+        'password' => 'db_answercp',
         'database' => 'dbanswercp',
         'prefix' => 'pc_'
     ),
