@@ -18,6 +18,7 @@ class game extends tbController {
      */
     public function index() {
         $this->exam_types = spClass("examTypeModel")->queryArray();
+        $_SESSION['current_question_id']=null;
         $this->displayPartial("game/index.html");
     }
     
@@ -27,6 +28,10 @@ class game extends tbController {
         if(!isset($_SESSION['current_question_id'])&&!$_SESSION['game_over']){
             $_SESSION['point']=1;
             $randExamIds=spClass("examModel")->GetRandExamIdsByTypeAndPoint($type,$_SESSION['point']);
+            if(!$randExamIds){
+                $this->displayPartial("game/error.html");
+                exit;
+            }
             $_SESSION['current_question_id']=array_pop($randExamIds);
             $_SESSION['randExamIds']=$randExamIds;
             $_SESSION['right']=0;
@@ -91,6 +96,10 @@ class game extends tbController {
                     exit;
                 }else{
                     $randExamIds=spClass("examModel")->GetRandExamIdsByTypeAndPoint($type,$_SESSION['point']);
+                    if(!$randExamIds){
+                        $this->displayPartial("game/error.html");
+                        exit;
+                    }
                     $_SESSION['current_question_id']=array_pop($randExamIds);
                     $_SESSION['randExamIds']=$randExamIds;
                     $_SESSION['right']=0;
