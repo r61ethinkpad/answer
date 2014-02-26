@@ -30,7 +30,7 @@ class verifierModel extends spVerifier {
 	 * 函数式使用模型辅助类的输入函数
 	 */
     public function __input(& $obj, $args){
-		$check_rs = parent::__input(& $obj, $args);
+		$check_rs = parent::__input($obj, $args);
 		
 		if(FALSE == $check_rs){//验证通过
 			return $check_rs;
