@@ -18,22 +18,22 @@ class examModel extends spModel {
             ),
             'alternative_a' => array(
                 'notnull' => TRUE,
-                'minlength' => 2,
+                'minlength' => 1,
                 'maxlength' => 300
             ),
             'alternative_b' => array(
                 'notnull' => TRUE,
-                'minlength' => 2,
+                'minlength' => 1,
                 'maxlength' => 300
             ),
             'alternative_c' => array(
-                'notnull' => TRUE,
-                'minlength' => 2,
+                //'notnull' => TRUE,
+               // 'minlength' => 2,
                 'maxlength' => 300
             ),
             'alternative_d' => array(
-                'notnull' => TRUE,
-                'minlength' => 2,
+                //'notnull' => TRUE,
+               // 'minlength' => 0,
                 'maxlength' => 300
             ),
             'exam_type' => array(
@@ -55,22 +55,22 @@ class examModel extends spModel {
             ),
             'alternative_a' => array(
                 'notnull' => "备选答案不能为空",
-                'minlength' => "备选答案不能少于2个字符",
+                'minlength' => "备选答案不能少于1个字符",
                 'maxlength' => "备选答案不能大于300个字符"
             ),
             'alternative_b' => array(
                 'notnull' => "备选答案不能为空",
-                'minlength' => "备选答案不能少于2个字符",
+                'minlength' => "备选答案不能少于1个字符",
                 'maxlength' => "备选答案不能大于300个字符"
             ),
             'alternative_c' => array(
-                'notnull' => "备选答案不能为空",
-                'minlength' => "备选答案不能少于2个字符",
+                //'notnull' => "备选答案不能为空",
+                //'minlength' => "备选答案不能少于2个字符",
                 'maxlength' => "备选答案不能大于300个字符"
             ),
             'alternative_d' => array(
-                'notnull' => "备选答案不能为空",
-                'minlength' => "备选答案不能少于2个字符",
+                //'notnull' => "备选答案不能为空",
+                //'minlength' => "备选答案不能少于2个字符",
                 'maxlength' => "备选答案不能大于300个字符"
             ),
             'exam_type' => array(
