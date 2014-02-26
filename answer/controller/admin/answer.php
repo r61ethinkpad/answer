@@ -551,7 +551,9 @@ class answer extends tbController {
             $currentSheet = $objPHPExcel->getSheet(0); //第一个工作簿
             $allRow = $currentSheet->getHighestRow(); //行数
            
-            //dump($allRow);
+            $list = array();
+            $err_msg = array();
+            $succ_num = 0;
             
             //按照文件格式从第7行开始循环读取数据
             for($currentRow = 3;$currentRow<=$allRow;$currentRow++){ 
@@ -654,8 +656,8 @@ class answer extends tbController {
                     'd'=>$alternative_d,
                     'answer'=>$correct_answer,
                 );
-                dump($list);
-                $msg = "";//$this->insertData($list);
+                //dump($list);
+                $msg = $this->insertData($list);
                 if ($msg == "") {
                     $succ_num++;
                 } else {
@@ -687,6 +689,7 @@ class answer extends tbController {
     }
 
     private function insertData($args) {
+        //dump($args);
         $operator_type = $_SESSION['operator']['type'];
         $type_id = '0';
         if($operator_type == '02')//建行题库管理员
@@ -743,16 +746,6 @@ class answer extends tbController {
             return "第" . $args['row_no'] . "行的备选答案B为空；";
         }
         
-//        if($args['c'] == null || $args['c'] == "")
-//        {
-//            return "第" . $args['row_no'] . "行的备选答案C为空；";
-//        }
-//        
-//        if($args['d'] == null || $args['d'] == "")
-//        {
-//            return "第" . $args['row_no'] . "行的备选答案D为空；";
-//        }
-        
         
         if($args['answer'] == null || $args['answer'] == "")
         {
@@ -780,12 +773,19 @@ class answer extends tbController {
             'alternative_d' => $args['d'],
             'correct_answer' => $args['answer'],
         );
+        $model = spClass("examModel");
+        $check_rs = $model->verifierModel($params);
+        //var_dump($check_rs);
+        if (false == $check_rs) {
+            $question_id = $model->create($params);
+            if (!$question_id) {
+                return "第" . $args['row_no'] . "行的题目添加失败；";
+            }
 
-        $question_id = spClass("examModel")->create($params);
-        if (!$question_id) {
+        }else
+        {
             return "第" . $args['row_no'] . "行的题目添加失败；";
         }
-
         return "";
     }
     

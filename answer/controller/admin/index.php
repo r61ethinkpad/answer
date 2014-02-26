@@ -234,11 +234,11 @@ class index extends tbController {
                 $this->errorinfo = "查询的用户编号错误";
                 break;
             case '6':
-                $this->errorinfo = "今天不是答题时间，请周五再来";
+                $this->errorinfo = "今天不是答题时间，请周五09:00-21:00再来";
                 break;
-	        case '7':
-	            $this->errorinfo = "今天已经答题3次了，请下周五再来";
-	            break;
+            case '7':
+                $this->errorinfo = "今天已经答题3次了，请下周五09:00-21:00再来";
+                break;
 
             default:
                 $this->errorinfo = "未知错误";
@@ -308,6 +308,7 @@ class index extends tbController {
         if($opt_type == '1' && false == $this->canBeginGame($user_id))
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'7')));
+            //应该进入兑奖环节
         }
         
         
@@ -359,8 +360,8 @@ class index extends tbController {
     {
         //$legal_date = $this->getWeekRange(date('Y-m-d'));
         $a = array(
-            'stime'		=>	date('Y-m-d 00:00:00'),//$legal_date['sdate'],
-            'etime'		=>	date('Y-m-d 23:59:59'),//$legal_date['edate'],
+            'stime'		=>	date('Y-m-d 09:00:00'),//$legal_date['sdate'],
+            'etime'		=>	date('Y-m-d 21:00:00'),//$legal_date['edate'],
             'user_id'   =>      $user_id,
             
         );
@@ -371,10 +372,20 @@ class index extends tbController {
         return $rs >= 3 ? false  : true ;
     }
 	
+    /**
+     * 每周五的9点到21点可以登录
+     * @return boolean
+     */
 	private function isGameTime()
 	{
 		if(date('w') == '5'){
-			return true;
+                    $now_h = intval(date('H',time()));//hour
+                    if($now_h>=9 && $now_h<21)
+                    {
+                        return true;
+                    }
+                    
+			return false;
 		}
 		return false;
 	}
