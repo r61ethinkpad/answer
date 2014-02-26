@@ -199,7 +199,7 @@ class answer extends tbController {
         $this->args = array(
             'question_content' => $content,
             'exam_type' => $exam_type,
-            'exam_point' => $exam_type,
+            'exam_point' => $exam_point,
             'alternative_a'=>trim($exam["alternative_a"]),
             'alternative_b'=>trim($exam["alternative_b"]),
             'alternative_c' => trim($exam["alternative_c"]),
@@ -207,7 +207,7 @@ class answer extends tbController {
             'correct_answer'=>trim($exam["correct_answer"]),
             'creator'=>$this->operator_id,
         );
-
+        //var_dump($this->args);
         $check_rs = $model->verifierModel($this->args);
         //var_dump($check_rs);
         if (false == $check_rs) {
@@ -363,7 +363,7 @@ class answer extends tbController {
         $this->args = array(
             'question_content' => $content,
             'exam_type' => $exam_type,
-            'exam_point' => $exam_type,
+            'exam_point' => $exam_point,
             'alternative_a'=>trim($exam["alternative_a"]),
             'alternative_b'=>trim($exam["alternative_b"]),
             'alternative_c' => trim($exam["alternative_c"]),
@@ -658,15 +658,15 @@ class answer extends tbController {
             return "第" . $args['row_no'] . "行的备选答案B为空；";
         }
         
-        if($args['c'] == null || $args['c'] == "")
-        {
-            return "第" . $args['row_no'] . "行的备选答案C为空；";
-        }
-        
-        if($args['d'] == null || $args['d'] == "")
-        {
-            return "第" . $args['row_no'] . "行的备选答案D为空；";
-        }
+//        if($args['c'] == null || $args['c'] == "")
+//        {
+//            return "第" . $args['row_no'] . "行的备选答案C为空；";
+//        }
+//        
+//        if($args['d'] == null || $args['d'] == "")
+//        {
+//            return "第" . $args['row_no'] . "行的备选答案D为空；";
+//        }
         
         
         if($args['answer'] == null || $args['answer'] == "")
@@ -816,7 +816,8 @@ class answer extends tbController {
         //必填提示
         $t = ord('A');
         for ($i = 0; $i < $must_cnt; $i++) {
-            $objPHPExcel->getActiveSheet()->setCellValue(chr($t) . '1', '必填');
+            $txt = in_array($i,array(5,6)) ? '' :'必填';
+            $objPHPExcel->getActiveSheet()->setCellValue(chr($t) . '1', $txt);
             $objPHPExcel->getActiveSheet()->getStyle(chr($t) . '1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_RED);
             $objPHPExcel->getActiveSheet()->getStyle(chr($t))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
             $objPHPExcel->getActiveSheet()->getColumnDimension(chr($t))->setWidth(20);
