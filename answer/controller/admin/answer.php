@@ -496,6 +496,7 @@ class answer extends tbController {
             $file_msg = array();
 
             $this->file_status = '-1';   //默认无上传文件
+            dump($file['name']);dump($file['size']);
             //检查上传文件
             if ($file['name'] == '' || $file['name'] == null)
                 $this->opt_msg = "未上传批量文件,请上传文件。";
@@ -533,31 +534,41 @@ class answer extends tbController {
 
         $this->display("answer/batch_add.html");
     }
-
+    
     //用户开卡批量上传
     public function openDetailCreate($file) {
 
         $tmp_name = $file ['tmp_name'];
+        dump($file['error']);
         if ($file["error"] == 0) {
 
-            import(APP_PATH . '/extension/phpexcelreader/' . "JPhpExcelReader.php");
-            $data = new JPhpExcelReader($tmp_name);
-            $count = $data->rowcount(0);
-            $list = array();
-            $err_msg = array();
-            $succ_num = 0;
-            for ($i = 3; $i <= $count; $i++) {
-                $type_name = trim($data->val($i, 1, 0));
-                $exam_point = trim($data->val($i, 2, 0));
-                $content = trim($data->val($i, 3, 0));
-                $alternative_a = trim($data->val($i, 4, 0));
-                
-                $alternative_b = trim($data->val($i,5,0));
-                $alternative_c = trim($data->val($i, 6, 0));
-                $alternative_d = trim($data->val($i, 7, 0));
-                $correct_answer = trim($data->val($i, 8, 0));
-                
+            import(APP_PATH . '/../libs/Classes/PHPExcel/IOFactory.php');
+            
+            $objPHPExcel = PHPExcel_IOFactory::load($tmp_name);
 
+            $currentSheet = $objPHPExcel->getSheet(0); //第一个工作簿
+            $allRow = $currentSheet->getHighestRow(); //行数
+            $output = array();
+            $preType = '';
+            dump($allRow);
+            
+            //按照文件格式从第7行开始循环读取数据
+            for($currentRow = 3;$currentRow<=$allRow;$currentRow++){ 
+                //判断每一行的B列是否为有效的序号，如果为空或者小于之前的序号则结束
+                $type_name = trim($currentSheet->getCell('A'.$currentRow)->getValue());
+                $exam_point = trim($currentSheet->getCell('B'.$currentRow)->getValue());
+                $content = trim($currentSheet->getCell('C'.$currentRow)->getValue());
+                $alternative_a = trim($currentSheet->getCell('D'.$currentRow)->getValue());
+                
+                $alternative_b = trim($currentSheet->getCell('E'.$currentRow)->getValue());
+                $alternative_c = trim($currentSheet->getCell('F'.$currentRow)->getValue());
+                $alternative_d = trim($currentSheet->getCell('G'.$currentRow)->getValue());
+                $correct_answer = trim($currentSheet->getCell('H'.$currentRow)->getValue());
+                  
+                if($type_name == ""||$exam_point==""||$content==""||$correct_answer=="")
+                {
+                    continue;
+                }
                 $list = array(
                     'row_no' => $i,
                     'type_name' => $type_name,
@@ -569,8 +580,81 @@ class answer extends tbController {
                     'd'=>$alternative_d,
                     'answer'=>$correct_answer,
                 );
-                //dump($list);
+                dump($list);
                 $msg = $this->insertData($list);
+                if ($msg == "") {
+                    $succ_num++;
+                } else {
+                    $err_msg[] = $msg;
+                }
+            }
+          
+            $err_str = "";
+            if (@count($err_msg)) {
+                foreach ($err_msg as $k => $v) {
+                    if ($k % 4 == 0) {
+                        $err_str.="<br/>";
+                    }
+                    $err_str .= $v;
+                }
+            }
+            if ($succ_num == 0) {
+                $upload_msg = "批量导入题库数据失败。" . $err_str;
+            } else {
+                $opt_msg = "批量导入题库数据成功。" . $err_str;
+            }
+        } else {
+            $upload_msg = "文件上传失败。";
+        }
+        
+
+        $return = array('upload_msg' => $upload_msg, 'opt_msg' => $opt_msg);
+
+        return $return;
+    }
+
+    //用户开卡批量上传
+    public function openDetailCreate2($file) {
+
+        $tmp_name = $file ['tmp_name'];
+        dump($file['error']);
+        if ($file["error"] == 0) {
+
+            import(APP_PATH . '/extension/phpexcelreader/' . "JPhpExcelReader.php");
+            $data = new JPhpExcelReader($tmp_name);
+            $count = $data->rowcount(0);
+            $list = array();
+            $err_msg = array();
+            $succ_num = 0;
+            dump($count);dump($file['size']);
+            for ($i = 3; $i <= $count; $i++) {
+                $type_name = trim($data->val($i, 1, 0));
+                $exam_point = trim($data->val($i, 2, 0));
+                $content = trim($data->val($i, 3, 0));
+                $alternative_a = trim($data->val($i, 4, 0));
+                
+                $alternative_b = trim($data->val($i,5,0));
+                $alternative_c = trim($data->val($i, 6, 0));
+                $alternative_d = trim($data->val($i, 7, 0));
+                $correct_answer = trim($data->val($i, 8, 0));
+                
+                if($type_name == ""||$exam_point==""||$content==""||$correct_answer=="")
+                {
+                    continue;
+                }
+                $list = array(
+                    'row_no' => $i,
+                    'type_name' => $type_name,
+                    'exam_point' => $exam_point,
+                    'content' => $content,
+                    'a' => $alternative_a,
+                    'b' => $alternative_b,
+                    'c' => $alternative_c,
+                    'd'=>$alternative_d,
+                    'answer'=>$correct_answer,
+                );
+                dump($list);
+                $msg = "";//$this->insertData($list);
                 if ($msg == "") {
                     $succ_num++;
                 } else {
@@ -580,7 +664,7 @@ class answer extends tbController {
             $err_str = "";
             if (@count($err_msg)) {
                 foreach ($err_msg as $k => $v) {
-                    if ($k % 3 == 0) {
+                    if ($k % 4 == 0) {
                         $err_str.="<br/>";
                     }
                     $err_str .= $v;
