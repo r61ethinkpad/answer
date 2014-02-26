@@ -539,18 +539,19 @@ class answer extends tbController {
     public function openDetailCreate($file) {
 
         $tmp_name = $file ['tmp_name'];
-        dump($file['error']);
+        //dump($file['error']);
         if ($file["error"] == 0) {
 
-            import(APP_PATH . '/../libs/Classes/PHPExcel/IOFactory.php');
-            
-            $objPHPExcel = PHPExcel_IOFactory::load($tmp_name);
+            import(APP_PATH . '/../libs/PHPExcel/PHPExcel/IOFactory.php');
+            $inputFileType = PHPExcel_IOFactory::identify($tmp_name); //文件名自动判断文件类型Excel5,Excel2007
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+            $objReader->setReadDataOnly(true);
+            $objPHPExcel = $objReader->load($tmp_name);
 
             $currentSheet = $objPHPExcel->getSheet(0); //第一个工作簿
             $allRow = $currentSheet->getHighestRow(); //行数
-            $output = array();
-            $preType = '';
-            dump($allRow);
+           
+            //dump($allRow);
             
             //按照文件格式从第7行开始循环读取数据
             for($currentRow = 3;$currentRow<=$allRow;$currentRow++){ 
@@ -580,7 +581,7 @@ class answer extends tbController {
                     'd'=>$alternative_d,
                     'answer'=>$correct_answer,
                 );
-                dump($list);
+                //dump($list);
                 $msg = $this->insertData($list);
                 if ($msg == "") {
                     $succ_num++;
