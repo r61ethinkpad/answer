@@ -234,8 +234,11 @@ class index extends tbController {
                 $this->errorinfo = "查询的用户编号错误";
                 break;
             case '6':
-                $this->errorinfo = "您一周内已经答题3次了";
+                $this->errorinfo = "今天不是答题时间，请周五再来";
                 break;
+	        case '7':
+	            $this->errorinfo = "今天已经答题3次了，请下周五再来";
+	            break;
 
             default:
                 $this->errorinfo = "未知错误";
@@ -296,11 +299,16 @@ class index extends tbController {
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'5')));
         }
-        //判断是否有条件答题
-//        if($opt_type == '1' && false == $this->canBeginGame($user_id))
-//        {
-//            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'6')));
-//        }
+        //判断今天是否可以游戏
+        if($opt_type == '1' && false == $this->isGameTime())
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'6')));
+        }
+        //判断用户是否已经答题3次
+        if($opt_type == '1' && false == $this->canBeginGame($user_id))
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'7')));
+        }
         
         
         //把客户信息存入session中
@@ -343,17 +351,17 @@ class index extends tbController {
     }
     
     /**
-     * 用户一周内只能答题3次
+     * 用户周五一天内只能答题3次
      * @param type $user_id
      * @return type
      */
     private function canBeginGame($user_id)
     {
-        $legal_date = $this->getWeekRange(date('Y-m-d'));
+        //$legal_date = $this->getWeekRange(date('Y-m-d'));
         $a = array(
-            'stime'		=>	$legal_date['sdate'],
-            'etime'		=>	$legal_date['edate'],
-            'user_id'           =>      $user_id,
+            'stime'		=>	date('Y-m-d 00:00:00'),//$legal_date['sdate'],
+            'etime'		=>	date('Y-m-d 23:59:59'),//$legal_date['edate'],
+            'user_id'   =>      $user_id,
             
         );
         //echo json_encode($a);
@@ -362,6 +370,14 @@ class index extends tbController {
         
         return $rs >= 3 ? false  : true ;
     }
+	
+	private function isGameTime()
+	{
+		if(date('w') == '5'){
+			return true;
+		}
+		return false;
+	}
     
     
     
