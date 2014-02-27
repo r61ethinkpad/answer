@@ -213,7 +213,9 @@ class recordModel extends spModel {
             }
             $row['over_point']=$over_point;
             //print_r($row);
-            return spClass("recordModel")->create($row);
+            $month = date('Ym');
+            $table_name = "answer_record_".$month;
+            return spClass("recordModel",array($table_name))->create($row);
         }else{
             return false;
         }
