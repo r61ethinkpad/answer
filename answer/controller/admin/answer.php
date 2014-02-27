@@ -573,7 +573,7 @@ class answer extends tbController {
                     continue;
                 }
                 $list = array(
-                    'row_no' => $i,
+                    'row_no' => $currentRow,
                     'type_name' => $type_name,
                     'exam_point' => $exam_point,
                     'content' => $content,
@@ -604,7 +604,7 @@ class answer extends tbController {
             if ($succ_num == 0) {
                 $upload_msg = "批量导入题库数据失败。" . $err_str;
             } else {
-                $opt_msg = "批量导入题库数据成功。" . $err_str;
+                $opt_msg = "批量导入题库数据成功。成功数量为".$succ_num."。" . $err_str;
             }
         } else {
             $upload_msg = "文件上传失败。";
@@ -727,8 +727,8 @@ class answer extends tbController {
         }else
         {
 
-            //判断题目内容是否已存在
-            $cnt = spClass("examModel")->findCount(array('question_content'=>$args['content']));
+            //判断题目内容是否已存在,现在改成 同一个分类下，题目不能相同
+            $cnt = spClass("examModel")->findCount(array('question_content'=>$args['content'],'exam_type'=>$type_id));
             if($cnt != 0)
             {
                 return "第" . $args['row_no'] . "行的题目内容已存在；";
@@ -784,7 +784,15 @@ class answer extends tbController {
 
         }else
         {
-            return "第" . $args['row_no'] . "行的题目添加失败；";
+            $error = "";
+            if(@count($check_rs) > 0)
+            {
+                foreach($check_rs as $k=>$v)
+                {
+                    $error.=$v.",";
+                }
+            }
+            return "第" . $args['row_no'] . "行的题目添加失败,".$error."；";
         }
         return "";
     }
