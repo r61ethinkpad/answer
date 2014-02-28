@@ -57,8 +57,11 @@ class recordModel extends spModel {
         }
         
         $condition .= " order by answer_time desc";
-        $ym_s = substr($args['stime'], 0,6);
-        $ym_e = substr($args['etime'], 0, 6);
+        
+        $stime = str_replace("-","",$args['stime']);
+        $etime = str_replace("-","",$args['etime']);
+        $ym_s = substr($stime, 0,6);
+        $ym_e = substr($etime, 0, 6);
         
         $ym_s = intval($ym_s);
         $ym_e = intval($ym_e);
@@ -185,8 +188,8 @@ class recordModel extends spModel {
         }
         
         
-        
-        $ym_e = substr($args['etime'], 0, 6);
+        $etime = str_replace(array('-',':'), "", $args['etime']);
+        $ym_e = substr($etime, 0, 6);
         
         $table_pre = "pc_answer_record_";
         $table_name = $table_pre.$ym_e;
