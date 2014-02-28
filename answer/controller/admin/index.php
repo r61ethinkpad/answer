@@ -335,7 +335,7 @@ class index extends tbController {
             $_SESSION['operator']["login_time"] = date('H:i:s');  
             
             $this->sessionFunctionAuth(array('type'=>'05'));
-            $this->jump(spUrl('record','index'));
+            $this->jump(spUrl('record','index',array('from'=>'bank')));
         }
        
     }
@@ -378,7 +378,8 @@ class index extends tbController {
      */
 	private function isGameTime()
 	{
-		if(date('w') == '5'){
+            date_default_timezone_set('PRC');
+            if(date('w') == '5'){
                     $now_h = intval(date('H',time()));//hour
                     if($now_h>=9 && $now_h<21)
                     {
