@@ -100,6 +100,31 @@ class permissionModel extends spModel {
                     'answerType/del'
                 )
             ),
+            'goods_manage' => array(
+                'module' => 'system',
+                'description' => '奖品管理',
+                'children' => array(
+                    'goods/index',
+                    'goods/queryList',
+                    'goods/create',
+                    'goods/save',
+                    'goods/del',
+                )
+            ),
+            'lottery_ticket_manage' => array(
+                'module' => 'system',
+                'description' => '彩票券管理',
+                'children' => array(
+                    'lotterTicket/index',
+                    'lotterTicket/queryList',
+                   
+                    'lotterTicket/del',
+                    'lotterTicket/batch',
+                    'lotterTicket/batchCreate',
+                    'lotterTicket/openTmpDown',
+                    
+                )
+            ),
             
             'game_manage' => array(
                 'module' => 'game',
@@ -109,6 +134,36 @@ class permissionModel extends spModel {
                     'game/question',
                     'game/answer',
                     'game/right',
+                )
+            ),
+            
+            'exchange_prize_manage' => array(
+                'module' => 'game',
+                'description' => '兑奖管理',
+                'children' => array(
+                    'exchange/index',
+                    'exchange/convert',
+                    'exchange/getUserScore',
+                    'exchange/save',
+                )
+            ),
+            
+            'my_prize_view' => array(
+                'module' => 'game',
+                'description' => '我的奖品管理',
+                'children' => array(
+                    'myPrize/index',
+                    'myPrize/queryList',
+                )
+            ),
+            
+            'lottery_view' => array(
+                'module' => 'game',
+                'description' => '我的抽奖管理',
+                'children' => array(
+                    'lottery/index',
+                    'lottery/getUserInfo',
+                    'lottery/save',
                 )
             ),
         );
