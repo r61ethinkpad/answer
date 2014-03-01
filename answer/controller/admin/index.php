@@ -200,17 +200,17 @@ class index extends tbController {
                 break;
             case '06'://客户兑奖
                 $list = array(
-                    'answer_record_view',
+                    'exchange_prize_manage',
                 );
                 break;
             case '07'://客户查询我的奖品
                 $list = array(
-                    'answer_record_view',
+                    'my_prize_view',
                 );
                 break;
             case '08'://客户抽奖
                 $list = array(
-                    'answer_record_view',
+                    'lottery_view',
                 );
                 break;
             default:
@@ -273,6 +273,7 @@ class index extends tbController {
      *      'user_id'=>'100001',
      *      'opt_type'=>‘1’ 
      *      'query_user'=>'100001',//查询用户积分时用
+     *      
      * )
      * opt_type的解释
      * '1'=>'答题'；
@@ -284,7 +285,7 @@ class index extends tbController {
     public function soLogin()
     {
         $sync_pwd = '666666';//单点登录协议密码
-        $default_opt_type = array('1','2');
+        $default_opt_type = array('1','2','3','4','5');
         $key = trim($this->spArgs("key"));
         if($key == null || $key == "")
         {
@@ -338,6 +339,7 @@ class index extends tbController {
         $_SESSION['so_login']['name'] = "银行答题客户";
         $_SESSION['so_login']['type'] = $opt_type;
         $_SESSION['so_login']['login_time'] = date('H:i:s');
+        $_SESSION['so_login']['term'] = date('Ymd');
         
         $_SESSION["login"] = true; //已经登录   
         
@@ -348,7 +350,7 @@ class index extends tbController {
             $this->jump(spUrl('game','index'));
         }else if ($opt_type == '2')
         {
-            $_SESSION['so_login']['query_user'] = $query_user;
+            $_SESSION['so_login']['query_user'] = $query_user==""?$user_id:$query_user;
             $_SESSION['so_login']['name'] = "积分查询管理员";
             
             $_SESSION['operator']["id"] = $user_id;
@@ -361,13 +363,13 @@ class index extends tbController {
         {
             $this->sessionFunctionAuth(array('type'=>'06'));
             
-            $this->jump(spUrl('exchangePrize','index'));
+            $this->jump(spUrl('exchange','index'));
         }
         else if($opt_type == '4')//我的奖品
         {
             $this->sessionFunctionAuth(array('type'=>'07'));
             
-            $this->jump(spUrl('myPrize','index'));
+            $this->jump(spUrl('myPrize','index',array('from'=>'bank')));
         }
         else if($opt_type == '5')//抽奖
         {
