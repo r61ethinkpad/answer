@@ -15,7 +15,7 @@ class lotteryTicketModel extends spModel
     //新建的验证规则
 	var $verifier = array(
 		"rules" => array( 
-			'lattery_code' => array(  //
+			'lottery_code' => array(  //
 				'notnull' => TRUE, // uname不能为空
 				'minlength' => 1,  // uname长度不能小于3
 				'maxlength' => 64  // uname长度不能大于12
@@ -25,7 +25,7 @@ class lotteryTicketModel extends spModel
 			
 		),
 		"messages" => array( // 提示信息
-			'lattery_code' => array(
+			'lottery_code' => array(
 				'notnull' => "标识码不能为空",
 				'minlength' => "标识码不能少于1个字符",
 				'maxlength' => "标识码不能大于64个字符"
@@ -104,6 +104,15 @@ class lotteryTicketModel extends spModel
             return True;
         }
         return False;
+    }
+    
+    
+    public static function getStatusArray()
+    {
+        return array(
+            '0'=>'未用',
+            '1'=>'已用'
+        );
     }
     
 	
