@@ -198,6 +198,21 @@ class index extends tbController {
                     'answer_record_view',
                 );
                 break;
+            case '06'://客户兑奖
+                $list = array(
+                    'answer_record_view',
+                );
+                break;
+            case '07'://客户查询我的奖品
+                $list = array(
+                    'answer_record_view',
+                );
+                break;
+            case '08'://客户抽奖
+                $list = array(
+                    'answer_record_view',
+                );
+                break;
             default:
                 $list = array();
                 break;
@@ -256,9 +271,15 @@ class index extends tbController {
      * pwd = 666666
      * data = array(
      *      'user_id'=>'100001',
-     *      'opt_type'=>'1',// '1'=>game '2'=> get score
+     *      'opt_type'=>‘1’ 
      *      'query_user'=>'100001',//查询用户积分时用
      * )
+     * opt_type的解释
+     * '1'=>'答题'；
+     * ‘2’=》‘查询答题积分’；
+     * ‘3’=》‘兑奖’ ；
+     * ‘4’=》我的奖品 ；
+     * ‘5’=》‘抽奖’
      */
     public function soLogin()
     {
@@ -336,6 +357,23 @@ class index extends tbController {
             
             $this->sessionFunctionAuth(array('type'=>'05'));
             $this->jump(spUrl('record','index',array('from'=>'bank')));
+        }else if($opt_type == '3')//兑奖
+        {
+            $this->sessionFunctionAuth(array('type'=>'06'));
+            
+            $this->jump(spUrl('exchangePrize','index'));
+        }
+        else if($opt_type == '4')//我的奖品
+        {
+            $this->sessionFunctionAuth(array('type'=>'07'));
+            
+            $this->jump(spUrl('myPrize','index'));
+        }
+        else if($opt_type == '5')//抽奖
+        {
+            $this->sessionFunctionAuth(array('type'=>'08'));
+            
+            $this->jump(spUrl('lottery','index'));
         }
        
     }

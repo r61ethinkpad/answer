@@ -496,7 +496,7 @@ class answer extends tbController {
             $file_msg = array();
 
             $this->file_status = '-1';   //默认无上传文件
-            dump($file['name']);dump($file['size']);
+            //dump($file['name']);dump($file['size']);
             //检查上传文件
             if ($file['name'] == '' || $file['name'] == null)
                 $this->opt_msg = "未上传批量文件,请上传文件。";
@@ -620,7 +620,7 @@ class answer extends tbController {
     public function openDetailCreate2($file) {
 
         $tmp_name = $file ['tmp_name'];
-        dump($file['error']);
+        //dump($file['error']);
         if ($file["error"] == 0) {
 
             import(APP_PATH . '/extension/phpexcelreader/' . "JPhpExcelReader.php");
@@ -629,7 +629,7 @@ class answer extends tbController {
             $list = array();
             $err_msg = array();
             $succ_num = 0;
-            dump($count);dump($file['size']);
+            //dump($count);dump($file['size']);
             for ($i = 3; $i <= $count; $i++) {
                 $type_name = trim($data->val($i, 1, 0));
                 $exam_point = trim($data->val($i, 2, 0));
