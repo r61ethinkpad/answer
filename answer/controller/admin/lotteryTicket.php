@@ -3,6 +3,7 @@
 if (!defined('TBOWCARDUP')) {
     exit(1);
 }
+import($GLOBALS['sysparams']['files']['phpexcelpath'] . 'PHPExcel.php');
 /**
  * 彩票券管理的控制器
  * @author: guohao
@@ -10,10 +11,12 @@ if (!defined('TBOWCARDUP')) {
 class lotteryTicket extends tbController {
 
     public $moduleId = '3';//系统配置管理
+    
 
     public function __construct() {
         parent::__construct();
         $this->operator_id = $_SESSION['operator']["id"];
+        $this->pageSize = 20;
     }
 
     /**
@@ -26,10 +29,12 @@ class lotteryTicket extends tbController {
         
         $this->tid = $_SESSION['lotteryTicket_tid'];
         $this->sid = $_SESSION['lotteryTicket_sid'];
+        
+        $this->status = spClass("lotteryTicketModel")->getStatusArray();
        
         $acl = spClass('aclModel');
         $this->authconfig = array(
-            'create' => $acl->checkCA('lotteryTicket', 'create'),
+            'create' => $acl->checkCA('lotteryTicket', 'batch'),
         );
         $this->current_tab = 'list';
        
@@ -59,9 +64,16 @@ class lotteryTicket extends tbController {
         //dump($_SESSION);
         $rs = spClass("lotteryTicketModel")->queryList($a);
         
-        
+        if($rs['rows'])
+        {
+            $status_array = spClass("lotteryTicketModel")->getStatusArray();
+            foreach($rs['rows'] as $key=>$row)
+            {
+                $rs['rows'][$key]['status_text'] = $row['status'] == '0'?$status_array['0'] : '<span style="color:red;">'.$status_array['1'].'</span>';
+            }
+        }
 
-        $this->type_list = $rs['rows'];
+        $this->list = $rs['rows'];
         $this->_pg_ = $rs['_pg_'];
         $url = '&status=' . $status;
         $this->query_url = spUrl("lotteryTicket", "queryList") . $url;
@@ -76,94 +88,12 @@ class lotteryTicket extends tbController {
         
         $acl = spClass('aclModel');
         $this->authconfig = array(
-            'create' => $acl->checkCA('lotteryTicket', 'create'),
+            'create' => $acl->checkCA('lotteryTicket', 'batch'),
             'del' => $acl->checkCA('lotteryTicket', 'del'),
         );
         $this->displayPartial("lotteryTicket/_list.html");
     }
 
-   
-
-    /**
-     * 新增题目
-     */
-    public function create() {
-
-        $this->tid = ($this->spArgs("tid") == '') ? $_SESSION['lotteryTicket_tid'] : $this->spArgs("tid");
-        $this->sid = ($this->spArgs("sid") == '') ? $_SESSION['lotteryTicket_sid'] : $this->spArgs("sid");
-        
-        $acl = spClass('aclModel');
-        $this->authconfig = array(
-            'create' => $acl->checkCA('lotteryTicket', 'create'),
-            'list' => $acl->checkCA('lotteryTicket', 'index'),
-        );
-        $this->current_tab = 'new';
-       
-        $this->display("lotteryTicket/create.html");
-    }
-    
-    public function save()
-    {
-        $model = spClass("lotteryTicketModel");
-
-        $lotteryTicket = $this->spArgs("lotteryTicket");
-        $code = trim($lotteryTicket["lottery_code"]);
-       
-        
-        $this->args = array(
-            'lottery_code' => $code,
-        );
-
-        $check_rs = $model->verifierModel($this->args);
-        //var_dump($check_rs);
-        if (false == $check_rs) {
-            if (!$this->validateLotteryCode($this->args)) {
-                //验证失败
-                $status = 6001;
-                $msg = '彩票券标识码已存在';
-                $err_rs = array(
-                    'lottery_code' => '彩票券标识码已存在',
-                );
-                $data = json_encode($err_rs);
-                $this->jsonreturn($status, $msg, $data);
-                exit;
-            }
-
-            $type_id = $model->create($this->args);
-            if (!$type_id) {
-                //验证失败
-                $status = 6002;
-                $msg = '彩票券标识码添加失败';
-                $err_rs = array(
-                    'lottery_code' => '彩票券标识码添加失败',
-                );
-                $data = json_encode($err_rs);
-                $this->jsonreturn($status, $msg, $data);
-                exit;
-            }
-            
-
-            $status = 0;
-            $msg = '彩票券标识码添加成功';
-            $data = json_encode(array());
-
-            $logargs = array(
-                'opt_field' => '添加彩票券标识码',
-                'opt_desc' => '彩票券标识码:' . $code,
-                'opt_result' => $status,
-                'result_desc' => $msg,
-                'module_id' => $this->moduleId,
-            ); //dump($logargs);
-            $logrs = optlog($logargs); //dump($logrs);
-        } else {
-            //验证失败
-            $status = 9999;
-            $msg = '';
-            $data = json_encode($check_rs);
-        }
-
-        return $this->jsonreturn($status, $msg, $data);
-    }
     
     /**
      * 判断问题内容是否重复
@@ -173,7 +103,7 @@ class lotteryTicket extends tbController {
     private function validateLotteryCode($args) 
     {
         $code = $args['lottery_code'];
-        $cnt = spClass("examTypeModel")->findCount(array('lottery_code' => $code));
+        $cnt = spClass("lotteryTicketModel")->findCount(array('lottery_code' => $code));
         if ($cnt == 0) {
             return true;
         }
@@ -230,12 +160,12 @@ class lotteryTicket extends tbController {
         $_SESSION['lotteryTicket_sid'] = $this->spArgs("sid");
         $this->tid = $_SESSION['lotteryTicket_tid'];
         $this->sid = $_SESSION['lotteryTicket_sid'];
-
+        $this->current_tab = 'new';
 
         if ($file) {
             $this->batchCreate($file);
         } else {
-            $this->display("lotteryTicket/batch_add.html");
+            $this->display("lotteryTicket/create.html");
         }
     }
 
@@ -255,7 +185,7 @@ class lotteryTicket extends tbController {
             $file_msg = array();
 
             $this->file_status = '-1';   //默认无上传文件
-            dump($file['name']);dump($file['size']);
+            //dump($file['name']);dump($file['size']);
             //检查上传文件
             if ($file['name'] == '' || $file['name'] == null)
                 $this->opt_msg = "未上传批量文件,请上传文件。";
@@ -291,7 +221,7 @@ class lotteryTicket extends tbController {
         }
 
 
-        $this->display("lotteryTicket/batch_add.html");
+        $this->display("lotteryTicket/create.html");
     }
     
     //用户开卡批量上传
@@ -376,12 +306,14 @@ class lotteryTicket extends tbController {
                 return "第" . $args['row_no'] . "行的标识码已存在；";
             }
         }
-        
+        $params = array(
+            'lottery_code'=>$args['lottery_code']
+        );
         $model = spClass("lotteryTicketModel");
-        $check_rs = $model->verifierModel($args);
+        $check_rs = $model->verifierModel($params);
         //var_dump($check_rs);
         if (false == $check_rs) {
-            $code = $model->create($args);
+            $code = $model->create($params);
             if (!$code) {
                 return "第" . $args['row_no'] . "行的标识码添加失败；";
             }
