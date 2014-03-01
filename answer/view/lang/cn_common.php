@@ -130,9 +130,16 @@ return array(
 	'nav_custom_exam'=>'自定义题库管理',
 	'nav_bank_exam'=>'银行题库管理',
 	'nav_system_set'=>'系统配置管理',
+        'nav_goods'=>'奖品管理',
+        'nav_lottery_ticket'=>'彩票券管理',
+        
+    
 	'nav_exam_type'=>'题库分类管理',
 	'nav_exam'=>'题库管理',
-	'nav_answer_record'=>'用户答题记录',
+        'nav_user_info'=>'客户信息',
+	'nav_answer_record'=>'客户答题记录',
+        'nav_exchange_record'=>'客户兑奖记录',
+    
 	'nav_operator_manage'=>'管理员管理',
         'nav_opt_log'=>'管理员日志',
         'nav_batch_exam'=>'批量导入题库',
