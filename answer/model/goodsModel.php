@@ -63,6 +63,18 @@ class goodsModel extends spModel
         {
             $condition .= " AND goods_name like '%".$args['goods_name']."%'";
         }
+        //当用户只查询神秘大奖和其他奖品
+        if($args['from'] !="" && $args['from'] != null)
+        {
+            if($args['from'] == 'exchange')
+            {
+                $condition .= " AND score != '0' ";
+            }else//from lottery抽奖
+            {
+                $condition .= " AND score = '0' ";
+            }
+            
+        }
         
         
         //dump($condition);
