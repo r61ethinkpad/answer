@@ -79,7 +79,7 @@ class navigationModel extends spModel {
                     ),
                     array(
                         "name" => T('nav_exchange_record'), //兑奖记录,
-                        "controller" => "exchangePrize",
+                        "controller" => "myPrize",
                         "action" => "index",
                         "sid" => 2,
                     ),
