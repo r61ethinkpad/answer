@@ -19,27 +19,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="name" style="vertical-align:top;"><font color="red">*</font>奖品类型：</td>
-                        <td class="value">
-                            <select name="goods[goods_type]" id="goods_type" class="input_text">
-                                <{foreach from=$goods_types item=v key=k}>
-                                <option value="<{$k}>"><{$v}></option>
-                                <{/foreach}>
-                            </select>
-                           
-                            <span class="tip">请选择奖品类型</span>
-                            <span class="colOrange" id="error_goods_type"><{$error_array.goods_type}></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="name" style="vertical-align:top;"><font color="red">*</font>价值金额：</td>
-                        <td class="value">
-                            <input type="text" name="goods[money]" id="money" value="" class="input_text" maxlength="32"/>
-                            <span class="tip">请填写数字.例如2，5，10，20</span>
-                            <span class="colOrange" id="error_count"><{$error_array.money}></span>
-                        </td>
-                    </tr>
-                    <tr>
                         <td class="name" style="vertical-align:top;"><font color="red">*</font>奖品数量：</td>
                         <td class="value">
                             <input type="text" name="goods[count]" id="count" value="" class="input_text" maxlength="32"/>
@@ -109,8 +88,6 @@
                 rules: {				
                     'goods[goods_name]': { required:true, minlength:1, maxlength:32, v_preg:'^[\u4e00-\u9fa5a-zA-Z0-9_]+$'},
                     'goods[count]': { required:true, number:true},
-                    'goods[money]': { required:true, number:true},
-                    'goods[goods_type]': { required:true},
                     'goods[score]': { required:true, number:true},
                     'pic': { required:true},
                     'goods[desc]': { maxlength:300}

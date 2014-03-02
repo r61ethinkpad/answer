@@ -1,0 +1,180 @@
+<style>
+
+</style>
+<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>	
+<table class="dbTable">
+    <thead>
+        <tr>
+            <th style="width:60%">奖品</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <{foreach from=$goods_list item=one}>
+        <tr>
+            <td>
+                <div style="float:left;">
+                    <img src="<{spUrl c=goods a=showImg pic=$one.pic}>" style="height:200px;"/>
+                </div>
+                <div style="float: left;margin-left: 10px;">
+                    <p style="height:10px;">&nbsp;</p>
+                    <{if $can_exchange == true}>
+                    <p style="font-weight: bolder;"><a href="javascript:void(0);" onclick="exchange('<{$one.id}>','<{$user_info.score}>','<{$one.score}>');">[兑换奖品]</a></p>
+                    <{/if}>
+                    <p style="font-weight: bolder;"><{$one.goods_name}></p>
+                    <p>价值金额：<{$one.money}>元</p>
+                    <p>所需积分：<{$one.score}></p>
+                    <p>剩余数量：<span id="goods_num_<{$one.id}>"><{$one.count}></span>份</p>
+                    <p style="width:300px;">描述：<{$one.remark}></p>
+                    
+                </div>
+
+            </td>
+            <td>
+                <div  id="div_<{$one.id}>" style="display: none;">
+                    <form id="form_<{$one.id}>" name="form_<{$one.id}>" action="<{spUrl c=exchange a=convert id=$one.id name=$one.goods_name}>" method="post">
+                        <table class="formList">
+
+                            <tr>
+                                <td class="name" style="vertical-align:top;width: 150px;"><font color="red">*</font>奖品类型：</td>
+                                <td class="value">
+                                    <input type="hidden" name="goods_score_<{$one.id}>" id="goods_score_<{$one.id}>" value="<{$one.score}>"/>
+                                    <input type="hidden" name="goods_money_<{$one.id}>" id="goods_money_<{$one.id}>" value="<{$one.money}>"/>
+                                    <{if $one.goods_type == '0'}>
+                                    <input type="hidden" name="goods_type_<{$one.id}>" value="0"/>
+                                    <span>彩票</span>
+                                    <{elseif $one.goods_type == '1'}>
+                                    <input type="hidden" name="goods_type_<{$one.id}>" value="1"/>
+                                    <span>话费</span>
+                                    <{elseif $one.goods_type == '2'}>
+                                    <input type="hidden" name="goods_type_<{$one.id}>" value="2"/>
+                                    <span>Q币</span>
+                                    <{else}>
+                                    <input type="radio" name="goods_type_<{$one.id}>" id="goods_type_<{$one.id}>_1" value="1" checked="true"><span>话费</span>
+                                    <input type="radio" name="goods_type_<{$one.id}>" id="goods_type_<{$one.id}>_2" value="2"><span>Q币</span>
+                                    <{/if}>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="name" style="vertical-align:top;"><font color="red">*</font>兑换数量：</td>
+                                <td class="value">
+                                    <select name="exchange_sum_<{$one.id}>" id="exchange_sum_<{$one.id}>">
+                                        <{section name="xunhuan" loop= intval($user_info.score)/intval($one.score)}>
+                                        <option value="<{$smarty.section.xunhuan.index+1}>"><{$smarty.section.xunhuan.index+1}></option>
+                                        <{/section}>
+                                    </select> 
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2" style="text-align: center;">
+                                    <input type="button" class="btnExchange" name="submit" id="btn_<{$one.id}>" value="兑换"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  colspan="2" style="text-align: center;color:red;" id="errMsg_<{$one.id}>">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <{foreachelse}>
+        <tr><td colspan="4"><span id="no_record">无查询记录！</span></td></tr>
+        <{/foreach}>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+	
+    function exchange(id,u_score,g_score)
+    {
+        if(g_score*1 > u_score*1){
+            jQuery("#div_"+id).html("积分不足，请兑换其他奖品。").toggle();
+        }else
+            jQuery("#div_"+id).toggle();
+    }
+    jQuery(document).ready(function(){
+	
+		
+        //屏蔽回车事件
+        $('input,select').live("keypress", function(e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        }); 
+					
+        //jQuery validate
+        v_addMethod();
+        jQuery(".btnExchange").click(function(){
+            var btn_id = jQuery(this).attr("id");
+            var btn_id_a = btn_id.split("_");
+            var id = btn_id_a[1];
+            var current_score_obj = jQuery("#user_score");
+            var current_score = current_score_obj.html();
+            
+            alert(id);
+            var errMsgObj = jQuery("#errMsg_"+id);
+            var type_id = "draw_type_"+id;
+            var sum = "exchange_sum_"+id;
+            var pre_score = "goods_score_"+id;
+            var goods_num = jQuery("#"+sum).val();
+            var goods_score = jQuery("#"+pre_score).val();
+            //alert(goods_num);alert(goods_score);
+            var balance = current_score*1 - (goods_num*1)*(goods_score*1);
+            //alert(balance);
+            if(balance < 0){
+                errMsgObj.html('兑换失败，积分不足，请尝试兑换其他奖品。').show();
+                return false;
+            }
+            $("#form_"+id).validate({
+                rules: {				
+                    type_id: { required:true},
+                    sum:{required:true}
+                }
+			
+            });
+            //exit;
+            if($("#form_"+id).valid()){
+                var options = {
+                    dataType:'json',
+                    success:function(data){
+                        errMsgObj.hide();
+                        $('.colOrange').hide();
+                        if(data.status == '9999'){
+                            var error = data.data;
+                            for(var key in error){
+                                $('#error_'+key).html(error[key]).show();
+                            }
+                        }
+                        else if (data.status == '0'){
+                            
+                            errMsgObj.html('兑换成功').show();
+                            current_score_obj.html(balance);
+                            //返回当前奖品的剩余数量
+                        }
+                        else{
+                            errMsgObj.html('兑换失败：'+ data.msg + '(' + data.status + ')').show();
+                        }
+                        //返回当前奖品的剩余数量
+                        var e_msg = data.data;
+                        jQuery("#goods_num_"+id).html(e_msg['surplus']);
+                    },
+                    error:function(){
+                        errMsgObj.html('请求失败').show();
+                    }
+                }
+                $("#form_"+id).ajaxSubmit(options);
+                return false;
+            }
+            
+
+        });
+        
+    });
+    
+    
+	
+</script>

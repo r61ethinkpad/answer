@@ -3,8 +3,9 @@
     <thead>
         <tr>
             <th style="width:30%">奖品名称</th>
-            <th style="width:15%">数量</th>
-            <th style="width:15%">所需积分</th>
+            <th style="width:10%">价值金额</th>
+            <th style="width:10%">数量</th>
+            <th style="width:10%">所需积分</th>
             <th style="width:15%">图片</th>
             <th style="width:15%">备注</th>
             <th>操作</th></tr>
@@ -13,7 +14,8 @@
         <{foreach from=$goods_list item=one}>
         <tr>
             <td><{$one.goods_name}></td>
-            <td><{$one.count}></td>
+            <td><{$one.money}>元</td>
+            <td><{$one.count}>份</td>
             <td><{$one.score}></td>
             <td><img src="<{spUrl c=goods a=showImg pic=$one.pic}>" style="height:50px;"/></td>
             <td><{$one.remark_text}></td>
