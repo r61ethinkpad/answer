@@ -103,6 +103,8 @@ class goods extends tbController {
         );
         $this->current_tab = 'new';
         
+        $this->goods_types = spClass("goodsModel")->getGoodsType();
+        
         $file = $_FILES['pic'];
         if($file)
         {
