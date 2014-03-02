@@ -156,6 +156,7 @@ class goods extends tbController {
                 $params['pic'] = $pic_path;
                 $params['remark'] = $goods['desc'];
                 $params['record_time'] = date('Y-m-d H:i:s');
+                $params['default_count'] = $params['count'];
                 unset($params['desc']);
                 if (!$this->validateGoodsName($params)) {
                     $this->opt_msg = "添加奖品失败。奖品名称重复";
