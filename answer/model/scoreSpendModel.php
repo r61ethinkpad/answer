@@ -140,7 +140,7 @@ class scoreSpendModel extends spModel {
         
     }
     
-    
+
 
    
 

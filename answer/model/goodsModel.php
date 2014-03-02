@@ -122,5 +122,18 @@ class goodsModel extends spModel
     
     
     
+    public static function getGoodsType()
+    {
+        return array(
+            '0'=>'彩票',
+            '1'=>'话费',
+            '2'=>'Q币',
+            '3'=>'话费或者Q币',
+            '4'=>'神秘大礼包',
+        );
+    }
+    
+    
+    
 	
 }
