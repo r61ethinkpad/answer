@@ -252,7 +252,10 @@ class index extends tbController {
                 $this->errorinfo = "今天不是答题时间，请周五09:00-21:00再来";
                 break;
             case '7':
-                $this->errorinfo = "今天已经答题3次了，请下周五09:00-21:00再来";
+                $this->errorinfo = "今天已经答题3次了，请去参加兑奖或者抽奖吧";
+                break;
+            case '8':
+                $this->errorinfo = "你还不能兑奖或者抽奖，请继续答题吧";
                 break;
 
             default:
@@ -321,16 +324,23 @@ class index extends tbController {
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'5')));
         }
-        //判断今天是否可以游戏
-        if($opt_type == '1' && false == $this->isGameTime())
+        //判断今天是否可以游戏,可以兑奖，可以查看我的奖品，抽奖
+        if(false == $this->isGameTime())
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'6')));
         }
-        //判断用户是否已经答题3次
+        //判断用户是否已经答题3次，答题已经够3次，不能进入答题环节
         if($opt_type == '1' && false == $this->canBeginGame($user_id))
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'7')));
             //应该进入兑奖环节
+        }
+        
+        //判断用户是否已经答题3次,答题不足3次，不允许参与抽奖和兑奖
+        if(($opt_type == '3' or $opt_type == '5') && true == $this->canBeginGame($user_id))
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'8')));
+            //应该进入答题环节
         }
         
         
@@ -361,8 +371,7 @@ class index extends tbController {
             $this->jump(spUrl('record','index',array('from'=>'bank')));
         }else if($opt_type == '3')//兑奖
         {
-            $this->sessionFunctionAuth(array('type'=>'06'));
-            
+            $this->sessionFunctionAuth(array('type'=>'06'));           
             $this->jump(spUrl('exchange','index'));
         }
         else if($opt_type == '4')//我的奖品
