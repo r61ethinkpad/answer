@@ -69,10 +69,15 @@ class exchange extends tbController {
         
         return $info;
     }
-    
+    /**
+     * 更新客户的本期客户信息
+     * @param type $args
+     * @return type
+     * WARNING:正式环境下，请用$_SESSION['so_login']['term'] 代替  date('Ymd')
+     */
     private function updateUserStatusInfo($args)
     {
-        $term = "20140301";//$_SESSION['so_login']['term'];//
+        $term = date('Ymd');//$_SESSION['so_login']['term'];//
         $rs = spClass("userStatusModel")->update(array('user_id'=>$_SESSION['so_login']['user_id'],'term'=>$term),$args);
         return $rs;
     }
