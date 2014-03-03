@@ -353,6 +353,11 @@ class index extends tbController {
         $_SESSION['so_login']['login_time'] = date('H:i:s');
         $_SESSION['so_login']['term'] = date('Ymd');
         
+        $_SESSION['operator']["id"] = $user_id;
+        $_SESSION['operator']["name"] = "银行答题客户";        
+        $_SESSION['operator']["login_time"] = date('H:i:s');  
+        $_SESSION['operator']['type'] = $opt_type;
+        
         $_SESSION["login"] = true; //已经登录   
         
         if($opt_type == '1')//go to game
@@ -362,13 +367,7 @@ class index extends tbController {
             $this->jump(spUrl('game','index'));
         }else if ($opt_type == '2')
         {
-            $_SESSION['so_login']['query_user'] = $query_user==""?$user_id:$query_user;
-            $_SESSION['so_login']['name'] = "积分查询管理员";
-            
-            $_SESSION['operator']["id"] = $user_id;
-            $_SESSION['operator']["name"] = "积分查询管理员";        
-            $_SESSION['operator']["login_time"] = date('H:i:s');  
-            
+            $_SESSION['so_login']['query_user'] = $query_user==""?$user_id:$query_user;        
             $this->sessionFunctionAuth(array('type'=>'05'));
             $this->jump(spUrl('record','index',array('from'=>'bank')));
         }else if($opt_type == '3')//兑奖
