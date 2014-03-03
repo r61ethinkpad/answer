@@ -219,24 +219,6 @@ class recordModel extends spModel {
             'ninth_scores'=>$records[8],
             'tenth_scores'=>$records[9],
         );
-<<<<<<< HEAD
         return spClass("recordModel")->create($row);
-=======
-        if(count($_SESSION['records'])){
-            $over_point=null;
-            foreach($_SESSION['records'] as $k=>$v){
-                $row[self::GetPointFieldName($k)]=$v;
-                $over_point=$k;
-            }
-            $row['over_point']=$over_point;
-            //print_r($row);
-            $month = date('Ym');
-            $table_name = "answer_record_".$month;
-            return spClass("recordModel",array($table_name))->create($row);
-        }else{
-            return false;
-        }
->>>>>>> 384a39f1dfb413fce0d06be1944218ff246a8b25
     }
-
 }
