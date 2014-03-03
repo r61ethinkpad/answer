@@ -149,7 +149,7 @@ class examModel extends spModel {
         return $model->find("question_id=$question_id",null,$files);
     }
 
-    public static function GetRandExamIdsByTypeAndPoint($type,$point,$c=10){
+    public static function GetRandExamIdsByTypeAndPoint($type,$point,$c=10,$first_get=true){
         $model = spClass("examModel");
         $rows=$model->findAll("exam_type=$type and exam_point=$point",null,"question_id");
         $total_count=count($rows);
@@ -158,16 +158,25 @@ class examModel extends spModel {
         for($i=0;$i<$c-1;$i++){
             $r=rand(0,$total_count-1);
             //echo "$r|";
-            if(!$randExamIds||array_search($rows[$r]['question_id'],$randExamIds)===false){
+            if($i==0||array_search($rows[$r]['question_id'],$randExamIds)===false){
                 $randExamIds[]=$rows[$r]['question_id'];
             }else{
-                $i--;continue;
+                while(true){
+                    $r++;
+                    if(array_search($rows[$r]['question_id'],$randExamIds)===false){
+                        $randExamIds[]=$rows[$r]['question_id'];
+                        break;
+                    }
+                }
             }//如果得到重复的题号则重新生成随机；
+        }
+        if(!$first_get){//如果不需要获取建行题则返回；
+            return $randExamIds;
         }
         //获取建行题
         $rows=$model->findAll("exam_type='9999' and exam_point=$point",null,"question_id");
         $total_count=count($rows);
-        if($total_count<1){return false;}//如果小于10道题则返回失败；
+        if($total_count<1){return false;}//如果小于1道题则返回失败；
         $r=rand(0,$total_count-1);
         $randExamIds[]=$rows[$r]['question_id'];
         //print_r($randExamIds);

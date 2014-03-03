@@ -11,10 +11,10 @@ if (!defined('TBOWCARDUP')) {
 class recordModel extends spModel {
 
     public $pk = 'log_sn';
-    public $table = 'answer_record';
+    public $table = "answer_record";
 
     public function __construct($table) {
-        $this->table = $table ? $table : "answer_record";
+        $this->table = "answer_record_".date("Ym");
         parent::__construct();
     }
 
@@ -228,24 +228,24 @@ class recordModel extends spModel {
         
     }
 
-    public static function add($user_id){
+    public static function add($user_id,$records,$point){
         $row=array(
             'user_id'=>$user_id,
             'answer_time'=>date("Y-m-d H:i:s"),
             'record_time'=>date("Y-m-d H:i:s"),
+            'over_point'=>$point,
+            'first_scores'=>$records[0],
+            'second_scores'=>$records[1],
+            'third_scores'=>$records[2],
+            'fourth_scores'=>$records[3],
+            'fifth_scores'=>$records[4],
+            'sixth_scores'=>$records[5],
+            'seventh_scores'=>$records[6],
+            'eighth_scores'=>$records[7],
+            'ninth_scores'=>$records[8],
+            'tenth_scores'=>$records[9],
         );
-        if(count($_SESSION['records'])){
-            $over_point=null;
-            foreach($_SESSION['records'] as $k=>$v){
-                $row[self::GetPointFieldName($k)]=$v;
-                $over_point=$k;
-            }
-            $row['over_point']=$over_point;
-            //print_r($row);
-            return spClass("recordModel")->create($row);
-        }else{
-            return false;
-        }
+        return spClass("recordModel")->create($row);
     }
 
 }

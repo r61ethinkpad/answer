@@ -9,35 +9,15 @@
 </head>
 <body>
 <div class="question_box" id="question_box">
-    <{include file="game/_question.html" question=$question}>
+    <div class="question_title clearfix">
+    </div>
+    <div class="question_main">
+        <div class="timu wrongTxt clearfix">
+            <p><img src="view/<{$tplName}>/images/game/love.png" /></p>
+            <p>感谢您的参与</p>
+            <p>您本期的3次答题机会已经全部用完，欢迎下期再来答题哦~</p>
+        </div>
+    </div>
 </div>
-<form id="form1" method="post">
-    <input type="hidden" id="answer" name="answer" value="">
-</form>
-<p class="info">游戏说明：在同一局域网内多个玩家进行游戏并不等同于小号和一人多号行为，不同的玩家可以在同一局域网内进行各自的游戏的交互行为会被严格监控。</p>
 </body>
 </html>
-<script>
-    var select_answer=function(obj,answer){
-        $("#answer").val(answer);
-        $("#question a").removeClass('p_a_selected');
-        $(obj).addClass('p_a_selected');
-    }
-    var cm=function(){
-        var answer=$("#answer").val();
-        if(!answer){alert("请选择答案！");return;}
-        //document.getElementById('form1').submit();
-        $.ajax({
-            data:{answer:answer},
-            url:"<{spUrl c=game a=answer type=$smarty.get.type}>",
-            type:"POST",
-            dataType:"json",
-            beforeSend:function(){
-                $("#question_box").html("正在提交答案...");
-            },
-            success:function(data){
-                $("#question_box").html(data);
-            }
-        })
-    }
-</script>

@@ -9,23 +9,7 @@
 </head>
 <body>
 <div class="question_box">
-	<div class="question_title clearfix">
-    	<span class="floatL">当前在第<{$smarty.session.point}>关</span>
-        <span class="floatR">
-        	<span class="right">对<{$smarty.session.right}>题</span>
-            <span class="wrong">错<{$smarty.session.wrong}>题</span>
-        </span>
-    </div>
-    <div class="question_main">
-    	<div class="timu wrongTxt clearfix">
-        	<p><img src="view/<{$tplName}>/images/game/love.png" /></p>
-            <p>恭喜您，答对了</p>
-            <p>获得1个积分</p>
-        </div>
-        <div class="btn_box clearfix">
-        	<a class="btn_red" href="<{spUrl c=game a=question type=$smarty.get.type}>">下一题</a>
-        </div>
-    </div>
+    <{include file="game/_right.html"  customer_status=$customer_status}>
 </div>
 <p class="info">游戏说明：在同一局域网内多个玩家进行游戏并不等同于小号和一人多号行为，不同的玩家可以在同一局域网内进行各自的游戏的交互行为会被严格监控。</p>
 </body>

@@ -1,26 +1,11 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>答题送积分</title>
-    <link href="view/<{$tplName}>/css/game/reset.css" rel="stylesheet" type="text/css"/>
-    <link href="view/<{$tplName}>/css/game/style.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="view/<{$tplName}>/js/jquery.min.js"></script>
-</head>
-<body>
-<div class="question_box">
-    <div class="question_title clearfix">
+﻿<div class="question_title clearfix">
+</div>
+<div class="question_main">
+    <div class="timu wrongTxt clearfix">
+        <p><img src="view/<{$tplName}>/images/game/cry.png" /></p>
+        <p>非常抱歉，题库不足，请重新选择别的类型的题</p>
     </div>
-    <div class="question_main">
-        <div class="timu wrongTxt clearfix">
-            <p><img src="view/<{$tplName}>/images/game/cry.png" /></p>
-            <p>非常抱歉，题库不足，请重新选择别的类型的题</p>
-        </div>
-        <div class="btn_box clearfix">
-            <a class="btn_red" href="<{spUrl c=game a=index}>">重新答题</a>
-        </div>
+    <div class="btn_box clearfix">
+        <a class="btn_red" href="<{spUrl c=game a=index}>">重新答题</a>
     </div>
 </div>
-<p class="info">游戏说明：在同一局域网内多个玩家进行游戏并不等同于小号和一人多号行为，不同的玩家可以在同一局域网内进行各自的游戏的交互行为会被严格监控。</p>
-</body>
-</html>

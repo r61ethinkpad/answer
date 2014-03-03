@@ -29,10 +29,10 @@ class tbController extends spController
 		$this->setLang('cn_common');
                 //项目名称
                 $this->projectName = T('project_name');
-		
+
 		//导航菜单
-		//$this->tNavigation = spClass("navigationModel")->navigationTree(1);	
-		
+		//$this->tNavigation = spClass("navigationModel")->navigationTree(1);
+
 		if($_SESSION['navigation']){
 			$this->tNavigation = $_SESSION['navigation'];
 		}

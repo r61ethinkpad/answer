@@ -8,31 +8,13 @@
     <script type="text/javascript" src="view/<{$tplName}>/js/jquery.min.js"></script>
 </head>
 <body>
-<div class="question_box">
-	<div class="question_title clearfix">
-    	<span class="floatL">当前在第<{$smarty.session.point}>关</span>
-        <span class="floatR">
-        	<span class="right">对<{$smarty.session.right}>题</span>
-            <span class="wrong">错<{$smarty.session.wrong}>题</span>
-        </span>
-    </div>
-    <div class="question_main">
-    	<div class="timu clearfix" id="question">
-            <p class="colRed"><{$question.question_content}></p>
-            <p><a onclick="select_answer(this,'A')">A、<{$question.alternative_a}></a></p>
-            <p><a onclick="select_answer(this,'B')">B、<{$question.alternative_b}></a></p>
-            <p><a onclick="select_answer(this,'C')">C、<{$question.alternative_c}></a></p>
-            <p><a onclick="select_answer(this,'D')">D、<{$question.alternative_d}></a></p>
-        </div>
-        <div class="btn_box clearfix">
-        	<a class="btn_blue" onclick="cm();">提交</a>
-        </div>
-    </div>
+<div class="question_box" id="question_box">
+    <{include file="game/_question.html" question=$question customer_status=$customer_status}>
 </div>
-<form action="<{spUrl c=game a=answer type=$smarty.get.type}>" id="form1" method="post">
+<form id="form1" method="post">
     <input type="hidden" id="answer" name="answer" value="">
 </form>
-<p class="info">游戏说明：在同一局域网内多个玩家进行游戏并不等同于小号和一人多号行为，不同的玩家可以在同一局域网内进行各自的游戏的交互行为会被严格监控。</p>
+<p class="info">游戏说明：在答题过程请不要刷新页面，如果刷新页面则被认为是放弃当前的答题机会，每一关的答题时间为90秒。当前剩余时间为<span id="timer"></span>秒</p>
 </body>
 </html>
 <script>
@@ -42,8 +24,47 @@
         $(obj).addClass('p_a_selected');
     }
     var cm=function(){
-        var v=$("#answer").val();
-        if(!v){alert("请选择答案！");return;}
-        document.getElementById('form1').submit();
+        var answer=$("#answer").val();
+        if(!answer){alert("请选择答案！");return;}
+        //document.getElementById('form1').submit();
+        $.ajax({
+            data:{answer:answer},
+            url:"<{spUrl c=game a=answer}>",
+            type:"POST",
+            beforeSend:function(){
+                $("#question_box").html("正在提交答案...");
+            },
+            success:function(data){
+                $("#question_box").html(data);
+            },
+            complete:function(){
+                $("#answer").val("");
+            }
+        })
+    }
+    $(document).ready(function(){
+        interval=setInterval(timer,1000);
+    });
+    var t=90;
+    var interval=null;
+    var timer=function(){
+        if(t>0){
+            $("#timer").html(t);
+            t--;
+        }else{
+            $("#answer").val("time_over");
+            cm();
+            clearInterval(interval);
+        }
+    }
+    var resetTime=function(){
+        clearInterval(interval);
+        interval=setInterval(timer,1000);
+        t=90;
+    }
+    var timeOver=function(){
+        clearInterval(interval);
+        t=0;
+        $("#timer").html(t);
     }
 </script>

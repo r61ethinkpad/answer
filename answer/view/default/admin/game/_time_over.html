@@ -7,13 +7,8 @@
 </div>
 <div class="question_main">
     <div class="timu wrongTxt clearfix">
-        <{if $customer_status->point > 10}>
-        <p><img src="view/<{$tplName}>/images/game/love.png" /></p>
-        <p>恭喜您，您已经通关</p>
-        <{else}>
         <p><img src="view/<{$tplName}>/images/game/cry.png" /></p>
-        <p>非常遗憾，您没有通关</p>
-        <{/if}>
+        <p>非常遗憾，您答题时间超时</p>
 
         <p>获得<{$customer_status->total_right}>个积分</p>
         <{if $customer_status->round<3}>
@@ -23,8 +18,13 @@
         <{/if}>
     </div>
     <{if $customer_status->round<4}>
-        <div class="btn_box clearfix">
-            <a class="btn_red" href="<{spUrl c=game a=index}>">再次闯关</a>
-        </div>
+    <div class="btn_box clearfix">
+        <a class="btn_red" href="<{spUrl c=game a=index}>">再次闯关</a>
+    </div>
     <{/if}>
 </div>
+<script>
+    $(document).ready(function(){
+        timeOver();
+    });
+</script>
