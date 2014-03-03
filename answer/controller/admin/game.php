@@ -141,7 +141,7 @@ class game extends tbController {
         }
     }
 
-    public function resetStatus(){
+    public function normalResetStatus(){
         $_SESSION['type']=-1;
         //重新初始化用户状态
         $status=array(
@@ -154,6 +154,27 @@ class game extends tbController {
             'total_wrong'=>0,
             'round'=>$this->customer_status->round,
             'records'=>"0|0|0|0|0|0|0|0|0|0",
+        );
+        $row=array(
+            'status'=>json_encode($status),
+            'total_count'=>$this->total_count,
+        );
+        return spClass("customerStatusModel")->upd($_SESSION['so_login']['user_id'],date("Ymd"),$row);
+    }
+
+    public function wrongCaseResetStatus(){
+        //答错4道题的情况下重新初始化用户状态
+        $this->records[$this->customer_status->point]=0;
+        $status=array(
+            'type'=>$this->customer_status->type,
+            //'question'=>1,
+            'point'=>$this->customer_status->point,
+            'right'=>0,
+            'wrong'=>0,
+            'total_right'=>$this->customer_status->total_right-$this->customer_status->right,
+            'total_wrong'=>$this->customer_status->total_wrong-$this->customer_status->wrong,
+            'round'=>$this->customer_status->round,
+            'records'=>join("|",$this->records),
         );
         $row=array(
             'status'=>json_encode($status),
@@ -182,14 +203,15 @@ class game extends tbController {
             }elseif($_POST['answer']!='time_over'){//答错了
                 $this->customer_status->wrong++;
                 $this->customer_status->total_wrong++;
+                $this->records[$this->customer_status->point-1]=$this->customer_status->right;
                 if($this->customer_status->wrong>3){//如果错了四道题则结束本次答题
                     //$this->customer_status->round++;
                     unset($_SESSION['current_question_id']);
                     unset($_SESSION['randExamIds']);
-                    $this->records[$this->customer_status->point-1]=$this->customer_status->right;
+                    //$this->records[$this->customer_status->point-1]=$this->customer_status->right;
                     spClass("recordModel")->add($_SESSION['so_login']['user_id'],$this->records,$this->customer_status->point);
 
-                    $this->resetStatus();
+                    $this->wrongCaseResetStatus();
                     $this->displayPartial("game/_over.html");
                     exit;
                 }
@@ -213,7 +235,7 @@ class game extends tbController {
                     $this->records[9]=$this->customer_status->right;
                     spClass("recordModel")->add($_SESSION['so_login']['user_id'],$this->records,$this->customer_status->point-1);
 
-                    $this->resetStatus();
+                    $this->normalResetStatus();
                     $this->displayPartial("game/_over.html");
                     exit;
                 }else{

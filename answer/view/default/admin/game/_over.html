@@ -21,7 +21,7 @@
         <p>感谢您的参与，您本期的3次答题机会已经全部用完！</p>
         <{/if}>
     </div>
-    <{if $customer_status->round<4}>
+    <{if $customer_status->round<3}>
         <div class="btn_box clearfix">
             <a class="btn_red" href="<{spUrl c=game a=index}>">再次闯关</a>
         </div>
