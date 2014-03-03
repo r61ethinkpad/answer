@@ -1,0 +1,30 @@
+﻿<div class="question_title clearfix">
+    <span class="floatL">您的总成绩</span>
+        <span class="floatR">
+        	<span class="right">对<{$customer_status->total_right}>题</span>
+            <span class="wrong">错<{$customer_status->total_wrong}>题</span>
+        </span>
+</div>
+<div class="question_main">
+    <div class="timu wrongTxt clearfix">
+        <{if $customer_status->point > 10}>
+        <p><img src="view/<{$tplName}>/images/game/love.png" /></p>
+        <p>恭喜您，您已经通关</p>
+        <{else}>
+        <p><img src="view/<{$tplName}>/images/game/cry.png" /></p>
+        <p>非常遗憾，您没有通关</p>
+        <{/if}>
+
+        <p>获得<{$customer_status->total_right}>个积分</p>
+        <{if $customer_status->round<3}>
+        <p>感谢您的参与，您还有<{3-$customer_status->round}>次答题机会</p>
+        <{else}>
+        <p>感谢您的参与，您本期的3次答题机会已经全部用完！</p>
+        <{/if}>
+    </div>
+    <{if $customer_status->round<4}>
+        <div class="btn_box clearfix">
+            <a class="btn_red" href="<{spUrl c=game a=index}>">再次闯关</a>
+        </div>
+    <{/if}>
+</div>
