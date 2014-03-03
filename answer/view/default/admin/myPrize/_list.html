@@ -1,0 +1,47 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>
+<style>
+    .towfocus {
+    color: #FF0000;
+    background-color:#fbf9e6;
+}
+.towfocus tr td span{
+     margin-right:20px;
+}
+</style>
+<table class="dbTable">
+    <thead>
+        <tr>
+            <th style="width:20%">奖品</th>
+            <th style="width:20%">数量</th>
+            <th style="width:20%">花费积分</th>
+            <th style="width:20%">余额</th>
+            <th>兑奖时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        <{foreach from=$list item=one key=k_id}>
+        <tr>
+
+            <td>
+
+                    <{$one.user_id}>
+            </td>
+            <td><{$one.count}></td>
+            <td><{$one.score}></td>
+            <td><{$one.balance}></td>
+            <td>
+               <{$one.record_time}>
+            </td>
+        </tr>
+        
+        <{foreachelse}>
+        <tr><td colspan="5"><span id="no_record">无查询记录！</span></td></tr>
+        <{/foreach}>
+    </tbody>
+   
+</table>
+<{include file="../inc/page.html"}>
+
+<script type="text/javascript">
+
+</script>

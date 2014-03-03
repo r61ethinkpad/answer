@@ -15,10 +15,9 @@ class navigationModel extends spModel {
             array(
                 "name" => "", //首页
                 "controller" => "index",
-                "action"=>'main',
+                "action" => 'main',
                 "tid" => 1,
             ),
-            
         );
         $menu = array();
         return $menu;
@@ -33,106 +32,116 @@ class navigationModel extends spModel {
      */
     public function navigationTree($position = 0) {
 
-            $tree = array(
-                array(
-                    "name" => T('nav_exam'), //题库管理
-                    "controller" => "answer",
-                    "action" => "index",
-                    "mainflag" => 0,
-                    "hassub" => 1,
-                    "tid" => 1,
-					"sid"=>1,
-					"subitem"=>array(
-                        array(
-                            "name" => T("nav_custom_exam"),
-                            "controller" => "answer",
-                            "action" => "index",
-                            "sid" => 1,
-                        ),
-                        array(
-                            "name" => T("nav_bank_exam"),
-                            "controller" => "answer",
-                            "action" => "bank",
-                            "sid" => 2,
-                        ),
-                        array(
-                            "name" => T("nav_batch_exam"),
-                            "controller" => "answer",
-                            "action" => "batch",
-                            "sid" => 3,
-                        ),
-					),
-                ),
-                
-                array(
-                    "name" => T('nav_answer_record'),//答题记录
-                    "controller" => "record",
-                    "action" => "index",
-                    "mainflag" => 0,
-                    "hassub" => 1,
-                    "tid" => 2,
-                    "sid" => 1,
-                    "subitem"=>array(
-                        array(
-                            "name" => T('nav_answer_record'),//答题记录,
-                            "controller" => "record",
-                            "action" => "index",
-                            "sid" => 1,
-                        ),
+        $tree = array(
+            array(
+                "name" => T('nav_exam'), //题库管理
+                "controller" => "answer",
+                "action" => "index",
+                "mainflag" => 0,
+                "hassub" => 1,
+                "tid" => 1,
+                "sid" => 1,
+                "subitem" => array(
+                    array(
+                        "name" => T("nav_custom_exam"),
+                        "controller" => "answer",
+                        "action" => "index",
+                        "sid" => 1,
                     ),
-                   
+                    array(
+                        "name" => T("nav_bank_exam"),
+                        "controller" => "answer",
+                        "action" => "bank",
+                        "sid" => 2,
+                    ),
+                    array(
+                        "name" => T("nav_batch_exam"),
+                        "controller" => "answer",
+                        "action" => "batch",
+                        "sid" => 3,
+                    ),
                 ),
-				
-                array(
-                    "name" => T('nav_system_set'),//系统配置
-                    "controller" => "answerType",
-                    "action" => "index",
-                    "mainflag" => 0,
-                    "hassub" => 1,
-                    "tid" => 3,
-					"sid"=>1,
-					"subitem"=>array(
-                        array(
-                            "name" => T("nav_exam_type"),
-                            "controller" => "answerType",
-                            "action" => "index",
-                            "sid" => 1,
-                        ),
-					),
-                   
+            ),
+            array(
+                "name" => T('nav_user_info'), //用户信息管理
+                "controller" => "record",
+                "action" => "index",
+                "mainflag" => 0,
+                "hassub" => 1,
+                "tid" => 2,
+                "sid" => 1,
+                "subitem" => array(
+                    array(
+                        "name" => T('nav_answer_record'), //答题记录,
+                        "controller" => "record",
+                        "action" => "index",
+                        "sid" => 1,
+                    ),
+                    array(
+                        "name" => T('nav_exchange_record'), //兑奖记录,
+                        "controller" => "myPrize",
+                        "action" => "index",
+                        "sid" => 2,
+                    ),
                 ),
-                
-                
-                
-                array(
-                    "name" => T('nav_operator_manage'),//管理员管理
-                    "controller" => "operator",
-                    "action" => "index",
-                    "mainflag" => 0,
-                    "hassub" => 1,
-                    "tid" => 4,
-                    "sid" => 1,
-                    "subitem" => array(
-                        array(
-                            "name" => T("nav_operator_manage"),
-                            "controller" => "operator",
-                            "action" => "index",
-                            "sid" => 1,
-                        ),
-                        array(
-                            "name" => T("nav_opt_log"),
-                            "controller" => "optLog",
-                            "action" => "index",
-                            "sid" => 2,
-                        ),
-                        
-                    )
+            ),
+            array(
+                "name" => T('nav_system_set'), //系统配置
+                "controller" => "answerType",
+                "action" => "index",
+                "mainflag" => 0,
+                "hassub" => 1,
+                "tid" => 3,
+                "sid" => 1,
+                "subitem" => array(
+                    array(
+                        "name" => T("nav_exam_type"),
+                        "controller" => "answerType",
+                        "action" => "index",
+                        "sid" => 1,
+                    ),
+                    array(
+                        "name" => T("nav_goods"),
+                        "controller" => "goods",
+                        "action" => "index",
+                        "sid" => 2,
+                    ),
+                    array(
+                        "name" => T("nav_lottery_ticket"),
+                        "controller" => "lotteryTicket",
+                        "action" => "index",
+                        "sid" => 3,
+                    ),
                 ),
-            );
-        
+            ),
+            array(
+                "name" => T('nav_operator_manage'), //管理员管理
+                "controller" => "operator",
+                "action" => "index",
+                "mainflag" => 0,
+                "hassub" => 1,
+                "tid" => 4,
+                "sid" => 1,
+                "subitem" => array(
+                    array(
+                        "name" => T("nav_operator_manage"),
+                        "controller" => "operator",
+                        "action" => "index",
+                        "sid" => 1,
+                    ),
+                    array(
+                        "name" => T("nav_opt_log"),
+                        "controller" => "optLog",
+                        "action" => "index",
+                        "sid" => 2,
+                    ),
+                )
+            ),
+        );
 
-            
-            return $tree;
+
+
+        return $tree;
     }
 
     public function navigationPosition() {

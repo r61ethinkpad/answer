@@ -57,8 +57,11 @@ class recordModel extends spModel {
         }
         
         $condition .= " order by answer_time desc";
-        $ym_s = substr($args['stime'], 0,6);
-        $ym_e = substr($args['etime'], 0, 6);
+        
+        $stime = str_replace("-","",$args['stime']);
+        $etime = str_replace("-","",$args['etime']);
+        $ym_s = substr($stime, 0,6);
+        $ym_e = substr($etime, 0, 6);
         
         $ym_s = intval($ym_s);
         $ym_e = intval($ym_e);
@@ -156,7 +159,13 @@ class recordModel extends spModel {
         
     }
     
-    
+    /**
+     * 查看用户答题次数。
+     * 一期活动就是一天，所以不存在跨表的情况。
+     * 查询用户在一天内答题的次数
+     * @param type $args
+     * @return type
+     */
     public static function caculateNum($args)
     {
         $condition = "";
@@ -175,51 +184,16 @@ class recordModel extends spModel {
         if($args['stime'] != null && $args['stime'] != "" && $args['etime'] != null && $args['etime'] != "")
         {
             if($condition!="") $condition .= " AND ";
-            $condition .= "  answer_time >= '".$args['stime']."' AND answer_time < date_add(str_to_date('".$args['etime']."','%Y%m%d'), interval 1 DAY) ";
+            $condition .= "  answer_time >= '".$args['stime']."' AND answer_time <= '".$args['etime']."' ";
         }
         
         
-        $ym_s = substr($args['stime'], 0,6);
-        $ym_e = substr($args['etime'], 0, 6);
+        $etime = str_replace(array('-',':'), "", $args['etime']);
+        $ym_e = substr($etime, 0, 6);
         
-        $ym_s = intval($ym_s);
-        $ym_e = intval($ym_e);
-        $sql = "";
         $table_pre = "pc_answer_record_";
-        $i = 1;
-        while($ym_e >= $ym_s)
-        {
-            $table_name = $table_pre.$ym_e;
-            //dump($table_name);
-            //检测当前的数据库表存在么
-            $cnt_table_sql = "select count(1) as count from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA`='dbanswercp' and  `TABLE_NAME`='".$table_name."' ";
-            $cnt_table_info = spClass("recordModel")->findSql($cnt_table_sql);
-            if($cnt_table_info[0]['count'] == 0)
-            {
-                $ym_e--;
-                
-                continue;
-            }
-            if($i != 1)
-            {
-                $sql .= " UNION ALL ";
-            }
-            $sql .= "select t.* from (select * from ".$table_name." where ".$condition.") t ";
-            //dump($ym_e."-".$ym_s);
-                       
-            
-            $ym_e--;
-            $i++;
-        }
-        //dump($sql);//exit;
-        if($sql == "")
-        {
-         
-            return 0;
-        
-        }
-        
-        $cnt_sql = "select count(1) as count from (".$sql.") tt";
+        $table_name = $table_pre.$ym_e;
+        $cnt_sql = "select count(1) as count from ".$table_name." where ".$condition;
         //dump($cnt_sql);
         $cnt_rs = spClass("recordModel")->findSql($cnt_sql);
         $total_count = intval($cnt_rs[0]['count']);
@@ -245,7 +219,24 @@ class recordModel extends spModel {
             'ninth_scores'=>$records[8],
             'tenth_scores'=>$records[9],
         );
+<<<<<<< HEAD
         return spClass("recordModel")->create($row);
+=======
+        if(count($_SESSION['records'])){
+            $over_point=null;
+            foreach($_SESSION['records'] as $k=>$v){
+                $row[self::GetPointFieldName($k)]=$v;
+                $over_point=$k;
+            }
+            $row['over_point']=$over_point;
+            //print_r($row);
+            $month = date('Ym');
+            $table_name = "answer_record_".$month;
+            return spClass("recordModel",array($table_name))->create($row);
+        }else{
+            return false;
+        }
+>>>>>>> 384a39f1dfb413fce0d06be1944218ff246a8b25
     }
 
 }

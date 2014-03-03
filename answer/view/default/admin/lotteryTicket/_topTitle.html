@@ -1,0 +1,4 @@
+<ul class="tab-label">
+    <li <{if $current_tab == 'list'}> class="current"<{/if}>><a href="<{spUrl c=lotteryTicket a=index tid=$tid sid=$sid}>">彩票券列表</a></li>
+    <li <{if $current_tab == 'new'}> class="current"<{/if}>><a href="<{spUrl c=lotteryTicket a=batch tid=$tid sid=$sid}>">批量导入</a></li>
+</ul>

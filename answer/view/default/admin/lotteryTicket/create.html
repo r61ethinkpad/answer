@@ -1,0 +1,82 @@
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+
+<div id="content">
+<{if $opt_msg!=''}>
+	<p id="optMsg" class="dBox"><{$opt_msg}><br/><a id='msg_close' style='margin-left:50px;' class='colOrange'>[关闭]</a></p>
+<{/if}>
+	<div class="tab">
+    	<{include file="lotteryTicket/_topTitle.html"}>
+        <div class="tab-main">
+            <form id="form1" action="<{spUrl c=lotteryTicket a=batch tid=$tid sid=$sid}>" 
+            method="post" enctype="multipart/form-data" name='form1'>
+        	<table class="formList">
+        	    
+               <tr class="form-name">
+                	<td colspan="4">上传彩票券标识码文件</td>
+                </tr>
+                 <tr>
+                    <td class="name"><span class='colRed'>*</span>选择文件：</td>
+                    <td class="value" colspan='3'>
+                    	<input type="file" name="batch_file" style='width:200px;'/>
+                    	<span class="colOrange"><{$error_array.batch_file}></span>
+                    </td>
+                </tr>
+                <tr><td colspan="4" class="value">
+                <pre style="margin-left:80px;">
+                	<br>文件导入规则：
+					<br>1、文件必须为xls的excel文件，文件最大<{$maxfsize}>M，工作表第一页必须填写数据；
+					<br>2、请从第3行开始填写数据，系统默认从第3行开始读取；					
+					<br>3、如不确定文件格式，请下载[<a href="javascript:void(0);" onclick="tmpDown();" id='a_tmp'>批量导入彩票券标识码模板</a>]。
+               	</pre>
+               	</td></tr>
+               
+                <tr class="btnBox">
+                    <td colspan="4">
+                        <span class="sBtn">
+                            <a class="left">确定</a><a class="right"></a>
+                        </span>
+                          
+                    </td>
+                </tr>
+            </table>
+        </form>
+            
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"> 
+$(document).ready(function(){
+	v_addMethod();
+	$(".sBtn").click(function(){
+	$("#form1").validate({
+		rules: {
+			'batch_file': {required:true,accept:'xls|xlsx'}
+			
+		},
+		messages:{
+			'batch_file': {accept:'文件格式不正确，请上传xls文件'}
+		}
+	});
+	if($("#form1").valid()){
+		$("#form1").submit();
+	}
+	});
+	
+	//关闭提示消息
+	$('#msg_close').click(function(){
+		$('#optMsg').hide();
+	});
+	
+	
+	
+	
+});
+
+var tmpDown = function(){
+	
+	window.location.href='<{spUrl c=lotteryTicket a=openTmpDown}>';
+	
+}
+</script>

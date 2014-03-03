@@ -199,7 +199,7 @@ class answer extends tbController {
         $this->args = array(
             'question_content' => $content,
             'exam_type' => $exam_type,
-            'exam_point' => $exam_type,
+            'exam_point' => $exam_point,
             'alternative_a'=>trim($exam["alternative_a"]),
             'alternative_b'=>trim($exam["alternative_b"]),
             'alternative_c' => trim($exam["alternative_c"]),
@@ -207,7 +207,7 @@ class answer extends tbController {
             'correct_answer'=>trim($exam["correct_answer"]),
             'creator'=>$this->operator_id,
         );
-
+        //var_dump($this->args);
         $check_rs = $model->verifierModel($this->args);
         //var_dump($check_rs);
         if (false == $check_rs) {
@@ -363,7 +363,7 @@ class answer extends tbController {
         $this->args = array(
             'question_content' => $content,
             'exam_type' => $exam_type,
-            'exam_point' => $exam_type,
+            'exam_point' => $exam_point,
             'alternative_a'=>trim($exam["alternative_a"]),
             'alternative_b'=>trim($exam["alternative_b"]),
             'alternative_c' => trim($exam["alternative_c"]),
@@ -496,6 +496,7 @@ class answer extends tbController {
             $file_msg = array();
 
             $this->file_status = '-1';   //默认无上传文件
+            //dump($file['name']);dump($file['size']);
             //检查上传文件
             if ($file['name'] == '' || $file['name'] == null)
                 $this->opt_msg = "未上传批量文件,请上传文件。";
@@ -533,11 +534,93 @@ class answer extends tbController {
 
         $this->display("answer/batch_add.html");
     }
-
+    
     //用户开卡批量上传
     public function openDetailCreate($file) {
 
         $tmp_name = $file ['tmp_name'];
+        //dump($file['error']);
+        if ($file["error"] == 0) {
+
+            import(APP_PATH . '/../libs/PHPExcel/PHPExcel/IOFactory.php');
+            $inputFileType = PHPExcel_IOFactory::identify($tmp_name); //文件名自动判断文件类型Excel5,Excel2007
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+            $objReader->setReadDataOnly(true);
+            $objPHPExcel = $objReader->load($tmp_name);
+
+            $currentSheet = $objPHPExcel->getSheet(0); //第一个工作簿
+            $allRow = $currentSheet->getHighestRow(); //行数
+           
+            $list = array();
+            $err_msg = array();
+            $succ_num = 0;
+            
+            //按照文件格式从第7行开始循环读取数据
+            for($currentRow = 3;$currentRow<=$allRow;$currentRow++){ 
+                //判断每一行的B列是否为有效的序号，如果为空或者小于之前的序号则结束
+                $type_name = trim($currentSheet->getCell('A'.$currentRow)->getValue());
+                $exam_point = trim($currentSheet->getCell('B'.$currentRow)->getValue());
+                $content = trim($currentSheet->getCell('C'.$currentRow)->getValue());
+                $alternative_a = trim($currentSheet->getCell('D'.$currentRow)->getValue());
+                
+                $alternative_b = trim($currentSheet->getCell('E'.$currentRow)->getValue());
+                $alternative_c = trim($currentSheet->getCell('F'.$currentRow)->getValue());
+                $alternative_d = trim($currentSheet->getCell('G'.$currentRow)->getValue());
+                $correct_answer = trim($currentSheet->getCell('H'.$currentRow)->getValue());
+                  
+                if($type_name == ""||$exam_point==""||$content==""||$correct_answer=="")
+                {
+                    continue;
+                }
+                $list = array(
+                    'row_no' => $currentRow,
+                    'type_name' => $type_name,
+                    'exam_point' => $exam_point,
+                    'content' => $content,
+                    'a' => $alternative_a,
+                    'b' => $alternative_b,
+                    'c' => $alternative_c,
+                    'd'=>$alternative_d,
+                    'answer'=>$correct_answer,
+                );
+                //dump($list);
+                $msg = $this->insertData($list);
+                if ($msg == "") {
+                    $succ_num++;
+                } else {
+                    $err_msg[] = $msg;
+                }
+            }
+          
+            $err_str = "";
+            if (@count($err_msg)) {
+                foreach ($err_msg as $k => $v) {
+                    if ($k % 4 == 0) {
+                        $err_str.="<br/>";
+                    }
+                    $err_str .= $v;
+                }
+            }
+            if ($succ_num == 0) {
+                $upload_msg = "批量导入题库数据失败。" . $err_str;
+            } else {
+                $opt_msg = "批量导入题库数据成功。成功数量为".$succ_num."。" . $err_str;
+            }
+        } else {
+            $upload_msg = "文件上传失败。";
+        }
+        
+
+        $return = array('upload_msg' => $upload_msg, 'opt_msg' => $opt_msg);
+
+        return $return;
+    }
+
+    //用户开卡批量上传
+    public function openDetailCreate2($file) {
+
+        $tmp_name = $file ['tmp_name'];
+        //dump($file['error']);
         if ($file["error"] == 0) {
 
             import(APP_PATH . '/extension/phpexcelreader/' . "JPhpExcelReader.php");
@@ -546,6 +629,7 @@ class answer extends tbController {
             $list = array();
             $err_msg = array();
             $succ_num = 0;
+            //dump($count);dump($file['size']);
             for ($i = 3; $i <= $count; $i++) {
                 $type_name = trim($data->val($i, 1, 0));
                 $exam_point = trim($data->val($i, 2, 0));
@@ -557,7 +641,10 @@ class answer extends tbController {
                 $alternative_d = trim($data->val($i, 7, 0));
                 $correct_answer = trim($data->val($i, 8, 0));
                 
-
+                if($type_name == ""||$exam_point==""||$content==""||$correct_answer=="")
+                {
+                    continue;
+                }
                 $list = array(
                     'row_no' => $i,
                     'type_name' => $type_name,
@@ -580,7 +667,7 @@ class answer extends tbController {
             $err_str = "";
             if (@count($err_msg)) {
                 foreach ($err_msg as $k => $v) {
-                    if ($k % 3 == 0) {
+                    if ($k % 4 == 0) {
                         $err_str.="<br/>";
                     }
                     $err_str .= $v;
@@ -602,6 +689,7 @@ class answer extends tbController {
     }
 
     private function insertData($args) {
+        //dump($args);
         $operator_type = $_SESSION['operator']['type'];
         $type_id = '0';
         if($operator_type == '02')//建行题库管理员
@@ -639,8 +727,8 @@ class answer extends tbController {
         }else
         {
 
-            //判断题目内容是否已存在
-            $cnt = spClass("examModel")->findCount(array('question_content'=>$args['content']));
+            //判断题目内容是否已存在,现在改成 同一个分类下，题目不能相同
+            $cnt = spClass("examModel")->findCount(array('question_content'=>$args['content'],'exam_type'=>$type_id));
             if($cnt != 0)
             {
                 return "第" . $args['row_no'] . "行的题目内容已存在；";
@@ -656,16 +744,6 @@ class answer extends tbController {
         if($args['b'] == null || $args['b'] == "")
         {
             return "第" . $args['row_no'] . "行的备选答案B为空；";
-        }
-        
-        if($args['c'] == null || $args['c'] == "")
-        {
-            return "第" . $args['row_no'] . "行的备选答案C为空；";
-        }
-        
-        if($args['d'] == null || $args['d'] == "")
-        {
-            return "第" . $args['row_no'] . "行的备选答案D为空；";
         }
         
         
@@ -695,12 +773,27 @@ class answer extends tbController {
             'alternative_d' => $args['d'],
             'correct_answer' => $args['answer'],
         );
+        $model = spClass("examModel");
+        $check_rs = $model->verifierModel($params);
+        //var_dump($check_rs);
+        if (false == $check_rs) {
+            $question_id = $model->create($params);
+            if (!$question_id) {
+                return "第" . $args['row_no'] . "行的题目添加失败；";
+            }
 
-        $question_id = spClass("examModel")->create($params);
-        if (!$question_id) {
-            return "第" . $args['row_no'] . "行的题目添加失败；";
+        }else
+        {
+            $error = "";
+            if(@count($check_rs) > 0)
+            {
+                foreach($check_rs as $k=>$v)
+                {
+                    $error.=$v.",";
+                }
+            }
+            return "第" . $args['row_no'] . "行的题目添加失败,".$error."；";
         }
-
         return "";
     }
     
@@ -816,7 +909,8 @@ class answer extends tbController {
         //必填提示
         $t = ord('A');
         for ($i = 0; $i < $must_cnt; $i++) {
-            $objPHPExcel->getActiveSheet()->setCellValue(chr($t) . '1', '必填');
+            $txt = in_array($i,array(5,6)) ? '' :'必填';
+            $objPHPExcel->getActiveSheet()->setCellValue(chr($t) . '1', $txt);
             $objPHPExcel->getActiveSheet()->getStyle(chr($t) . '1')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_RED);
             $objPHPExcel->getActiveSheet()->getStyle(chr($t))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
             $objPHPExcel->getActiveSheet()->getColumnDimension(chr($t))->setWidth(20);

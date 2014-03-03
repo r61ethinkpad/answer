@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-19 16:42:19
+<?php /* Smarty version Smarty-3.0.8, created on 2014-03-01 21:53:53
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/../inc/so_error.html" */ ?>
-<?php /*%%SmartyHeaderCode:13341157253046e6b6aef99-53205197%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:5337657235311e671791f46-45488017%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '534ea36d36978a601b1b669ca1b0f7f8613db36a' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/../inc/so_error.html',
-      1 => 1392799335,
+      1 => 1393682028,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13341157253046e6b6aef99-53205197',
+  'nocache_hash' => '5337657235311e671791f46-45488017',
   'function' => 
   array (
   ),
@@ -89,7 +89,7 @@ $_smarty_tpl->decodeProperties(array (
                                                 </TR>
                                                     <TR>
                                                         <TD style="PADDING-RIGHT: 8px">
-                                                    <LI>我们每周只有三次机会，抓住时机哦！</LI></TD></TR></TBODY></TABLE><BR></DIV></TD></TR></TBODY></TABLE>
+                                                    <LI>每周五9:00-2100有三次机会，抓住时机哦！</LI></TD></TR></TBODY></TABLE><BR></DIV></TD></TR></TBODY></TABLE>
                             <P>&nbsp;</P></TD></TR>
                     <TR>
                         <TD vAlign=bottom align=right><A href="javascript:history.back(-1);"><FONT 

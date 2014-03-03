@@ -198,6 +198,21 @@ class index extends tbController {
                     'answer_record_view',
                 );
                 break;
+            case '06'://客户兑奖
+                $list = array(
+                    'exchange_prize_manage',
+                );
+                break;
+            case '07'://客户查询我的奖品
+                $list = array(
+                    'my_prize_view',
+                );
+                break;
+            case '08'://客户抽奖
+                $list = array(
+                    'lottery_view',
+                );
+                break;
             default:
                 $list = array();
                 break;
@@ -234,7 +249,13 @@ class index extends tbController {
                 $this->errorinfo = "查询的用户编号错误";
                 break;
             case '6':
-                $this->errorinfo = "您一周内已经答题3次了";
+                $this->errorinfo = "今天不是答题时间，请周五09:00-21:00再来";
+                break;
+            case '7':
+                $this->errorinfo = "今天已经答题3次了，请去参加兑奖或者抽奖吧";
+                break;
+            case '8':
+                $this->errorinfo = "你还不能兑奖或者抽奖，请继续答题吧";
                 break;
 
             default:
@@ -253,14 +274,21 @@ class index extends tbController {
      * pwd = 666666
      * data = array(
      *      'user_id'=>'100001',
-     *      'opt_type'=>'1',// '1'=>game '2'=> get score
+     *      'opt_type'=>‘1’ 
      *      'query_user'=>'100001',//查询用户积分时用
+     *      
      * )
+     * opt_type的解释
+     * '1'=>'答题'；
+     * ‘2’=》‘查询答题积分’；
+     * ‘3’=》‘兑奖’ ；
+     * ‘4’=》我的奖品 ；
+     * ‘5’=》‘抽奖’
      */
     public function soLogin()
     {
         $sync_pwd = '666666';//单点登录协议密码
-        $default_opt_type = array('1','2');
+        $default_opt_type = array('1','2','3','4','5');
         $key = trim($this->spArgs("key"));
         if($key == null || $key == "")
         {
@@ -296,10 +324,25 @@ class index extends tbController {
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'5')));
         }
-        //判断是否有条件答题
-//        if($opt_type == '1' && false == $this->canBeginGame($user_id))
+//WARNING:正式环境下，请去掉这块注释
+        //判断今天是否可以游戏,可以兑奖，可以查看我的奖品，抽奖
+//        if(false == $this->isGameTime())
 //        {
 //            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'6')));
+//        }
+        //判断用户是否已经答题3次，答题已经够3次，不能进入答题环节
+        if($opt_type == '1' && false == $this->canBeginGame($user_id))
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'7')));
+            //应该进入兑奖环节
+        }
+ 
+//WARNING:正式环境下，请去掉这块注释
+        //判断用户是否已经答题3次,答题不足3次，不允许参与抽奖和兑奖
+//        if(($opt_type == '3' or $opt_type == '5') && true == $this->canBeginGame($user_id))
+//        {
+//            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'8')));
+//            //应该进入答题环节
 //        }
         
         
@@ -308,6 +351,7 @@ class index extends tbController {
         $_SESSION['so_login']['name'] = "银行答题客户";
         $_SESSION['so_login']['type'] = $opt_type;
         $_SESSION['so_login']['login_time'] = date('H:i:s');
+        $_SESSION['so_login']['term'] = date('Ymd');
         
         $_SESSION["login"] = true; //已经登录   
         
@@ -318,7 +362,7 @@ class index extends tbController {
             $this->jump(spUrl('game','index'));
         }else if ($opt_type == '2')
         {
-            $_SESSION['so_login']['query_user'] = $query_user;
+            $_SESSION['so_login']['query_user'] = $query_user==""?$user_id:$query_user;
             $_SESSION['so_login']['name'] = "积分查询管理员";
             
             $_SESSION['operator']["id"] = $user_id;
@@ -326,7 +370,23 @@ class index extends tbController {
             $_SESSION['operator']["login_time"] = date('H:i:s');  
             
             $this->sessionFunctionAuth(array('type'=>'05'));
-            $this->jump(spUrl('record','index'));
+            $this->jump(spUrl('record','index',array('from'=>'bank')));
+        }else if($opt_type == '3')//兑奖
+        {
+            $this->sessionFunctionAuth(array('type'=>'06'));           
+            $this->jump(spUrl('exchange','index'));
+        }
+        else if($opt_type == '4')//我的奖品
+        {
+            $this->sessionFunctionAuth(array('type'=>'07'));
+            
+            $this->jump(spUrl('myPrize','index',array('from'=>'bank')));
+        }
+        else if($opt_type == '5')//抽奖
+        {
+            $this->sessionFunctionAuth(array('type'=>'08'));
+            
+            $this->jump(spUrl('lottery','index'));
         }
        
     }
@@ -343,17 +403,17 @@ class index extends tbController {
     }
     
     /**
-     * 用户一周内只能答题3次
+     * 用户周五一天内只能答题3次
      * @param type $user_id
      * @return type
      */
     private function canBeginGame($user_id)
     {
-        $legal_date = $this->getWeekRange(date('Y-m-d'));
+        //$legal_date = $this->getWeekRange(date('Y-m-d'));
         $a = array(
-            'stime'		=>	$legal_date['sdate'],
-            'etime'		=>	$legal_date['edate'],
-            'user_id'           =>      $user_id,
+            'stime'		=>	date('Y-m-d 09:00:00'),//$legal_date['sdate'],
+            'etime'		=>	date('Y-m-d 21:00:00'),//$legal_date['edate'],
+            'user_id'   =>      $user_id,
             
         );
         //echo json_encode($a);
@@ -362,6 +422,25 @@ class index extends tbController {
         
         return $rs >= 3 ? false  : true ;
     }
+	
+    /**
+     * 每周五的9点到21点可以登录
+     * @return boolean
+     */
+	private function isGameTime()
+	{
+            date_default_timezone_set('PRC');
+            if(date('w') == '5'){
+                    $now_h = intval(date('H',time()));//hour
+                    if($now_h>=9 && $now_h<21)
+                    {
+                        return true;
+                    }
+                    
+			return false;
+		}
+		return false;
+	}
     
     
     

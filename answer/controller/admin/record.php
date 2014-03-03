@@ -36,7 +36,13 @@ class record extends tbController {
         //dump($this->query_user);
         
         $this->exam_points = spClass("examModel")->queryExamPoints();
-        $this->display("record/index.html");
+        if($this->spArgs("from") == 'bank')
+        {
+            $this->displaySimple("record/index.html");
+        }  else {
+            $this->display("record/index.html");
+        }
+        
     }
 
     

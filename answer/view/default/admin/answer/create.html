@@ -66,7 +66,7 @@
                     <tr><td>&nbsp;</td><td>（备选答案不多于300个字符）</td></tr>
                     
                     <tr>
-                        <td class="name" style="vertical-align:top;"><font color="red">*</font>备选答案C：</td>
+                        <td class="name" style="vertical-align:top;">备选答案C：</td>
                         <td class="value">
                             <textarea id="alternative_c" name="exam[alternative_c]"  maxlength="300" style="width:500px;height:30px;"><{$args.alternative_c}></textarea>
                             <span class="colOrange"><{$error_array.alternative_c}></span>
@@ -74,7 +74,7 @@
                     <tr><td>&nbsp;</td><td>（备选答案不多于300个字符）</td></tr>
                     
                     <tr>
-                        <td class="name" style="vertical-align:top;"><font color="red">*</font>备选答案D：</td>
+                        <td class="name" style="vertical-align:top;">备选答案D：</td>
                         <td class="value">
                             <textarea id="alternative_d" name="exam[alternative_d]"  maxlength="300" style="width:500px;height:30px;"><{$args.alternative_d}></textarea>
                             <span class="colOrange"><{$error_array.alternative_d}></span>
@@ -131,10 +131,10 @@
                     'exam[exam_type]':{required:true},
                     'exam[exam_point]':{required:true},
                     'exam[correct_answer]':{required:true},
-                    'exam[alternative_a]': { required:true,schar:true,minlength:2,maxlength:300},
-                    'exam[alternative_b]': { required:true,schar:true,minlength:2,maxlength:300},
-                    'exam[alternative_c]': { required:true,schar:true,minlength:2,maxlength:300},
-                    'exam[alternative_d]': { required:true,schar:true,minlength:2,maxlength:300}
+                    'exam[alternative_a]': { required:true,schar:true,minlength:1,maxlength:300},
+                    'exam[alternative_b]': { required:true,schar:true,minlength:1,maxlength:300},
+                    'exam[alternative_c]': { schar:true,maxlength:300},
+                    'exam[alternative_d]': { schar:true,maxlength:300}
                 }
 			
             });

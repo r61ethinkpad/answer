@@ -9,7 +9,34 @@
 </head>
 <body>
 <div class="question_box">
+<<<<<<< HEAD
     <{include file="game/_over.html"  customer_status=$customer_status}>
 </div>
+=======
+    <div class="question_title clearfix">
+        <span class="floatL">您的总成绩</span>
+        <span class="floatR">
+        	<span class="right">对<{$smarty.session.total_record}>题</span>
+            <span class="wrong">错<{$smarty.session.total_wrong}>题</span>
+        </span>
+    </div>
+    <div class="question_main">
+        <div class="timu wrongTxt clearfix">
+            <{if $smarty.session.point > 10}>
+            <p><img src="view/<{$tplName}>/images/game/love.png" /></p>
+            <p>恭喜您，您已经通关</p>
+            <p>获得<{$smarty.session.total_record}>个积分</p>
+            <p>感谢您的参与，欢迎明天再来答题哦~</p>
+            <{else}>
+            <p><img src="view/<{$tplName}>/images/game/cry.png" /></p>
+            <p>非常遗憾，您没有通关</p>
+            <p>获得<{$smarty.session.total_record}>个积分</p>
+            <p>感谢您的参与，欢迎明天再来答题哦~</p>
+            <{/if}>
+        </div>
+    </div>
+</div>
+<p class="info">游戏说明：同一个玩家一周有3次参与游戏的机会。在同一关卡中，答错题目的次数不得多于4次。答题错误次数达到4次，则游戏结束。</p>
+>>>>>>> 384a39f1dfb413fce0d06be1944218ff246a8b25
 </body>
 </html>

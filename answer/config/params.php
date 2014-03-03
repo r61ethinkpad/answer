@@ -27,6 +27,7 @@ $GLOBALS['sysparams'] = Array(
 	
 	'debug_log_file_path' => '/tmp',//"D:\\up",	//debug日志地址   
 	'bank_type_id'=>'9999',//规定了银行题库分类为9999.其他都是自定义题库的分类
+        'save_goods_picture_url'=>APP_PATH."/view/default/images/goods/",//规定了奖品图片存放地址
 );
 
 $GLOBALS['sysparams']['lang'] = 'cn_common';

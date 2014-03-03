@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-18 17:43:37
+<?php /* Smarty version Smarty-3.0.8, created on 2014-02-26 09:32:00
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/answer/create.html" */ ?>
-<?php /*%%SmartyHeaderCode:26510185653032b49c493b7-77738339%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1433556929530d441053d162-87362392%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1f94908a074925f4cc316d6bbb46f51a1a27272e' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/answer/create.html',
-      1 => 1392716533,
+      1 => 1393378306,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '26510185653032b49c493b7-77738339',
+  'nocache_hash' => '1433556929530d441053d162-87362392',
   'function' => 
   array (
   ),
@@ -114,7 +114,7 @@ if ($_smarty_tpl->_count($_from) > 0){
                     <tr><td>&nbsp;</td><td>（备选答案不多于300个字符）</td></tr>
                     
                     <tr>
-                        <td class="name" style="vertical-align:top;"><font color="red">*</font>备选答案C：</td>
+                        <td class="name" style="vertical-align:top;">备选答案C：</td>
                         <td class="value">
                             <textarea id="alternative_c" name="exam[alternative_c]"  maxlength="300" style="width:500px;height:30px;"><?php echo $_smarty_tpl->getVariable('args')->value['alternative_c'];?>
 </textarea>
@@ -124,7 +124,7 @@ if ($_smarty_tpl->_count($_from) > 0){
                     <tr><td>&nbsp;</td><td>（备选答案不多于300个字符）</td></tr>
                     
                     <tr>
-                        <td class="name" style="vertical-align:top;"><font color="red">*</font>备选答案D：</td>
+                        <td class="name" style="vertical-align:top;">备选答案D：</td>
                         <td class="value">
                             <textarea id="alternative_d" name="exam[alternative_d]"  maxlength="300" style="width:500px;height:30px;"><?php echo $_smarty_tpl->getVariable('args')->value['alternative_d'];?>
 </textarea>
@@ -193,10 +193,10 @@ if ($_smarty_tpl->_count($_from) > 0){
                     'exam[exam_type]':{required:true},
                     'exam[exam_point]':{required:true},
                     'exam[correct_answer]':{required:true},
-                    'exam[alternative_a]': { required:true,schar:true,minlength:2,maxlength:300},
-                    'exam[alternative_b]': { required:true,schar:true,minlength:2,maxlength:300},
-                    'exam[alternative_c]': { required:true,schar:true,minlength:2,maxlength:300},
-                    'exam[alternative_d]': { required:true,schar:true,minlength:2,maxlength:300}
+                    'exam[alternative_a]': { required:true,schar:true,minlength:1,maxlength:300},
+                    'exam[alternative_b]': { required:true,schar:true,minlength:1,maxlength:300},
+                    'exam[alternative_c]': { schar:true,maxlength:300},
+                    'exam[alternative_d]': { schar:true,maxlength:300}
                 }
 			
             });
