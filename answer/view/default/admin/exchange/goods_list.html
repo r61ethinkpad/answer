@@ -50,11 +50,12 @@
                                     <input type="hidden" name="goods_type_<{$one.id}>" value="2"/>
                                     <span>Q币</span>
                                     <{else}>
-                                    <input type="radio" name="goods_type_<{$one.id}>" id="goods_type_<{$one.id}>_1" value="1" checked="true"><span>话费</span>
-                                    <input type="radio" name="goods_type_<{$one.id}>" id="goods_type_<{$one.id}>_2" value="2"><span>Q币</span>
+                                    <input type="radio" name="goods_type_<{$one.id}>" id="goods_type_<{$one.id}>_1" value="1" checked="true" onclick="javascript:changeRadio(this,'<{$one.id}>');"><span>话费</span>
+                                    <input type="radio" name="goods_type_<{$one.id}>" id="goods_type_<{$one.id}>_2" value="2" onclick="javascript:changeRadio(this,'<{$one.id}>');"><span>Q币</span>
                                     <{/if}>
                                 </td>
                             </tr>
+                            
                             <tr>
                                 <td class="name" style="vertical-align:top;"><font color="red">*</font>兑换数量：</td>
                                 <td class="value">
@@ -65,7 +66,19 @@
                                     </select> 
                                 </td>
                             </tr>
-
+                            <{if $one.goods_type != '0'}>
+                            <tr>
+                                <td class="name" style="vertical-align:top;">
+                                    <font color="red">*</font>
+                                    <span id="show_device_name_<{$one.id}>">
+                                        <{if $one.goods_type == '2'}>QQ号码<{else}>手机号码<{/if}>
+                                    </span>：
+                                </td>
+                                <td class="value">
+                                    <input type="text" name="device_no_<{$one.id}>" id="device_no_<{$one.id}>" value="" class="input_text"/>
+                                </td>
+                            </tr>
+                            <{/if}>
                             <tr>
                                 <td colspan="2" style="text-align: center;">
                                     <input type="button" class="btnExchange" name="submit" id="btn_<{$one.id}>" value="兑换"/>
@@ -95,6 +108,20 @@
             jQuery("#div_"+id).html("积分不足，请兑换其他奖品。").toggle();
         }else
             jQuery("#div_"+id).toggle();
+            jQuery("#errMsg_"+id).html("");
+            
+    }
+    
+    function changeRadio(obj,goods_id){
+        
+        var obj = jQuery(obj);
+        var v = obj.attr("value");
+       
+        if(v == '2'){//Q币
+            jQuery("#show_device_name_"+goods_id).html("QQ号码");
+        }else{
+            jQuery("#show_device_name_"+goods_id).html("手机号码");
+        }
     }
     jQuery(document).ready(function(){
 	
@@ -115,10 +142,11 @@
             var current_score_obj = jQuery("#user_score");
             var current_score = current_score_obj.html();
             
-            alert(id);
+            //alert(id);
             var errMsgObj = jQuery("#errMsg_"+id);
             var type_id = "draw_type_"+id;
             var sum = "exchange_sum_"+id;
+            var isdn = "device_no_"+id;
             var pre_score = "goods_score_"+id;
             var goods_num = jQuery("#"+sum).val();
             var goods_score = jQuery("#"+pre_score).val();
@@ -151,7 +179,7 @@
                         }
                         else if (data.status == '0'){
                             
-                            errMsgObj.html('兑换成功').show();
+                            errMsgObj.html(data.msg).show();
                             current_score_obj.html(balance);
                             //返回当前奖品的剩余数量
                         }
