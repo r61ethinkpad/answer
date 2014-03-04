@@ -63,6 +63,21 @@ class recordModel extends spModel {
         $ym_s = substr($stime, 0,6);
         $ym_e = substr($etime, 0, 6);
         
+        if($ym_e == $ym_s)//单表查询
+        {
+            $table_name = "pc_answer_record_".$ym_e;
+            $sql = "select * from ".$table_name." where ".$condition;
+            $model = spClass("recordModel");     
+            $rows = $model->spPager($args['_pg_'][0],$args['_pg_'][1])->findSql($sql);
+            //dump($rows);
+            return array(
+                'status'=>0,
+                'desc'=>'获取日志数据成功',
+                'rows'=>$rows,
+                '_pg_'=>$model->spPager()->getPager()
+            );
+        }
+        
         $ym_s = intval($ym_s);
         $ym_e = intval($ym_e);
         $sql = "";

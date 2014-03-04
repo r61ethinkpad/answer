@@ -46,6 +46,21 @@ class scoreSpendModel extends spModel {
         $ym_s = intval($ym_s);
         $ym_e = intval($ym_e);
         
+        if($ym_e == $ym_s)//单表查询
+        {
+            $table_name = "pc_score_spend_log_".$ym_e;
+            $sql = "select * from ".$table_name." where ".$condition;
+            $model = spClass("scoreSpendModel");     
+            $rows = $model->spPager($args['_pg_'][0],$args['_pg_'][1])->findSql($sql);
+            //dump($rows);dump($model->spPager()->getPager());
+            return array(
+                'status'=>0,
+                'desc'=>'获取日志数据成功',
+                'rows'=>$rows,
+                '_pg_'=>$model->spPager()->getPager()
+            );
+        }
+        
         $sql = "";
         $table_pre = "pc_score_spend_log_";
         $i = 1;
