@@ -109,6 +109,7 @@ class permissionModel extends spModel {
                     'goods/create',
                     'goods/save',
                     'goods/del',
+                    'goods/showImg',
                 )
             ),
             'lottery_ticket_manage' => array(
@@ -142,9 +143,10 @@ class permissionModel extends spModel {
                 'description' => '兑奖管理',
                 'children' => array(
                     'exchange/index',
+                    'exchange/queryGoods',
                     'exchange/convert',
                     'exchange/getUserScore',
-                    'exchange/save',
+                    'goods/showImg',
                 )
             ),
             
@@ -154,6 +156,7 @@ class permissionModel extends spModel {
                 'children' => array(
                     'myPrize/index',
                     'myPrize/queryList',
+                    'goods/showImg',
                 )
             ),
             
