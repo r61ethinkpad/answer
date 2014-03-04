@@ -130,7 +130,7 @@ class optLogModel extends spModel {
             $total_page = 1;
         }else
         {
-            $total_page = $total_count%$page_size == 0 ? $total_count/$page_size : ($total_count/$page_size)+1;
+            $total_page = $total_count%$page_size == 0 ? $total_count/$page_size : ceil($total_count / $page_size);
         }
         
         
