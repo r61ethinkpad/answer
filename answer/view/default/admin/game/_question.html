@@ -9,9 +9,9 @@
     <div class="timu clearfix" id="question">
         <p class="colRed"><{$question.question_content}></p>
         <{if $question.alternative_a}><p><a onclick="select_answer(this,'A')">A、<{$question.alternative_a}></a></p><{/if}>
-        <{if $question.alternative_a}><p><a onclick="select_answer(this,'B')">B、<{$question.alternative_b}></a></p><{/if}>
-        <{if $question.alternative_a}><p><a onclick="select_answer(this,'C')">C、<{$question.alternative_c}></a></p><{/if}>
-        <{if $question.alternative_a}><p><a onclick="select_answer(this,'D')">D、<{$question.alternative_d}></a></p><{/if}>
+        <{if $question.alternative_b}><p><a onclick="select_answer(this,'B')">B、<{$question.alternative_b}></a></p><{/if}>
+        <{if $question.alternative_c}><p><a onclick="select_answer(this,'C')">C、<{$question.alternative_c}></a></p><{/if}>
+        <{if $question.alternative_d}><p><a onclick="select_answer(this,'D')">D、<{$question.alternative_d}></a></p><{/if}>
     </div>
     <div class="btn_box clearfix">
         <a class="btn_blue" onclick="cm();">提交</a>
