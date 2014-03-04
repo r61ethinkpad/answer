@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-23 09:28:28
+<?php /* Smarty version Smarty-3.0.8, created on 2014-03-04 15:33:15
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/game/question.html" */ ?>
-<?php /*%%SmartyHeaderCode:40695445953094ebc57c457-12916631%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:524467759531581bb8d6a17-73355292%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2e6b78e6addc736114ddbe0d971d7cbab226bdb7' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/game/question.html',
-      1 => 1393080697,
+      1 => 1393900922,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '40695445953094ebc57c457-12916631',
+  'nocache_hash' => '524467759531581bb8d6a17-73355292',
   'function' => 
   array (
   ),
@@ -30,40 +30,14 @@ $_smarty_tpl->decodeProperties(array (
 /js/jquery.min.js"></script>
 </head>
 <body>
-<div class="question_box">
-	<div class="question_title clearfix">
-    	<span class="floatL">当前在第<?php echo $_SESSION['point'];?>
-关</span>
-        <span class="floatR">
-        	<span class="right">对<?php echo $_SESSION['right'];?>
-题</span>
-            <span class="wrong">错<?php echo $_SESSION['wrong'];?>
-题</span>
-        </span>
-    </div>
-    <div class="question_main">
-    	<div class="timu clearfix" id="question">
-            <p class="colRed"><?php echo $_smarty_tpl->getVariable('question')->value['question_content'];?>
-</p>
-            <p><a onclick="select_answer(this,'A')">A、<?php echo $_smarty_tpl->getVariable('question')->value['alternative_a'];?>
-</a></p>
-            <p><a onclick="select_answer(this,'B')">B、<?php echo $_smarty_tpl->getVariable('question')->value['alternative_b'];?>
-</a></p>
-            <p><a onclick="select_answer(this,'C')">C、<?php echo $_smarty_tpl->getVariable('question')->value['alternative_c'];?>
-</a></p>
-            <p><a onclick="select_answer(this,'D')">D、<?php echo $_smarty_tpl->getVariable('question')->value['alternative_d'];?>
-</a></p>
-        </div>
-        <div class="btn_box clearfix">
-        	<a class="btn_blue" onclick="cm();">提交</a>
-        </div>
-    </div>
+<div class="question_box" id="question_box">
+    <?php $_template = new Smarty_Internal_Template("game/_question.html", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
+$_template->assign('question',$_smarty_tpl->getVariable('question')->value);$_template->assign('customer_status',$_smarty_tpl->getVariable('customer_status')->value); echo $_template->getRenderedTemplate(); $_template->rendered_content = null;?><?php unset($_template);?>
 </div>
-<form action="<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['spUrl'][0][0]->__template_spUrl(array('c'=>'game','a'=>'answer','type'=>$_GET['type']),$_smarty_tpl);?>
-" id="form1" method="post">
+<form id="form1" method="post">
     <input type="hidden" id="answer" name="answer" value="">
 </form>
-<p class="info">游戏说明：同一个玩家一周有3次参与游戏的机会。在同一关卡中，答错题目的次数不得多于4次。答题错误次数达到4次，则游戏结束。</p>
+<p class="info">游戏说明：在答题过程请不要刷新页面，如果刷新页面则被认为是放弃当前的答题机会，每一关的答题时间为90秒，答题错误次数达到4次，则游戏结束。当前剩余时间为<span id="timer"></span>秒</p>
 </body>
 </html>
 <script>
@@ -73,8 +47,48 @@ $_smarty_tpl->decodeProperties(array (
         $(obj).addClass('p_a_selected');
     }
     var cm=function(){
-        var v=$("#answer").val();
-        if(!v){alert("请选择答案！");return;}
-        document.getElementById('form1').submit();
+        var answer=$("#answer").val();
+        if(!answer){alert("请选择答案！");return;}
+        //document.getElementById('form1').submit();
+        $.ajax({
+            data:{answer:answer},
+            url:"<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['spUrl'][0][0]->__template_spUrl(array('c'=>'game','a'=>'answer'),$_smarty_tpl);?>
+",
+            type:"POST",
+            beforeSend:function(){
+                $("#question_box").html("正在提交答案...");
+            },
+            success:function(data){
+                $("#question_box").html(data);
+            },
+            complete:function(){
+                $("#answer").val("");
+            }
+        })
+    }
+    $(document).ready(function(){
+        interval=setInterval(timer,1000);
+    });
+    var t=90;
+    var interval=null;
+    var timer=function(){
+        if(t>0){
+            $("#timer").html(t);
+            t--;
+        }else{
+            $("#answer").val("time_over");
+            cm();
+            clearInterval(interval);
+        }
+    }
+    var resetTime=function(){
+        clearInterval(interval);
+        interval=setInterval(timer,1000);
+        t=90;
+    }
+    var timeOver=function(){
+        clearInterval(interval);
+        t=0;
+        $("#timer").html(t);
     }
 </script>
