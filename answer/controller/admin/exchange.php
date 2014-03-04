@@ -61,7 +61,7 @@ class exchange extends tbController {
     private function getUserInfo()
     {
         $info = null;
-        $term = "20140301";//$_SESSION['so_login']['term'];//
+        $term = $_SESSION['so_login']['term'];//"20140301";//
         $rs = spClass("userStatusModel")->find(array('user_id'=>$_SESSION['so_login']['user_id'],'term'=>$term));
         if($rs)
         {
@@ -79,7 +79,7 @@ class exchange extends tbController {
      */
     private function updateUserStatusInfo($args)
     {
-        $term = "20140301";//date('Ymd');//$_SESSION['so_login']['term'];//
+        $term = $_SESSION['so_login']['term'];//"20140301";//date('Ymd');//
         $rs = spClass("userStatusModel")->update(array('user_id'=>$_SESSION['so_login']['user_id'],'term'=>$term),$args);
         return $rs;
     }
