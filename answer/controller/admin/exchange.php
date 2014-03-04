@@ -42,6 +42,7 @@ class exchange extends tbController {
             $this->can_exchange = true;
         }
         
+        
         $this->displayPartial('exchange/goods_list.html');
     }
     
@@ -53,6 +54,7 @@ class exchange extends tbController {
             'from'=>'exchange'
         );
         $rs = spClass("goodsModel")->queryList($a);
+        //dump($rs);
         return $rs['rows'];
     }
     
@@ -77,7 +79,7 @@ class exchange extends tbController {
      */
     private function updateUserStatusInfo($args)
     {
-        $term = date('Ymd');//$_SESSION['so_login']['term'];//
+        $term = "20140301";//date('Ymd');//$_SESSION['so_login']['term'];//
         $rs = spClass("userStatusModel")->update(array('user_id'=>$_SESSION['so_login']['user_id'],'term'=>$term),$args);
         return $rs;
     }
@@ -116,6 +118,7 @@ class exchange extends tbController {
         $exchange_sum = $this->spArgs("exchange_sum_".$id);
         $goods_score = $this->spArgs("goods_score_".$id);
         $goods_money = $this->spArgs("goods_money_".$id);
+        $device_no = $this->spArgs("device_no_".$id);//彩票的话，就没有
         $user_id = $_SESSION['so_login']['user_id'];
         $args = array(
             'goods_id'=>$id,
@@ -123,7 +126,8 @@ class exchange extends tbController {
             'exchange_sum'=>$exchange_sum,
             'goods_score'=>$goods_score,
             'goods_money'=>$goods_money,
-            'user_id'=>$user_id
+            'user_id'=>$user_id,
+            'device_no'=>$device_no
         );
         
         if($user_id == null||$user_id == "")
@@ -222,7 +226,7 @@ class exchange extends tbController {
                 'score'=>$need_score,
                 'balance'=>$balance,
                 'record_time'=>date('Y-m-d H:i:s'),
-                'remark'=>'奖品兑换记录',
+                'remark'=>'奖品兑换记录.'.$rs['desc'],
             );
             $month = date('Ym');
             $table_name = "score_spend_log_".$month;
@@ -232,6 +236,7 @@ class exchange extends tbController {
             }
             // var_dump($ret);
             //更新客户当前积分
+            //var_dump($balance);
             $ret = $this->updateUserStatusInfo(array('total_count'=>$balance));
             if($ret == false)
             {
@@ -250,10 +255,16 @@ class exchange extends tbController {
         $data['surplus'] = intval($goods_info['count']);
         
         $data = json_encode($data);
-        return $this->jsonreturn($rs['status'], $rs['desc'], $data);
+        return $this->jsonreturn($rs['status'], $msg, $data);
     }
     
-    
+    /**
+     * 彩票兑换。
+     * 首先去彩票库，取出对应数量的彩票券。
+     * 然后返回给前端
+     * @param type $args
+     * @return array
+     */
     private function exchange_caipiao($args)
     {
         $rs = array(
@@ -261,29 +272,142 @@ class exchange extends tbController {
             'desc'=>'兑换成功。',
             'err_rs'=>array(),
         );
+        $should_exchange_sum = intval($args['exchange_sum']);
+        $model = spClass("lotteryTicketModel");
+        $cnt = $model->findCount(array('status'=>'0'));
+        if($cnt < $should_exchange_sum)
+        {
+            $rs['status'] = 6003;
+            $rs['desc'] = "彩票券数量不足";
+            return $rs;
+        }
+        $ret = $model->findSql("select lottery_code from pc_lottery_ticket where status = '0' limit 0,".intval($args['exchange_sum']));
+        
+        $count = @count($ret);
+        if($count < $should_exchange_sum)
+        {
+            $rs['status'] = 6003;
+            $rs['desc'] = "彩票券数量不足";
+            return $rs;
+        }
+        
+        $tickets = "请牢记以下彩票券标识码：";
+        $upd_ticket = "'";
+        foreach($ret as $row)
+        {
+            $tickets .= $row['lottery_code'].",";
+            $upd_ticket .= $row['lottery_code']."','";
+        }
+        $rs['desc'] .= $tickets;
+        $upd_ticket = substr($upd_ticket,0,  strlen($upd_ticket)-2);
+        $upd_sql = "update pc_lottery_ticket set status = '1' where lottery_code in (".$upd_ticket.")";
+        $result = $model->runSql($upd_sql);
         
         return $rs;
     }
     
+    /**
+     * 兑换话费
+     * @param type $args
+     * @return int
+     */
     private function exchange_huafei($args)
     {
         $rs = array(
             'status'=>0,
-            'desc'=>'兑换成功。',
+            'desc'=>'',
             'err_rs'=>array(),
         );
+        
+        $ret = $this->requestExchange($args);
+        $rs['desc'] .= $ret['desc'];
+        if($ret['status'] != 0)
+        {
+            $rs['status'] = 6004;
+        }
+        
         
         return $rs;
     }
     
+    /**
+     * Q币兑换
+     * @param type $args
+     * @return int
+     */
     private function exchange_qb($args)
     {
         $rs = array(
             'status'=>0,
-            'desc'=>'兑换成功。',
+            'desc'=>'',
             'err_rs'=>array(),
         );
+        $ret = $this->requestExchange($args);
+        $rs['desc'] .= $ret['desc'];
+        if($ret['status'] != 0)
+        {
+            $rs['status'] = 6005;
+        }
+        return $rs;
+    }
+    
+    /***
+     * http://www.371tuan.cn/api/371tuan_api_server.php
+        get的方式请求
+        私有KEY：6ed73c3353c3c04403e5f79210ae9016
+        get参数：
+        userid 标识用户ID
+        payclass 标识充值类型 2种类型：qq，mobile
+        orderid 标识有请求方产生15-20不重复ID
+        haoma 标识号码 比如QQ号或者手机号
+        money 标识充值的金额 比如10元
+        sign 的算法
+        sign = md5(userid.payclass.orderid.haoma.money.私有KEY) 
+        32位小写
+        php拼接符是.
+        http://www.371tuan.cn/api/371tuan_api_server.php?userid=参数&payclass=参数&orderid=参数&haoma=参数&money=参数&sign=参数
+     */
+    private function requestExchange($args)
+    {
+        $key = '6ed73c3353c3c04403e5f79210ae9016';
+        $payclass = $args['exchange_type'] == '2'? 'qq' : 'mobile';
+        $userid = $args['user_id'];
+        $orderid = date('YmdHis').rand(100, 99999);
+        $money = intval($args['exchange_sum'])*intval($args['goods_money']);
+        $haoma = $args['device_no'];
+        $sign = strtolower(md5($userid.$payclass.$orderid.$haoma.$money.$key));
         
+        $url = 'http://www.371tuan.cn/api/371tuan_api_server.php?userid='.$userid.'&payclass='.$payclass.'&orderid='.$orderid.'&haoma='.$haoma.'&money='.$money.'&sign='.$sign;
+        //dump($url); 
+        //$handler = file_get_contents($url);//返回一个字符串 ok 或者error
+        //初始化
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        //执行并获取HTML文档内容
+        $handler = curl_exec($ch);
+        //释放curl句柄
+        curl_close($ch);
+        $rs = array(
+            'status' => 0,
+            'desc'=>'兑换号码：'.$haoma.',兑换金额：'.$money."。",
+        );
+        if($handler ==false || $handler == "")
+        {
+            $rs['status'] = 1001;
+            $rs['desc'] .= "兑换失败。未知错误,没有返回数据.";
+            return $rs;
+        }
+        //$handler_array = (array)json_decode($handler);
+        //var_dump($handler_array);
+        if($handler == 'error')
+        {
+            $rs['status'] = 1002;
+            $rs['desc'] .= "兑换失败。充值失败.";
+            return $rs;
+        }
+        $rs['desc'] .= "兑换成功。";
         return $rs;
     }
     
