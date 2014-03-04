@@ -225,7 +225,7 @@ class index extends tbController {
     //无权限时跳转
     function noPerm() {
         $this->errorinfo = '您没有权限使用这个功能！';
-        $this->display("../inc/error.html");
+        $this->displayPartial("../inc/error.html");
     }
     
     
