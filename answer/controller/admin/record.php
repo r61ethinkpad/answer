@@ -27,8 +27,8 @@ class record extends tbController {
         $this->tid = $_SESSION['record_tid'];
         $this->sid = $_SESSION['record_sid'];
         
-        $this->firstday = date('Y-m-d');
-	$this->today = date('Y-m-d');
+        $this->firstday = '2014-03-04';//date('Y-m-d');
+	$this->today = '2014-03-04';//date('Y-m-d');
         
         //如果单点登录过来的，就会有这个值
         $this->query_user = $_SESSION['so_login']['query_user'];
@@ -52,7 +52,7 @@ class record extends tbController {
         $user_id = $this->spArgs("user_id") == "输入用户编号"?"":trim($this->spArgs("user_id"));
         
         $over_point = $this->spArgs("over_point");
-        $stime = $this->spArgs("stime")==""?date('Ym01'):str_replace('-', '', $this->spArgs("stime"));
+        $stime = $this->spArgs("stime")==""?date('Ymd'):str_replace('-', '', $this->spArgs("stime"));
 	$etime = $this->spArgs("etime")==""?date('Ymd'):str_replace('-', '', $this->spArgs("etime"));
 		
         $page = $this->spArgs('page') == '' ? $page : $this->spArgs('page');
@@ -73,6 +73,7 @@ class record extends tbController {
         if ($rs['rows']) {
             
             $exam_points = spClass("examModel")->queryExamPoints();
+            $all_scores = 0;
             foreach ($rs['rows'] as $key => $row) {
               
                 $rs['rows'][$key]['over_point_text'] = $exam_points[$row['over_point']];
@@ -185,6 +186,18 @@ class record extends tbController {
                 
                 $rs['rows'][$key]['get_scores'] = $get_scores;
                 $rs['rows'][$key]['point_desc'] = $point_desc;
+                $rs['rows'][$key]['show_detail'] = true;
+                $all_scores += $get_scores;
+            }
+            if($user_id != ""){
+                $all_row = array(
+                    'user_id' =>$user_id,
+                    'answer_time'=>"<span style='font-weight:bolder;color:blue;'>合计</span>",
+                    'get_scores'=>$all_scores,
+                    'over_point_text'=>'',
+                    'show_detail'=>false
+                );
+                array_push($rs['rows'],$all_row);
             }
         }
 
