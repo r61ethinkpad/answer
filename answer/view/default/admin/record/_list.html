@@ -30,7 +30,9 @@
             <td><{$one.get_scores}></td>
             <td><{$one.over_point_text}></td>
             <td>
+                <{if $one.show_detail == true}>
                <a href="javascript:void(0);" onclick="showDetail('<{$k_id}>');">查看详细</a>
+               <{/if}>
             </td>
         </tr>
         <tr id="tr_<{$k_id}>"  class="towfocus" style="display: none;">
