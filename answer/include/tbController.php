@@ -44,10 +44,7 @@ class tbController extends spController
 				$_SESSION['navigation'] = $this->tNavigation;
 			}
 		}
-                //dump($_SESSION['functionauth']);
-                //dump($_SESSION['authlist']);
-        //var_dump($nav);
-        //exit;
+               
 		$this->msgFlag = $_SESSION['login'];
 	}
 	/**
