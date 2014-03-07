@@ -307,7 +307,9 @@ class lotteryTicket extends tbController {
             }
         }
         $params = array(
-            'lottery_code'=>$args['lottery_code']
+            'lottery_code'=>$args['lottery_code'],
+            'status'=>'0',
+            'record_time'=>date('Y-m-d H:i:s')
         );
         $model = spClass("lotteryTicketModel");
         $check_rs = $model->verifierModel($params);
