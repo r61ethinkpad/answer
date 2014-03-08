@@ -9,6 +9,7 @@ class permissionModel extends spModel {
     public function getAdminNoCheckCA() {
         $ca = array(
             'main' => 'ALL',
+            'index'=>'ALL'
         );
         return $ca;
     }
@@ -135,6 +136,9 @@ class permissionModel extends spModel {
                     'game/question',
                     'game/answer',
                     'game/right',
+                    'game/normalResetStatus',
+                    'game/wrongCaseResetStatus',
+                    'game/timeover',
                 )
             ),
             

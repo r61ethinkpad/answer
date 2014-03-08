@@ -82,9 +82,9 @@ class aclModel extends spModel//udModel
 		exit;
 	}*/
 	public function acljump($url=''){ 
-		if($_SESSION['login'] <> 1){
+		if($_SESSION['login'] <> true && $_SESSION['login'] <> 1){
 			//$url = spUrl("index","login");
-			$url = spUrl("index","noPerm",array('tid'=>1));
+			$url = spUrl("index","noPerm2",array('tid'=>1));
 		}
 		elseif($url==''){
 			$url = spUrl("index","noPerm",array('tid'=>1));
