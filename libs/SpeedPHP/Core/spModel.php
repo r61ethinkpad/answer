@@ -136,7 +136,8 @@ class spModel {
 			if( $newinserid = $this->_db->newinsertid() ){
 				return $newinserid;
 			}else{
-				return array_pop( $this->find($row, "{$this->pk} DESC",$this->pk) );
+                            $rows = $this->find($row, "{$this->pk} DESC",$this->pk);
+                            return array_pop( $rows );
 			}
 		}
 		return FALSE;
