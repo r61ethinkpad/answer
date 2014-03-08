@@ -4,11 +4,11 @@
 
 <div id="content">
     <div class="tab">
+        <{if $query_user == "" or $query_user == null}>
         <ul class="tab-label">
-
-            <li  class="current"><a href="<{spUrl c=myPrize a=index tid=$tid sid=$sid}>">我的奖品</a></li>
-
+            <li  class="current"><a href="<{spUrl c=myPrize a=index tid=$tid sid=$sid}>">客户的奖品</a></li>
         </ul>
+        <{/if}>
         <div class="tab-main">
             <form id='_query_form'>
                 <div class="tool-box">
