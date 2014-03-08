@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('TBOWCARDUP')) {
     exit(1);
 }
@@ -86,7 +85,7 @@ class index extends tbController {
                     $logrs = optlog($logargs); //dump($logrs);
                 }
 
-                
+                //用户兑换完成后，请牢记你的彩票券标识码（验证码）。请到以下网址购买彩票【http://116.255.234.109/fc/web/3d.jsp】。用户需要输入的内容有：手机号码，3d号码（彩票号码）和验证码（彩票券标识码）。
 
                 $status = $rs['status'];
                 $msg = $rs['desc'];
@@ -224,7 +223,13 @@ class index extends tbController {
 
     //无权限时跳转
     function noPerm() {
-        $this->errorinfo = '您没有权限使用这个功能！或者登陆超时，请重新登陆';
+        $this->errorinfo = '您没有权限使用这个功能！';
+        $this->displayPartial("../inc/error.html");
+    }
+    
+    //无权限时跳转
+    function noPerm2() {
+        $this->errorinfo = '登陆超时，请重新登陆';
         $this->displayPartial("../inc/error.html");
     }
     
@@ -357,17 +362,21 @@ class index extends tbController {
         $_SESSION['operator']["name"] = "银行答题客户";        
         $_SESSION['operator']["login_time"] = date('H:i:s');  
         $_SESSION['operator']['type'] = $opt_type;
+        $_SESSION['operator']['admin'] = 1;
         
         $_SESSION["login"] = true; //已经登录   
+        $_SESSION['so_login']['query_user'] = $query_user==""?$user_id:$query_user;
         
+        //echo file_put_contents($GLOBALS['sysparams']['tmp_log'], "guohao",FILE_APPEND);
+        //exit;
         if($opt_type == '1')//go to game
-        {
+        { 
             $this->sessionFunctionAuth(array('type'=>'04'));
             
             $this->jump(spUrl('game','index'));
         }else if ($opt_type == '2')
         {
-            $_SESSION['so_login']['query_user'] = $query_user==""?$user_id:$query_user;        
+                    
             $this->sessionFunctionAuth(array('type'=>'05'));
             $this->jump(spUrl('record','index',array('from'=>'bank')));
         }else if($opt_type == '3')//兑奖
