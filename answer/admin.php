@@ -1,4 +1,6 @@
 <?php
+//header解决了iframe嵌套后，造成跨域session保存失败。只在ie下出现这个问题
+header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 define('TBOWCARDUP', true);
 
 define("APP_PATH",dirname(__FILE__));
