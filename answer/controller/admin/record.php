@@ -27,8 +27,8 @@ class record extends tbController {
         $this->tid = $_SESSION['record_tid'];
         $this->sid = $_SESSION['record_sid'];
         
-        $this->firstday = '2014-03-04';//date('Y-m-d');
-	$this->today = '2014-03-04';//date('Y-m-d');
+        $this->firstday = date('Y-m-d');
+	$this->today = date('Y-m-d');
         
         //如果单点登录过来的，就会有这个值
         $this->query_user = $_SESSION['so_login']['query_user'];
