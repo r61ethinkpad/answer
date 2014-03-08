@@ -4,32 +4,32 @@
 
 <div id="content">
     <div class="tab">
+        <{if $query_user == "" or $query_user == null}>
         <ul class="tab-label">
-
-            <li  class="current"><a href="<{spUrl c=record a=index tid=$tid sid=$sid}>">答题记录</a></li>
-
+            <li  class="current"><a href="<{spUrl c=record a=index tid=$tid sid=$sid}>">客户的积分</a></li>
         </ul>
+        <{/if}>
         <div class="tab-main">
             <form id='_query_form'>
                 <div class="tool-box">
+                    <{if $query_user == "" or $query_user == null}>
                     <select name="over_point" id="over_point">
                         <option value="" selected="selected" />--截至关卡--</option>
                         <{foreach from=$exam_points item=value key=name}>
                         <option value="<{$name}>"/><{$value}></option>
                         <{/foreach}>
-                    </select>
-                    <{if $query_user == "" or $query_user == null}>
-                        <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
-                        <input class="Wdate" maxlength="10" type="text" id="date1" name='stime' value="<{$firstday}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
-                        <span>到</span>
-                        <input class="Wdate" maxlength="10" type="text" id="date1" name='etime' value="<{$today}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
+                    </select>    
+                    <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
+                    <input class="Wdate" maxlength="10" type="text" id="date1" name='stime' value="<{$firstday}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
+                    <span>到</span>
+                    <input class="Wdate" maxlength="10" type="text" id="date1" name='etime' value="<{$today}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
+                    <a class="search_btn" onclick="listQuery('_query_form', '<{spUrl c=record a=queryList}>', 'datagrid');"></a>
                     <{else}>
                     <input type="hidden" name="user_id" value="<{$query_user}>"/>
                     <input type="hidden" name="stime" value="<{$firstday}>"/>
                     <input type="hidden" name="etime" value="<{$today}>"/>
                     <{/if}>
-                    
-                    <a class="search_btn" onclick="listQuery('_query_form', '<{spUrl c=record a=queryList}>', 'datagrid');"></a>
+
 
                 </div>
             </form>
