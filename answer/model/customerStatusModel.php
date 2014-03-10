@@ -65,4 +65,13 @@ class customerStatusModel extends spModel {
         }
         return self::GetOneByUserIdAndTerm($user_id,$term);
     }
+
+    public function addOne($user_id,$term){
+        $model=self::GetOneByUserIdAndTerm($user_id,$term);
+        if($model){
+            return self::upd($user_id,$term,array('total_count'=>$model['total_count']+1));
+        }else{
+            return false;
+        }
+    }
 }

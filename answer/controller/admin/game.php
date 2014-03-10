@@ -126,7 +126,7 @@ class game extends tbController {
         $this->customer_status->records=join("|",$this->records);
         $row=array(
             'status'=>json_encode($this->customer_status),
-            'total_count'=>$this->total_count,
+            //'total_count'=>$this->total_count,
         );
         //print_r($row);
         return spClass("customerStatusModel")->upd($_SESSION['so_login']['user_id'],date("Ymd"),$row);
@@ -159,7 +159,7 @@ class game extends tbController {
         );
         $row=array(
             'status'=>json_encode($status),
-            'total_count'=>$this->total_count,
+            //'total_count'=>$this->total_count,
         );
         return spClass("customerStatusModel")->upd($_SESSION['so_login']['user_id'],date("Ymd"),$row);
     }
@@ -180,7 +180,7 @@ class game extends tbController {
         );
         $row=array(
             'status'=>json_encode($status),
-            'total_count'=>$this->total_count,
+            //'total_count'=>$this->total_count,
         );
         return spClass("customerStatusModel")->upd($_SESSION['so_login']['user_id'],date("Ymd"),$row);
     }
@@ -201,6 +201,10 @@ class game extends tbController {
                 $this->customer_status->total_right++;
                 $this->total_count++;
                 $this->records[$this->customer_status->point-1]=$this->customer_status->right;
+
+                //积分加1
+                spClass("customerStatusModel")->addOne($_SESSION['so_login']['user_id'],date("Ymd"));
+
                 $go='game/_right.html';
             }elseif($_POST['answer']!='time_over'){//答错了
                 $this->customer_status->wrong++;
