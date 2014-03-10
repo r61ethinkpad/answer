@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-22 11:09:54
+<?php /* Smarty version Smarty-3.0.8, created on 2014-03-08 16:18:09
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/record/index.html" */ ?>
-<?php /*%%SmartyHeaderCode:1135887423530815021a49f4-48643223%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:570193643531ad2412abe12-58264040%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'fc68f959c20c47cb357b2c8ef9da3ad4a4f880f8' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/record/index.html',
-      1 => 1393038588,
+      1 => 1394266673,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1135887423530815021a49f4-48643223',
+  'nocache_hash' => '570193643531ad2412abe12-58264040',
   'function' => 
   array (
   ),
@@ -26,21 +26,16 @@ $_smarty_tpl->decodeProperties(array (
 
 <div id="content">
     <div class="tab">
+        <?php if ($_smarty_tpl->getVariable('query_user')->value==''||$_smarty_tpl->getVariable('query_user')->value==null){?>
         <ul class="tab-label">
-
             <li  class="current"><a href="<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['spUrl'][0][0]->__template_spUrl(array('c'=>'record','a'=>'index','tid'=>$_smarty_tpl->getVariable('tid')->value,'sid'=>$_smarty_tpl->getVariable('sid')->value),$_smarty_tpl);?>
-">答题记录</a></li>
-
+">客户的积分</a></li>
         </ul>
+        <?php }?>
         <div class="tab-main">
             <form id='_query_form'>
                 <div class="tool-box">
                     <?php if ($_smarty_tpl->getVariable('query_user')->value==''||$_smarty_tpl->getVariable('query_user')->value==null){?>
-                    <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
-                    <?php }else{ ?>
-                    <input type="hidden" name="user_id" value="<?php echo $_smarty_tpl->getVariable('query_user')->value;?>
-"/>
-                    <?php }?>
                     <select name="over_point" id="over_point">
                         <option value="" selected="selected" />--截至关卡--</option>
                         <?php  $_smarty_tpl->tpl_vars['value'] = new Smarty_Variable;
@@ -54,17 +49,24 @@ if ($_smarty_tpl->_count($_from) > 0){
 "/><?php echo $_smarty_tpl->tpl_vars['value']->value;?>
 </option>
                         <?php }} ?>
-                    </select>
-
+                    </select>    
+                    <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
                     <input class="Wdate" maxlength="10" type="text" id="date1" name='stime' value="<?php echo $_smarty_tpl->getVariable('firstday')->value;?>
 " onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
-		        <span>到</span>
-				<input class="Wdate" maxlength="10" type="text" id="date1" name='etime' value="<?php echo $_smarty_tpl->getVariable('today')->value;?>
+                    <span>到</span>
+                    <input class="Wdate" maxlength="10" type="text" id="date1" name='etime' value="<?php echo $_smarty_tpl->getVariable('today')->value;?>
 " onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
-				
-
                     <a class="search_btn" onclick="listQuery('_query_form', '<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['spUrl'][0][0]->__template_spUrl(array('c'=>'record','a'=>'queryList'),$_smarty_tpl);?>
 ', 'datagrid');"></a>
+                    <?php }else{ ?>
+                    <input type="hidden" name="user_id" value="<?php echo $_smarty_tpl->getVariable('query_user')->value;?>
+"/>
+                    <input type="hidden" name="stime" value="<?php echo $_smarty_tpl->getVariable('firstday')->value;?>
+"/>
+                    <input type="hidden" name="etime" value="<?php echo $_smarty_tpl->getVariable('today')->value;?>
+"/>
+                    <?php }?>
+
 
                 </div>
             </form>

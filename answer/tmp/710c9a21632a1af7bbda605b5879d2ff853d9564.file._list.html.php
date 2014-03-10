@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-02-19 18:19:49
+<?php /* Smarty version Smarty-3.0.8, created on 2014-03-07 09:31:39
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/record/_list.html" */ ?>
-<?php /*%%SmartyHeaderCode:181071914653048545403dd8-50462153%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1858409765319217b040714-46484712%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '710c9a21632a1af7bbda605b5879d2ff853d9564' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/record/_list.html',
-      1 => 1392805183,
+      1 => 1394155896,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '181071914653048545403dd8-50462153',
+  'nocache_hash' => '1858409765319217b040714-46484712',
   'function' => 
   array (
   ),
@@ -60,8 +60,10 @@ if ($_smarty_tpl->_count($_from) > 0){
             <td><?php echo $_smarty_tpl->tpl_vars['one']->value['over_point_text'];?>
 </td>
             <td>
+                <?php if ($_smarty_tpl->tpl_vars['one']->value['show_detail']==true){?>
                <a href="javascript:void(0);" onclick="showDetail('<?php echo $_smarty_tpl->tpl_vars['k_id']->value;?>
 ');">查看详细</a>
+               <?php }?>
             </td>
         </tr>
         <tr id="tr_<?php echo $_smarty_tpl->tpl_vars['k_id']->value;?>
