@@ -1,4 +1,8 @@
 <ul class="tab-label">
     <li <{if $current_tab == 'list'}> class="current"<{/if}>><a href="<{spUrl c=goods a=index tid=$tid sid=$sid}>">奖品列表</a></li>
+    <{if $current_tab == 'edit'}>
+    <li class="current"><a href="<{spUrl c=goods a=edit id=$id tid=$tid sid=$sid}>">编辑奖品</a></li>
+    <{else}>
     <li <{if $current_tab == 'new'}> class="current"<{/if}>><a href="<{spUrl c=goods a=create tid=$tid sid=$sid}>">新增奖品</a></li>
+    <{/if}>
 </ul>

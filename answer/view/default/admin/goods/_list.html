@@ -21,7 +21,7 @@
             <td><{$one.remark_text}></td>
             <td>
                 <a href="javascript:void(0);" onclick="del('<{$one.id}>','<{$one.goods_name}>');">删除</a>
-
+                <a href='<{spUrl c=goods a=edit id=$one.id tid=$tid sid=$sid}>' >编辑</a>
             </td>
         </tr>
         <{foreachelse}>

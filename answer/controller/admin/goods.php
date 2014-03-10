@@ -201,6 +201,73 @@ class goods extends tbController {
        // dump($this->opt_msg);
         $this->display("goods/create.html");
     }
+    
+    
+    public function edit()
+    {
+        $this->tid = $_SESSION['exam_tid'];
+        $this->sid = $_SESSION['exam_sid'];
+
+        $this->id = $this->spArgs('id');
+        $info = $this->loadRecord($this->id);
+        $goods_types = spClass("goodsModel")->getGoodsType();
+        $goods_type = $goods_types[$info['goods_type']];
+        $info['goods_type_text'] = $goods_type;
+        $this->args= $info;
+        //dump($info);
+        $acl = spClass('aclModel');
+        $this->authconfig = array(
+            'list' => $acl->checkCA('goods', 'index'),
+            'edit' => $acl->checkCA('goods', 'edit'),
+        );
+        $this->current_tab = 'edit';
+        
+        $this->display('goods/edit.html');
+    }
+    
+    
+    public function update()
+    {
+        $model = spClass("goodsModel");
+        $id = $this->spArgs("id");
+        $goods = $this->spArgs("goods");
+        
+        $this->args = array(
+            'count'=>$goods['count'],
+            'money'=>$goods['money'],
+            'score'=>$goods['score'],
+            'remark'=>$goods['remark']
+        );
+        //dump($goods);dump($id);exit;
+        $rs = $model->update(array('id'=>$id),$this->args);
+        if (!$rs) {
+            //验证失败
+            $status = 6002;
+            $msg = '奖品编辑失败';
+            $err_rs = array(
+                'question_content' => '奖品编辑失败',
+            );
+            $data = json_encode($err_rs);
+            $this->jsonreturn($status, $msg, $data);
+            exit;
+        }
+
+
+        $status = 0;
+        $msg = '奖品编辑成功';
+        $data = json_encode(array());
+
+        $logargs = array(
+            'opt_field' => '编辑奖品',
+            'opt_desc' => '奖品名称:' . $goods['goods_name']  . ',奖品编号:' . $id,
+            'opt_result' => $status,
+            'result_desc' => $msg,
+            'module_id' => $this->moduleId,
+        ); //dump($logargs);
+        $logrs = optlog($logargs); //dump($logrs);
+        
+        return $this->jsonreturn($status, $msg, $data);
+    }
 
     /**
      * 上传图片到服务器的固定位置

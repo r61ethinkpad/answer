@@ -1,0 +1,203 @@
+
+<div id="content">
+    <div class="tab">
+        <{include file="goods/_topTitle.html"}>
+        <div class="tab-main">
+            <p id="udError" class="dBox" style="display:none;"></p>
+            <form id="_create_form" action="<{spUrl c=goods a=update id=$id tid=$tid sid=$sid}>" method="post" >
+                <table class="formList">
+                    <input type="hidden" name="goods[goods_id]" value="<{$args.id}>"/>
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>奖品名称：</td>
+                        <td class="value">
+                            <{$args.goods_name}>
+                            <input type="hidden" name="goods[goods_name]" value="<{$args.goods_name}>"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>奖品类型：</td>
+                        <td class="value">
+                            <{$args.goods_type_text}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>价值金额：</td>
+                        <td class="value">
+                            <input type="text" name="goods[money]" id="money" value="<{$args.money}>" class="input_text" maxlength="32"/>
+                            <span class="tip">请填写数字.例如2，5，10，20</span>
+                            <span class="colOrange" id="error_count"><{$error_array.money}></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>奖品数量：</td>
+                        <td class="value">
+                            <input type="text" name="goods[count]" id="count" value="<{$args.count}>" class="input_text" maxlength="32"/>
+                            <span class="tip">请填写数字</span>
+                            <span class="colOrange" id="error_count"><{$error_array.count}></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;"><font color="red">*</font>所需积分：</td>
+                        <td class="value">
+                            <input type="text" name="goods[score]" id="score" value="<{$args.score}>" class="input_text" maxlength="32"/>
+                            <span class="tip">请填写数字</span>
+                            <span class="colOrange" id="error_score"><{$error_array.score}></span>
+                        </td>
+                    </tr>
+                    
+                    <tr id="words"><td>&nbsp;</td><td><span id="words_left">&nbsp;</span></td></tr>
+                    <tr>
+                        <td class="name" style="vertical-align:top;">备注：</td>
+                        <td class="value">
+                            <textarea id="remark" name="goods[remark]"  maxlength="300" style="width:500px;height:150px;"><{$args.remark}></textarea>
+                            <span class="colOrange" id="error_remark"><{$error_array.remark}></span>
+                        </td>
+                    <tr><td>&nbsp;</td><td>（简述内容不多于300个字符）</td></tr>
+                    
+                    
+                    <tr class="btnBox">
+                        <td colspan="2">
+                            <span class="sBtn">
+                                <a class="left">确定</a><a class="right"></a>
+                            </span>
+                            <span class="sBtn-cancel">
+                                <a class="left" href="<{spUrl c=goods a=index tid=$tid sid=$sid}>">返回</a><a class="right"></a>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+	
+		
+        //屏蔽回车事件
+        $('input,select').live("keypress", function(e) {
+            if (e.keyCode == 13) {
+                return false;
+            }
+        }); 
+					
+        //jQuery validate
+        v_addMethod();
+        $(".sBtn").click(function(){
+            
+            $('#_create_form').find('.tip').hide();
+            $("#_create_form").validate({
+                rules: {				
+                    'goods[id]': { required:true},
+                    'goods[count]': { required:true, number:true},
+                    'goods[money]': { required:true, number:true},
+                    'goods[score]': { required:true, number:true},
+                    'goods[remark]': { maxlength:300}
+                }
+                
+			
+            });
+            
+            
+            if($("#_create_form").valid()){
+               if(!confirm("确定提交本奖品么？")) return false;
+               //$("#_create_form").submit();
+               var options = {
+                    dataType:'json',
+                    success:function(data){
+                        $('#udError').hide();
+                        $('.colOrange').hide();
+                        if(data.status == '9999'){
+                            var error = data.data;
+                            for(var key in error){
+                                $('#error_'+key).html(error[key]).show();
+                            }
+                        }
+                        else if (data.status == '0'){
+                            
+                            $('#udError').html('奖品编辑成功').show();
+                        }
+                        else{
+                            $('#udError').html('奖品编辑失败：'+ data.msg + '(' + data.status + ')').show();
+                        }
+                    },
+                    error:function(){
+                        $('#udError').html('请求失败').show();
+                    }
+                }
+                $('#_create_form').ajaxSubmit(options);
+                return false;
+            }
+        });
+        
+        //关闭提示消息
+	$('#msg_close').click(function(){
+		$('#optMsg').hide();
+	});
+    });
+    window.onload=function(){
+        
+        var content = '<{$args.remark}>';
+        
+        jQuery("#words").hide();
+        var js=document.getElementById("remark");//获取文本域
+        var info=document.getElementById('words_left');//获取要插入提示信息的元素
+        //var submit=document.getElementById('btnSubmit');//获取提交按钮
+        var max=js.getAttribute('maxlength');//获取限制输入的最大长度
+        var tips=document.createElement('span');//新建一个提示span
+        var val,cur,count,warn;
+        //submit.disabled=true;//默认不可提交
+        tips.innerHTML='（您还可以输入&nbsp;<em style="color:red;">'+max+'</em>&nbsp;&nbsp;个字符，<font size="2pt">不区分中英文字符。</font>）'; 
+        
+        if(content != ""){
+                jQuery("#words").show();
+                //submit.disabled=false;
+                if(info.lastChild.nodeName!='SPAN') info.appendChild(tips);//避免每次弹起都会插入一条提示信息
+                count=info.getElementsByTagName('em')[0];//根据输入数字变换区
+                warn=info.getElementsByTagName('font')[0];//副标题
+                val=js.value;
+                cur=val.length;
+                if(cur==0){ //当默认值长度为0时,可输入数为默认maxlength值,此时不可提交
+                    count.innerHTML = max;
+                    //submit.disabled=true;
+                    warn.innerHTML='不区分中英文字符。';
+                }else if (cur < max) {//当默认值小于限制数时,可输入数为max-cur
+                    count.innerHTML = max - cur;
+                    warn.innerHTML='不区分中英文字符。';
+                }else{
+                    count.innerHTML = 0;//当默认值大于等于限制数时,插入一条提示信息并截取限制数内的值
+                    warn.innerHTML='不可再输入！';
+                    js.value=val.substring(0,max);//此处前面的this.value不能用变量val,它们不再是同一个值
+                }
+        }
+        
+        if(max){
+            js.onkeyup=js.onchange=function(){
+                jQuery("#words").show();
+                //submit.disabled=false;
+                if(info.lastChild.nodeName!='SPAN') info.appendChild(tips);//避免每次弹起都会插入一条提示信息
+                count=info.getElementsByTagName('em')[0];//根据输入数字变换区
+                warn=info.getElementsByTagName('font')[0];//副标题
+                val=this.value;
+                cur=val.length;
+                //	            for(var i=0;i<val.length; i++){//此循环是用来判断中英文字符的,但并不建议那样做
+                //	                if(val.charCodeAt(i)>255) cur+=1;
+                //	            }
+                if(cur==0){ //当默认值长度为0时,可输入数为默认maxlength值,此时不可提交
+                    count.innerHTML = max;
+                    //submit.disabled=true;
+                    warn.innerHTML='不区分中英文字符。';
+                }else if (cur < max) {//当默认值小于限制数时,可输入数为max-cur
+                    count.innerHTML = max - cur;
+                    warn.innerHTML='不区分中英文字符。';
+                }else{
+                    count.innerHTML = 0;//当默认值大于等于限制数时,插入一条提示信息并截取限制数内的值
+                    warn.innerHTML='不可再输入！';
+                    this.value=val.substring(0,max);//此处前面的this.value不能用变量val,它们不再是同一个值
+                }
+            }
+        }
+    }
+</script>
