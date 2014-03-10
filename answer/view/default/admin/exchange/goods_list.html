@@ -14,7 +14,7 @@
         <tr>
             <td>
                 <div style="float:left;">
-                    <img src="<{spUrl c=goods a=showImg pic=$one.pic}>" style="height:200px;"/>
+                    <img src="<{spUrl c=goods a=showImg pic=$one.pic}>" style="width:150px;height:200px;"/>
                 </div>
                 <div style="float: left;margin-left: 10px;">
                     <p style="height:10px;">&nbsp;</p>
@@ -25,7 +25,7 @@
                     <p>价值金额：<{$one.money}>元</p>
                     <p>所需积分：<{$one.score}></p>
                     <p>剩余数量：<span id="goods_num_<{$one.id}>"><{$one.count}></span>份</p>
-                    <p style="width:300px;">描述：<{$one.remark}></p>
+                    <p style="width:150px;">描述：<{$one.remark}></p>
                     
                 </div>
 
@@ -36,7 +36,7 @@
                         <table class="formList">
 
                             <tr>
-                                <td class="name" style="vertical-align:top;width: 150px;"><font color="red">*</font>奖品类型：</td>
+                                <td class="name" style="vertical-align:top;width: 150px;"><font color="red">*</font>类型：</td>
                                 <td class="value">
                                     <input type="hidden" name="goods_score_<{$one.id}>" id="goods_score_<{$one.id}>" value="<{$one.score}>"/>
                                     <input type="hidden" name="goods_money_<{$one.id}>" id="goods_money_<{$one.id}>" value="<{$one.money}>"/>
