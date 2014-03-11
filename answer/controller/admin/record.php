@@ -213,5 +213,19 @@ class record extends tbController {
         
         $this->displayPartial("record/_list.html");
     }
+    
+    
+    public function myRecord()
+    {
+	$today = date('Y-m-d');     
+        //如果单点登录过来的，就会有这个值
+        $query_user = $_SESSION['so_login']['query_user'];
+        //var_dump($query_user);var_dump($today);
+        $this->record_list = spClass("userStatusModel")->findAll(array('user_id'=>$query_user,'term'=>$today));
+        
+        $this->displaySimple("record/myRecord.html");
+    }
+    
+    
 
 }

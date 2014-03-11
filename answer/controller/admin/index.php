@@ -194,7 +194,7 @@ class index extends tbController {
                 break;
             case '05'://系统客户查询用户的答题记录
                 $list = array(
-                    'answer_record_view',
+                    'my_record_view',
                 );
                 break;
             case '06'://客户兑奖
@@ -378,7 +378,7 @@ class index extends tbController {
         {
                     
             $this->sessionFunctionAuth(array('type'=>'05'));
-            $this->jump(spUrl('record','index',array('from'=>'bank')));
+            $this->jump(spUrl('record','myRecord'));
         }else if($opt_type == '3')//兑奖
         {
             $this->sessionFunctionAuth(array('type'=>'06'));           
