@@ -1,0 +1,52 @@
+<script type="text/javascript" src="view/<{$tplName}>/js/DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" type="text/css" href="view/<{$tplName}>/js/JQwindow/windowCSS.css" />
+<script type="text/javascript" src="view/<{$tplName}>/js/JQwindow/windowJS.js"></script>
+
+<div id="content">
+    <div class="tab">
+        <div class="tab-main">
+                <div class="tool-box">
+                    &nbsp;
+                </div>
+
+            <div id="datagrid">
+                <script type="text/javascript" src="view/<{$tplName}>/js/jquery.overall.js"></script>
+                <table class="dbTable">
+                    <thead>
+                        <tr>
+                            <th style="width:20%">答题客户</th>
+                            <th style="width:20%">答题时间</th>
+                            <th style="width:20%">获得积分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <{foreach from=$record_list item=one key=k_id}>
+                        <tr>
+
+                            <td>
+                                <{$one.user_id}>
+                            </td>
+                            <td><{$one.term}></td>
+                            <td><{$one.total_count}></td>
+                           
+                        </tr>
+                      
+                        <{foreachelse}>
+                        <tr><td colspan="3"><span id="no_record">无查询记录！</span></td></tr>
+                        <{/foreach}>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+		
+    });
+	
+	
+</script>
