@@ -14,7 +14,7 @@
 <form id="form1" method="post">
     <input type="hidden" id="answer" name="answer" value="">
 </form>
-<p class="info">游戏说明：在答题过程请不要刷新页面，如果刷新页面则被认为是放弃当前的答题机会，每一关的答题时间为90秒，答题错误次数达到4次，则游戏结束。当前剩余时间为<span id="timer"></span>秒</p>
+<p class="info">游戏说明：在答题过程请不要刷新页面，如果刷新页面则被认为是放弃当前的答题机会，每一关的答题时间为120秒，答题错误次数达到4次，则游戏结束。当前剩余时间为<span id="timer"></span>秒</p>
 </body>
 </html>
 <script>
@@ -45,7 +45,7 @@
     $(document).ready(function(){
         interval=setInterval(timer,1000);
     });
-    var t=90;
+    var t=120;
     var interval=null;
     var timer=function(){
         if(t>0){
@@ -60,7 +60,7 @@
     var resetTime=function(){
         clearInterval(interval);
         interval=setInterval(timer,1000);
-        t=90;
+        t=120;
     }
     var timeOver=function(){
         clearInterval(interval);
