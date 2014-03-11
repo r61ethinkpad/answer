@@ -90,6 +90,13 @@ class permissionModel extends spModel {
                     'record/queryList',
                 )
             ),
+            'my_record_view' => array(
+                'module' => 'record',
+                'description' => '我的答题积分查看',
+                'children' => array(
+                    'record/myRecord',
+                )
+            ),
             'exam_type_manage' => array(
                 'module' => 'system',
                 'description' => '题库分类管理',
