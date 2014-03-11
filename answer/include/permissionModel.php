@@ -118,6 +118,8 @@ class permissionModel extends spModel {
                     'goods/save',
                     'goods/del',
                     'goods/showImg',
+                    'goods/edit',
+                    'goods/update'
                 )
             ),
             'lottery_ticket_manage' => array(
