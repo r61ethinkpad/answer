@@ -11,7 +11,7 @@ if (!defined('TBOWCARDUP')) {
 class game extends tbController {
     public $c=10;
     public $records=array();
-    public $time_out=100;
+    public $time_out=130;
     public $total_count=0;
     public $draw_count=0;
 
