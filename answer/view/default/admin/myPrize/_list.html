@@ -53,7 +53,7 @@
         <{/foreach}>
         <{if $list }>
 		<tr id="report_tr"><td colspan="7" >
-			<a href="#top">[导出报表]</a>
+			<a href="#top">[导出本期兑奖申请]</a>
 		</td></tr>
 		<{/if}>
     </tbody>
@@ -62,4 +62,8 @@
 <{include file="../inc/page.html"}>
 
 <script type="text/javascript">
+    jQuery("#report_tr").click(function(){
+        if(confirm("你确定要下载本期兑奖申请吗？下载时间可能比较长，请耐心等待。")) return false;
+        window.location.href='<{spUrl c=myPrize a=openDown}>';
+    });
 </script>
