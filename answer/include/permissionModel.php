@@ -173,6 +173,7 @@ class permissionModel extends spModel {
                     'myPrize/my',
                     'myPrize/queryMy',
                     'myPrize/audit',
+                    'myPrize/openDown',
                 )
             ),
             
