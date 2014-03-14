@@ -220,6 +220,9 @@ class aclModel extends spModel//udModel
 		if(in_array($controller, array('index'))){
 			return true;
 		}
+                if($controller == 'main' && $action == 'index'){
+			return true;
+		}
 		
 		if($_SESSION['login'] <> 1){
 			return false;

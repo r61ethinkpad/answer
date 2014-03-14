@@ -163,13 +163,28 @@ class permissionModel extends spModel {
                 )
             ),
             
-            'my_prize_view' => array(
+            'my_prize_manage' => array(
                 'module' => 'game',
-                'description' => '我的奖品管理',
+                'description' => '客户奖品管理',
                 'children' => array(
                     'myPrize/index',
                     'myPrize/queryList',
                     'goods/showImg',
+                    'myPrize/my',
+                    'myPrize/queryMy',
+                    'myPrize/audit',
+                )
+            ),
+            
+            'my_prize_view' => array(
+                'module' => 'game',
+                'description' => '我的奖品管理',
+                'children' => array(
+                   
+                    'goods/showImg',
+                    'myPrize/my',
+                    'myPrize/queryMy',
+                    'myPrize/draw',
                 )
             ),
             
