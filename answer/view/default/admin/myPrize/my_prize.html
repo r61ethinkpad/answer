@@ -4,32 +4,26 @@
 
 <div id="content">
     <div class="tab">
-        <{if $query_user == "" or $query_user == null}>
-        <ul class="tab-label">
-            <li  class="current"><a href="<{spUrl c=myPrize a=index tid=$tid sid=$sid}>">客户的奖品申请</a></li>
-        </ul>
-        <{/if}>
+        
         <div class="tab-main">
             <form id='_query_form'>
                 <div class="tool-box">
-                    <{if $query_user == "" or $query_user == null}>
-                    <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
-                    <{else}>
+                    
                     <input type="hidden" name="user_id" value="<{$query_user}>"/>
-                    <{/if}>
+                   
 
                     <input class="Wdate" maxlength="10" type="text" id="date1" name='stime' value="<{$firstday}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
 		        <span>到</span>
 				<input class="Wdate" maxlength="10" type="text" id="date1" name='etime' value="<{$today}>" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
 				
 
-                    <a class="search_btn" onclick="listQuery('_query_form', '<{spUrl c=myPrize a=queryList}>', 'datagrid');"></a>
+                    <a class="search_btn" onclick="listQuery('_query_form', '<{spUrl c=myPrize a=queryMy}>', 'datagrid');"></a>
 
                 </div>
             </form>
-            <div class="tool-box" id="export_id" style="display:none;"><{include file="../inc/export.html"}></div>
+
             <div id="datagrid">
-                <{include file="myPrize/_list.html"}>
+                <{include file="myPrize/_my_prize.html"}>
             </div>
         </div>
 
@@ -44,7 +38,7 @@
         //加载列表
         jQuery.ajax({
             type: 'get',
-            url: "<{spUrl c=myPrize a=queryList}>",
+            url: "<{spUrl c=myPrize a=queryMy}>",
             data: jQuery('#_query_form').serialize(),
             beforeSend: function(XMLHttpRequest){
                 $("#no_record").html("<img src='view/default/js/JQwindow/loading.gif' class='loading' />数据加载中...");
@@ -56,7 +50,7 @@
         //搜索区域回车事件
         $('input,select').live("keypress", function(e) {
             if (e.keyCode == 13) {
-                listQuery('_query_form', '<{spUrl c=myPrize a=queryList}>', 'datagrid');
+                listQuery('_query_form', '<{spUrl c=myPrize a=queryMy}>', 'datagrid');
                 return false;
             }
         }); 
