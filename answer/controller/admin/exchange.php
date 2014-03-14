@@ -199,19 +199,27 @@ class exchange extends tbController {
             exit;
         }
         $rs = array(
-            'status'=>9000,
-            'desc'=>''
+            'status'=>0,
+            'desc'=>'兑换申请已提交。',
+            'err_rs'=>array()
         );
-        if($exchange_type == '0')
+        if($exchange_type == '1')
         {
-            $rs = $this->exchange_caipiao($args);
-        }else if($exchange_type == '1')
-        {
-            $rs = $this->exchange_huafei($args);
+            $rs['desc'] .= "充值号码:".$device_no.".";
         }else if($exchange_type == '2')
         {
-            $rs = $this->exchange_qb($args);
-        }  
+            $rs['desc'] .= "充值QQ:".$device_no.".";
+        }
+//        if($exchange_type == '0')
+//        {
+//            $rs = $this->exchange_caipiao($args);
+//        }else if($exchange_type == '1')
+//        {
+//            $rs = $this->exchange_huafei($args);
+//        }else if($exchange_type == '2')
+//        {
+//            $rs = $this->exchange_qb($args);
+//        }  
         $data = $rs['err_rs'];
         $msg = $rs['desc'];
         //兑换成功，记录日志。减掉用户的积分，返回当前奖品的数量
@@ -226,7 +234,7 @@ class exchange extends tbController {
                 'score'=>$need_score,
                 'balance'=>$balance,
                 'record_time'=>date('Y-m-d H:i:s'),
-                'remark'=>'奖品兑换记录.'.$rs['desc'],
+                'remark'=>$rs['desc'],
             );
             $month = date('Ym');
             $table_name = "score_spend_log_".$month;
@@ -269,7 +277,7 @@ class exchange extends tbController {
     {
         $rs = array(
             'status'=>0,
-            'desc'=>'兑换成功。',
+            'desc'=>'兑换申请已提交成功。',
             'err_rs'=>array(),
         );
         $should_exchange_sum = intval($args['exchange_sum']);
@@ -315,7 +323,7 @@ class exchange extends tbController {
     {
         $rs = array(
             'status'=>0,
-            'desc'=>'',
+            'desc'=>'兑换申请已提交。',
             'err_rs'=>array(),
         );
         
@@ -339,7 +347,7 @@ class exchange extends tbController {
     {
         $rs = array(
             'status'=>0,
-            'desc'=>'',
+            'desc'=>'兑换申请已提交',
             'err_rs'=>array(),
         );
         $ret = $this->requestExchange($args);

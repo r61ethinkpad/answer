@@ -185,6 +185,7 @@ class index extends tbController {
                     'answer_record_view',
                     'exam_type_manage',
                     'game_manage',
+                    'my_prize_manage',
                 );
                 break;
             case '04'://建行客户
@@ -388,7 +389,7 @@ class index extends tbController {
         {
             $this->sessionFunctionAuth(array('type'=>'07'));
             
-            $this->jump(spUrl('myPrize','index',array('from'=>'bank')));
+            $this->jump(spUrl('myPrize','my'));
         }
         else if($opt_type == '5')//抽奖
         {
