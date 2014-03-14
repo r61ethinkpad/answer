@@ -253,8 +253,9 @@ class myPrize extends tbController {
         ini_set("max_execution_time", "1800"); //30分钟
         // 从数据库中获取数据 
         $table = 'pc_score_spend_log_'.date('Ym');
-        $sql = "select user_id,goods_name,count,score,balance,record_time from `".$table."` where status='0'";
-
+        $now_date = date('Ymd');
+        $sql = "select user_id,goods_name,count,score,balance,record_time from `".$table."` where status='0' and date_format(record_time,'%Y%m%d') = '".$now_date."'";
+        var_dump($sql);exit;
         $rows = spClass("scoreSpendModel")->findSql($sql);
 
         $must_cnt = 6;
