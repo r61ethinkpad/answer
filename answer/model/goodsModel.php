@@ -96,6 +96,24 @@ class goodsModel extends spModel
         return $rs;
     }
     
+    /**
+     * 奖品 的编号和奖品类型
+     * @return type
+     */
+    public static function getGoodsForType()
+    {
+        $rs = spClass("goodsModel")->findAll();
+        $list = array();
+        if(@count($rs) > 0)
+        {
+            foreach($rs as $row)
+            {
+                $list[$row['id']] = $row['goods_type'];
+            }
+        }
+        return $list;
+    }
+    
     
     
     

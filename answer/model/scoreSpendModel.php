@@ -18,7 +18,14 @@ class scoreSpendModel extends spModel {
         parent::__construct();
     }
 
-    
+    public static function getStatusArray()
+    {
+        return array(
+            '0'=>'审核中',
+             '1'=>'通过',
+             '2'=>'不通过',
+        );
+    }
     
 
     public static function queryList($args)
@@ -27,7 +34,7 @@ class scoreSpendModel extends spModel {
         if($args['user_id'] != null && $args['user_id'] != "")
         {
             if($condition!="") $condition .= " AND ";
-            $condition .= " user_id = '".$args['user_id']."'";
+            $condition .= " s.user_id = '".$args['user_id']."'";
         }
         
         
@@ -35,10 +42,10 @@ class scoreSpendModel extends spModel {
         if($args['stime'] != null && $args['stime'] != "" && $args['etime'] != null && $args['etime'] != "")
         {
             if($condition!="") $condition .= " AND ";
-            $condition .= "  record_time >= '".$args['stime']."' AND record_time < date_add(str_to_date('".$args['etime']."','%Y%m%d'), interval 1 DAY) ";
+            $condition .= "  s.record_time >= '".$args['stime']."' AND s.record_time < date_add(str_to_date('".$args['etime']."','%Y%m%d'), interval 1 DAY) ";
         }
         
-        $condition .= " order by record_time desc";
+        $condition .= " order by s.record_time desc";
         
         $ym_s = substr($args['stime'], 0,6);
         $ym_e = substr($args['etime'], 0, 6);
@@ -49,7 +56,7 @@ class scoreSpendModel extends spModel {
         if($ym_e == $ym_s)//单表查询
         {
             $table_name = "pc_score_spend_log_".$ym_e;
-            $sql = "select * from ".$table_name." where ".$condition;
+            $sql = "select s.*,'".$table_name."' as table_name from ".$table_name." s where ".$condition;
             $model = spClass("scoreSpendModel");     
             $rows = $model->spPager($args['_pg_'][0],$args['_pg_'][1])->findSql($sql);
             //dump($rows);dump($model->spPager()->getPager());
@@ -81,14 +88,14 @@ class scoreSpendModel extends spModel {
             {
                 $sql .= " UNION ALL ";
             }
-            $sql .= "select t.* from (select * from ".$table_name." where ".$condition.") t ";
+            $sql .= "select t.* from (select s.*,'".$table_name."' as table_name from ".$table_name." s where ".$condition.") t ";
             //dump($ym_e."-".$ym_s);
                        
             
             $ym_e--;
             $i++;
         }
-        //var_dump($sql);//exit;
+        var_dump($sql);//exit;
         if($sql == "")
         {
          
@@ -156,7 +163,40 @@ class scoreSpendModel extends spModel {
     }
     
 
-
+    public static function audit($id,$table,$result)
+    {
+        $sql = "update ".$table." set status='".$result."' where id='".$id."'";
+        
+        $rs = spClass("scoreSpendModel")->runSql($sql);
+        $ret = array(
+                'status'=>0,
+                'desc'=>'操作成功。',
+            );
+        if(!$rs)
+        {
+            $ret['desc'] = "操作失败";
+        }
+        
+        return $ret;
+    }
+    
+    
+    public static function updateRemark($id,$table,$desc,$flag='0')
+    {
+        $sql = "update ".$table." set remark=concat(remark,'".$desc."'),flag='".$flag."' where id='".$id."'";
+        
+        $rs = spClass("scoreSpendModel")->runSql($sql);
+        $ret = array(
+                'status'=>0,
+                'desc'=>'操作成功。',
+            );
+        if(!$rs)
+        {
+            $ret['desc'] = "操作失败";
+        }
+        
+        return $ret;
+    }
    
 
 }
