@@ -19,7 +19,7 @@
                 <div style="float: left;margin-left: 10px;">
                     <p style="height:10px;">&nbsp;</p>
                     <{if $can_exchange == true}>
-                    <p style="font-weight: bolder;"><a href="javascript:void(0);" onclick="exchange('<{$one.id}>','<{$user_info.score}>','<{$one.score}>');">[兑换奖品]</a></p>
+                    <p style="font-weight: bolder;"><a href="javascript:void(0);" onclick="exchange('<{$one.id}>','<{$user_info.score}>','<{$one.score}>');">[兑奖申请]</a></p>
                     <{/if}>
                     <p style="font-weight: bolder;"><{$one.goods_name}></p>
                     <p>价值金额：<{$one.money}>元</p>
@@ -36,8 +36,8 @@
                         <table class="formList">
 
                             <tr>
-                                <td class="name" style="vertical-align:top;width: 150px;"><font color="red">*</font>类型：</td>
-                                <td class="value">
+                                <td class="name" style="vertical-align:top;width: 200px;"><font color="red">*</font>类型</td>
+                                <td class="value" style="width:160px;">
                                     <input type="hidden" name="goods_score_<{$one.id}>" id="goods_score_<{$one.id}>" value="<{$one.score}>"/>
                                     <input type="hidden" name="goods_money_<{$one.id}>" id="goods_money_<{$one.id}>" value="<{$one.money}>"/>
                                     <{if $one.goods_type == '0'}>
@@ -57,9 +57,9 @@
                             </tr>
                             
                             <tr>
-                                <td class="name" style="vertical-align:top;"><font color="red">*</font>兑换数量：</td>
+                                <td class="name" style="vertical-align:top;"><font color="red">*</font>兑换数量</td>
                                 <td class="value">
-                                    <select name="exchange_sum_<{$one.id}>" id="exchange_sum_<{$one.id}>">
+                                    <select name="exchange_sum_<{$one.id}>" id="exchange_sum_<{$one.id}>" style="width:70px;">
                                         <{section name="xunhuan" loop= intval($user_info.score)/intval($one.score)}>
                                         <option value="<{$smarty.section.xunhuan.index+1}>"><{$smarty.section.xunhuan.index+1}></option>
                                         <{/section}>
@@ -72,10 +72,10 @@
                                     <font color="red">*</font>
                                     <span id="show_device_name_<{$one.id}>">
                                         <{if $one.goods_type == '2'}>QQ号码<{else}>手机号码<{/if}>
-                                    </span>：
+                                    </span>
                                 </td>
                                 <td class="value">
-                                    <input type="text" name="device_no_<{$one.id}>" id="device_no_<{$one.id}>" value="" class="input_text"/>
+                                    <input type="text" name="device_no_<{$one.id}>" id="device_no_<{$one.id}>" value="" class="input_text" style="width:70px;"/>
                                 </td>
                             </tr>
                             <{/if}>
