@@ -32,7 +32,7 @@
             </td>
             <td>
                 <div  id="div_<{$one.id}>" style="display: none;">
-                    <form id="form_<{$one.id}>" name="form_<{$one.id}>" action="<{spUrl c=exchange a=convert id=$one.id name=$one.goods_name}>" method="post">
+                    <form id="form_<{$one.id}>" name="form_<{$one.id}>" action="<{spUrl c=exchange a=convert id=$one.id name=urlencode($one.goods_name)}>" method="post">
                         <table class="formList">
 
                             <tr>
