@@ -254,17 +254,15 @@ class myPrize extends tbController {
         // 从数据库中获取数据 
         $table = 'pc_score_spend_log_'.date('Ym');
         $now_date = date('Ymd');
-        $sql = "select user_id,goods_name,count,score,balance,record_time from `".$table."` where status='0' and date_format(record_time,'%Y%m%d') = '".$now_date."'";
-        var_dump($sql);exit;
+        $sql = "select user_id,user_isdn,goods_name,count,score,balance,record_time from `".$table."` where status='0' and date_format(record_time,'%Y%m%d') = '".$now_date."'";
+        //var_dump($sql);exit;
         $rows = spClass("scoreSpendModel")->findSql($sql);
 
-        $must_cnt = 6;
+        $must_cnt = 7;
 
-        $type_cell = "A3";
-        $point_cell = "B3";
-        $answer_cell = "H3";
         $title = array(
             "客户编号",
+            "客户手机号码",
             "奖品",
             "数量",
             "花费积分",        
@@ -296,6 +294,7 @@ class myPrize extends tbController {
         $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(40);
         $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(40);
         $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(40);
  
         //表头
         $t = ord('A');

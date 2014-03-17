@@ -282,6 +282,7 @@ class index extends tbController {
      *      'user_id'=>'100001',
      *      'opt_type'=>‘1’ 
      *      'query_user'=>'100001',//查询用户积分时用
+     *      'user_isdn'=>'13512344321'//客户的手机号码
      *      
      * )
      * opt_type的解释
@@ -316,8 +317,9 @@ class index extends tbController {
         $user_id = $data['user_id'];
         $opt_type = $data['opt_type'];
         $query_user = $data['query_user'];
+        $user_isdn = $data['user_isdn'];
         
-        if($user_id == null || $user_id == "")
+        if($user_id == null || $user_id == "" || $user_isdn == null || $user_isdn == "")
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'3')));
         }
@@ -358,6 +360,7 @@ class index extends tbController {
         $_SESSION['so_login']['type'] = $opt_type;
         $_SESSION['so_login']['login_time'] = date('H:i:s');
         $_SESSION['so_login']['term'] = date('Ymd');
+        $_SESSION['so_login']['user_isdn'] = $user_isdn;
         
         $_SESSION['operator']["id"] = $user_id;
         $_SESSION['operator']["name"] = "银行答题客户";        

@@ -127,7 +127,7 @@ class exchange extends tbController {
             'goods_score'=>$goods_score,
             'goods_money'=>$goods_money,
             'user_id'=>$user_id,
-            'device_no'=>$device_no
+            'device_no'=>$device_no,
         );
         
         if($user_id == null||$user_id == "")
@@ -235,6 +235,7 @@ class exchange extends tbController {
                 'balance'=>$balance,
                 'record_time'=>date('Y-m-d H:i:s'),
                 'remark'=>$rs['desc'],
+                'user_isdn'=>$_SESSION['so_login']['user_isdn'],//客户手机号码
             );
             $month = date('Ym');
             $table_name = "score_spend_log_".$month;

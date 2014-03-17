@@ -11,9 +11,10 @@
 <table class="dbTable">
     <thead>
         <tr>
+            <th style="width:10%">客户</th>
             <th style="width:20%">奖品</th>
-            <th style="width:15%">数量</th>
-            <th style="width:15%">消费积分</th>
+            <th style="width:10%">数量</th>
+            <th style="width:10%">消费积分</th>
             <th style="width:10%">余额</th>
             <th style="width:15%">申请时间</th>
             <th style="width:10%">当前状态</th>
@@ -23,7 +24,7 @@
     <tbody>
         <{foreach from=$list item=one key=k_id}>
         <tr>
-
+            <td><{$one.user_isdn}></td>
             <td>
 
                     <{$one.goods_name}>
