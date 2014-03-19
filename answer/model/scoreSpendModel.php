@@ -95,7 +95,7 @@ class scoreSpendModel extends spModel {
             $ym_e--;
             $i++;
         }
-        var_dump($sql);//exit;
+        //var_dump($sql);//exit;
         if($sql == "")
         {
          
@@ -160,6 +160,81 @@ class scoreSpendModel extends spModel {
                 '_pg_'=>$pager
             );
         
+    }
+    
+    
+    
+    public static function queryAllData($args)
+    {
+        $condition = "";
+        if($args['user_id'] != null && $args['user_id'] != "")
+        {
+            if($condition!="") $condition .= " AND ";
+            $condition .= " s.user_id = '".$args['user_id']."'";
+        }
+        
+        
+        
+        if($args['stime'] != null && $args['stime'] != "" && $args['etime'] != null && $args['etime'] != "")
+        {
+            if($condition!="") $condition .= " AND ";
+            $condition .= "  s.record_time >= str_to_date('".$args['stime']."000000','%Y%m%d%H%i%s') AND s.record_time <=str_to_date('".$args['etime']."235959','%Y%m%d%H%i%s')";
+        }
+        
+        $condition .= " order by s.record_time desc";
+        
+        $ym_s = substr($args['stime'], 0,6);
+        $ym_e = substr($args['etime'], 0, 6);
+        
+        $ym_s = intval($ym_s);
+        $ym_e = intval($ym_e);
+        $cols = "s.user_id,s.user_isdn,s.goods_name,s.count,s.score,s.balance,s.record_time";
+        if($ym_e == $ym_s)//单表查询
+        {
+            $table_name = "pc_score_spend_log_".$ym_e;
+            $sql = "select ".$cols." from ".$table_name." s where ".$condition;
+            $model = spClass("scoreSpendModel");     
+            $rows = $model->findSql($sql);
+            //dump($rows);dump($model->spPager()->getPager());
+            return $rows;
+        }
+        
+        $sql = "";
+        $table_pre = "pc_score_spend_log_";
+        $i = 1;
+        while($ym_e >= $ym_s)
+        {
+            $table_name = $table_pre.$ym_e;
+            //dump($table_name);
+            //检测当前的数据库表存在么
+            $cnt_table_sql = "select count(1) as count from `INFORMATION_SCHEMA`.`TABLES` where `TABLE_SCHEMA`='dbanswercp' and  `TABLE_NAME`='".$table_name."' ";
+            $cnt_table_info = spClass("scoreSpendModel")->findSql($cnt_table_sql);
+            if($cnt_table_info[0]['count'] == 0)
+            {
+                $ym_e--;
+                
+                continue;
+            }
+            if($i != 1)
+            {
+                $sql .= " UNION ALL ";
+            }
+            $sql .= "select t.* from (select ".$cols." from ".$table_name." s where ".$condition.") t ";
+            //dump($ym_e."-".$ym_s);
+                       
+            
+            $ym_e--;
+            $i++;
+        }
+        //var_dump($sql);//exit;
+        if($sql == "")
+        {
+         
+            return array();
+        
+        }      
+        $rows = spClass("scoreSpendModel")->findSql($sql);
+        return $rows;
     }
     
 

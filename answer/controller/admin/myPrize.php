@@ -251,12 +251,19 @@ class myPrize extends tbController {
     public function openDown() {
         
         ini_set("max_execution_time", "1800"); //30分钟
+        //
+        //$user_id = $this->spArgs("user_id") == "输入用户编号" ? "" : trim($this->spArgs("user_id"));
+
+        $stime = $this->spArgs("stime") == "" ? date('Ymd') : str_replace('-', '', $this->spArgs("stime"));
+        $etime = $this->spArgs("etime") == "" ? date('Ymd') : str_replace('-', '', $this->spArgs("etime"));
+
+        //var_dump($stime."--".$etime);
+        $args = array(
+            'stime'=>$stime,
+            'etime'=>$etime
+        );
         // 从数据库中获取数据 
-        $table = 'pc_score_spend_log_'.date('Ym');
-        $now_date = date('Ymd');
-        $sql = "select user_id,user_isdn,goods_name,count,score,balance,record_time from `".$table."` where status='0' and date_format(record_time,'%Y%m%d') = '".$now_date."'";
-        //var_dump($sql);exit;
-        $rows = spClass("scoreSpendModel")->findSql($sql);
+        $rows = spClass("scoreSpendModel")->queryAllData($args);
 
         $must_cnt = 7;
 
