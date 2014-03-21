@@ -236,6 +236,7 @@ class exchange extends tbController {
                 'record_time'=>date('Y-m-d H:i:s'),
                 'remark'=>$rs['desc'],
                 'user_isdn'=>$_SESSION['so_login']['user_isdn'],//客户手机号码
+                'goods_type'=>$exchange_type,
             );
             $month = date('Ym');
             $table_name = "score_spend_log_".$month;

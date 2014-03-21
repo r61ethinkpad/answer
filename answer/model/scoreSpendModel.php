@@ -188,7 +188,7 @@ class scoreSpendModel extends spModel {
         
         $ym_s = intval($ym_s);
         $ym_e = intval($ym_e);
-        $cols = "s.user_id,s.user_isdn,s.goods_name,s.count,s.score,s.balance,s.record_time";
+        $cols = "s.user_id,s.user_isdn,s.goods_name,s.goods_type,s.count,s.score,s.balance,s.record_time";
         if($ym_e == $ym_s)//单表查询
         {
             $table_name = "pc_score_spend_log_".$ym_e;

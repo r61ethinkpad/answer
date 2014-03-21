@@ -271,6 +271,7 @@ class myPrize extends tbController {
             "客户编号",
             "客户手机号码",
             "奖品",
+            "奖品分类",
             "数量",
             "花费积分",        
             "剩余积分",
@@ -313,15 +314,26 @@ class myPrize extends tbController {
 
         $excel_now_row = 2;
         
+        $goods_types = array(
+            '0'=>'彩票',
+            '1'=>'话费',
+            '2'=>'Q币',
+        );
+        
         foreach($rows as $key=>$row)
         {
             //样例
             $t = ord('A');
             foreach ($row as $k=>$one) {
+                
+                if($k == 'goods_type')
+                {
+                    $one = $goods_types[$one];
+                }
                 $objPHPExcel->getActiveSheet()->setCellValueExplicit(chr($t) . $excel_now_row, $one, PHPExcel_Cell_DataType::TYPE_STRING);
                 $t++;
             }
-            
+            //exit;
             $excel_now_row++;
     				
             //指定開始下一个工作表
