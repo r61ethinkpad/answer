@@ -319,7 +319,7 @@ class index extends tbController {
         $query_user = $data['query_user'];
         $user_isdn = $data['user_isdn'];
         
-        if($user_id == null || $user_id == "" || $user_isdn == null || $user_isdn == "")
+        if($user_id == null || $user_id == "")
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'3')));
         }
@@ -334,10 +334,10 @@ class index extends tbController {
         }
 //WARNING:正式环境下，请去掉这块注释
         //判断今天是否可以游戏,可以兑奖，可以查看我的奖品，抽奖
-//        if(false == $this->isGameTime())
-//        {
-//            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'6')));
-//        }
+        if(false == $this->isGameTime())
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'6')));
+        }
         //判断用户是否已经答题3次，答题已经够3次，不能进入答题环节
         if($opt_type == '1' && false == $this->canBeginGame($user_id))
         {
@@ -347,11 +347,11 @@ class index extends tbController {
  
 //WARNING:正式环境下，请去掉这块注释
         //判断用户是否已经答题3次,答题不足3次，不允许参与抽奖和兑奖
-//        if(($opt_type == '3' or $opt_type == '5') && true == $this->canBeginGame($user_id))
-//        {
-//            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'8')));
-//            //应该进入答题环节
-//        }
+        if(($opt_type == '3' or $opt_type == '5') && true == $this->canBeginGame($user_id))
+        {
+            $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'8')));
+            //应该进入答题环节
+        }
         
         
         //把客户信息存入session中
