@@ -6,6 +6,11 @@
     <link href="view/<{$tplName}>/css/game/reset.css" rel="stylesheet" type="text/css"/>
     <link href="view/<{$tplName}>/css/game/style.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="view/<{$tplName}>/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        window.onbeforeunload = function(){
+            return "不能离开或刷新页面，否则视为放弃本次答题的机会，如果页面加载较慢请耐心等待！";
+       }
+    </script>
 </head>
 <body>
 <div class="question_box" id="question_box">
@@ -67,4 +72,5 @@
         t=0;
         $("#timer").html(t);
     }
+  
 </script>
