@@ -347,7 +347,8 @@ class index extends tbController {
  
 //WARNING:正式环境下，请去掉这块注释
         //判断用户是否已经答题3次,答题不足3次，不允许参与抽奖和兑奖
-        if(($opt_type == '3' or $opt_type == '5') && true == $this->canBeginGame($user_id))
+        //var_dump($this->canBeginGame($user_id));exit;
+        if(($opt_type == '3' or $opt_type == '5') && false == $this->canBeginGame($user_id))
         {
             $this->jump(spUrl('index', 'jumpToError',array('msg_no'=>'8')));
             //应该进入答题环节
@@ -421,18 +422,19 @@ class index extends tbController {
      */
     private function canBeginGame($user_id)
     {
+        return true;
         //$legal_date = $this->getWeekRange(date('Y-m-d'));
-        $a = array(
-            'stime'		=>	date('Y-m-d 09:00:00'),//$legal_date['sdate'],
-            'etime'		=>	date('Y-m-d 21:00:00'),//$legal_date['edate'],
-            'user_id'   =>      $user_id,
-            
-        );
-        //echo json_encode($a);
-        //dump($_SESSION);
-        $rs = spClass("recordModel")->caculateNum($a);
-        
-        return $rs >= 3 ? false  : true ;
+//        $a = array(
+//            'stime'		=>	date('Y-m-d 09:00:00'),//$legal_date['sdate'],
+//            'etime'		=>	date('Y-m-d 21:00:00'),//$legal_date['edate'],
+//            'user_id'   =>      $user_id,
+//            
+//        );
+//        //echo json_encode($a);
+//        //dump($_SESSION);
+//        $rs = spClass("recordModel")->caculateNum($a);
+//        
+//        return $rs >= 3 ? false  : true ;
     }
 	
     /**

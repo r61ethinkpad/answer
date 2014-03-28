@@ -14,7 +14,6 @@
             <th style="width:20%">答题客户</th>
             <th style="width:20%">答题时间</th>
             <th style="width:20%">获得积分</th>
-            <th style="width:20%">截至关卡</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -26,9 +25,9 @@
 
                     <{$one.user_id}>
             </td>
-            <td><{$one.answer_time}></td>
-            <td><{$one.get_scores}></td>
-            <td><{$one.over_point_text}></td>
+            <td><{$one.term}></td>
+            <td><{$one.total_count}></td>
+            
             <td>
                 <{if $one.show_detail == true}>
                <a href="javascript:void(0);" onclick="showDetail('<{$k_id}>');">查看详细</a>

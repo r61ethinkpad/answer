@@ -139,7 +139,7 @@
     });
     window.onload=function(){
         
-        var content = '<{$args.remark}>';
+        var content = '';
         
         jQuery("#words").hide();
         var js=document.getElementById("remark");//获取文本域
@@ -150,7 +150,7 @@
         var val,cur,count,warn;
         //submit.disabled=true;//默认不可提交
         tips.innerHTML='（您还可以输入&nbsp;<em style="color:red;">'+max+'</em>&nbsp;&nbsp;个字符，<font size="2pt">不区分中英文字符。</font>）'; 
-        
+        content = js.value;
         if(content != ""){
                 jQuery("#words").show();
                 //submit.disabled=false;
