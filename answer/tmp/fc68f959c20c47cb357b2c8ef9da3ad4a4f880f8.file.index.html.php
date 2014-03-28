@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.8, created on 2014-03-13 21:46:17
+<?php /* Smarty version Smarty-3.0.8, created on 2014-03-28 18:25:35
          compiled from "/Users/apple/web/root/answer/answer/view/default/admin/record/index.html" */ ?>
-<?php /*%%SmartyHeaderCode:570193643531ad2412abe12-58264040%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:164943921453354e1f2239a5-36310027%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'fc68f959c20c47cb357b2c8ef9da3ad4a4f880f8' => 
     array (
       0 => '/Users/apple/web/root/answer/answer/view/default/admin/record/index.html',
-      1 => 1394449365,
+      1 => 1396002321,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '570193643531ad2412abe12-58264040',
+  'nocache_hash' => '164943921453354e1f2239a5-36310027',
   'function' => 
   array (
   ),
@@ -36,20 +36,7 @@ $_smarty_tpl->decodeProperties(array (
             <form id='_query_form'>
                 <div class="tool-box">
                     <?php if ($_smarty_tpl->getVariable('query_user')->value==''||$_smarty_tpl->getVariable('query_user')->value==null){?>
-                    <select name="over_point" id="over_point">
-                        <option value="" selected="selected" />--截至关卡--</option>
-                        <?php  $_smarty_tpl->tpl_vars['value'] = new Smarty_Variable;
- $_smarty_tpl->tpl_vars['name'] = new Smarty_Variable;
- $_from = $_smarty_tpl->getVariable('exam_points')->value; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
-if ($_smarty_tpl->_count($_from) > 0){
-    foreach ($_from as $_smarty_tpl->tpl_vars['value']->key => $_smarty_tpl->tpl_vars['value']->value){
- $_smarty_tpl->tpl_vars['name']->value = $_smarty_tpl->tpl_vars['value']->key;
-?>
-                        <option value="<?php echo $_smarty_tpl->tpl_vars['name']->value;?>
-"/><?php echo $_smarty_tpl->tpl_vars['value']->value;?>
-</option>
-                        <?php }} ?>
-                    </select>    
+                       
                     <input type="text" value="输入用户编号" name="user_id" class="grayTips input_text" maxlength="32" style="margin-right: 10px;"/>
                     <input class="Wdate" maxlength="10" type="text" id="date1" name='stime' value="<?php echo $_smarty_tpl->getVariable('firstday')->value;?>
 " onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" style=""/>
